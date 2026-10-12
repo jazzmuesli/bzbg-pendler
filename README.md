@@ -24,6 +24,62 @@ cp index.html      <repo>/complex.html   # wird zu /complex.html
 
 Wer das umdreht, überschreibt die Kurzfassung mit der Langfassung.
 
+## Die Kurzfassung (`/`)
+
+`simplified.html` ist **die Seite, auf der alles aufgebaut ist**. Sie beantwortet
+eine einzige Frage — *wie viele Zugfahrten erreichen den Bus 500 noch?* — und
+lässt jeden Regler zu, von dem die Antwort abhängt.
+
+| Regler | Wirkung |
+|---|---|
+| **Zeitraum** | ganzer Zeitraum, letzte 90/30 Tage, seit 24.08.2026, seit 15.05.2026 |
+| **Geplante Ankunft zwischen** | Presets (Feierabend, Früh, Mittag, Abend, ganzer Tag) oder frei wählbar |
+| **Startbahnhof** | von Hamburg / Rostock / Schwerin / andere |
+| **nur Mo–Fr** | Wochenenden ausblenden |
+| **Umstiegszeit** | Minuten zwischen Zugankunft und Busabfahrt (Vorgabe **0**) |
+| **Busfahrplan** | welche Fahrplan-Version für **alle** gewählten Tage gilt (Vorgabe: die heutige) |
+| **Bus fährt … später** | Versatz der gewählten Abfahrt in Minuten (Vorgabe +5) |
+| **Wie viele Fahrten zeigen** | Zeilenzahl der Tabelle unten (5–200, Vorgabe 20) |
+
+Das Diagramm ist die Antwortkurve: für jede Minute einer möglichen
+Busabfahrt der Anteil der Zugfahrten, die sie noch erreichen. Jeder Absatz ist
+ein Balken, und seine Höhe ist genau die Zahl der in dieser Minute
+dazugekommenen Fahrten — Treffer sind als Text unterlegt, die neuesten zuerst.
+
+### Die letzten Fahrten im Blick
+
+Die Tabelle listet die neuesten Fahrten der aktuellen Auswahl mit dem Bus, den
+es an dem Tag wirklich gab. Sie beantwortet die Frage, die sich hinter jeder
+Prozentzahl versteckt: *was ist da eigentlich passiert?*
+
+| Spalte | Inhalt |
+|---|---|
+| **Datum** | Tag mit Wochentag, z. B. `2026-10-09 (Fr)` |
+| **Zug** | Zugnummer der Fahrt |
+| **geplant** / **Ist** | Fahrplan und tatsächliche Ankunft |
+| **Verspätung** | in Minuten |
+| **Bus** | die Abfahrt plus `1. Bus`, `2. Bus` oder `verpasst` |
+| **Wartezeit** | Minuten zwischen Ankunft und Abfahrt |
+
+**`1. Bus` / `2. Bus` / `verpasst` sind bewusst drei Stufen und nicht ja/nein.**
+Die kurze Seite kennt genau zwei Abfahrten: den Bus, den die Auswahl am
+häufigsten verpasst, und den um den eingestellten Versatz verschobenen. Wer den
+ersten verpasst, aber den späteren noch bekommt, wartet — `2. Bus` macht diese
+Wartezeit sichtbar, statt sie als Treffer zu zählen.
+
+Die Tabelle ersetzt die bestehende Karte **„Die Zugfahrten, um die es sich
+dreht"** nicht: jene zeigt nur die geretteten Fahrten, diese zeigt die Auswahl
+vollständig. Erst zusammen belegen sie die Aussage der Seite, dass der
+steile Bereich der Kurve ein schmales Stück ist.
+
+**Grenze des Modells, die die Tabelle sichtbar macht:** die Kurzfassung rechnet
+mit *einer* Abfahrtszeit, nicht mit dem stündlichen Ring der Linie 500. Eine
+Fahrt, die den 17:15 verpasst, gilt hier als `verpasst`, auch wenn ringsum um
+18:15 der nächste Bus kommt. Für diese Frage — *verschiebt man den 17:15 um
+fünf Minuten?* — ist das genau richtig; für die Frage *wie lange wartet jemand,
+der den Bus verpasst?* ist die Langfassung unter `/complex.html` die richtige
+Adresse, weil sie das Anschlussfenster und den Ringbus rechnet.
+
 ## Was drin ist
 
 `index.html` ist eine **einzige, in sich geschlossene Datei** (ca. 600 KB). Die
@@ -33,7 +89,7 @@ die Seite funktioniert offline und stellt keine Anfragen an Dritte.
 - **12.722 Zugankünfte** an Boizenburg (Elbe) über **450 Tage**
 - Fahrpläne der VLP-Linien **500, 520, 525, 530** (Stand der eingelesenen PDFs)
 
-## Bedienung
+## Bedienung der Langfassung (`/complex.html`)
 
 Oben einstellen, alles darunter rechnet sich sofort neu:
 
@@ -78,7 +134,7 @@ gezählt. Bei 17:25 (+10 min) sind es 14 min. Verschiebungen, die den Bus aus
 dem Anschlussfenster herausbugsieren, sind als „ohne Anschluss" markiert —
 deren Prozentwerte sind nicht mit „heute" vergleichbar.
 
-## Aufbau der Seite
+## Aufbau der Langfassung
 
 Die Seite ist auf das Nötigste eingedampft, damit sie auch ohne Vorwissen
 lesbar ist. Ganz oben stehen **drei große Knöpfe** — *Feierabend*, *Früher
