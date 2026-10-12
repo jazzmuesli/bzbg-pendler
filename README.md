@@ -5,6 +5,25 @@ Anschlüssen an den Busverkehr der VLP.
 
 Live: <https://bzbg-pendler.openfun.org>
 
+## Die beiden Seiten
+
+| Adresse | Datei | Wofür |
+|---|---|---|
+| `/` | `simplified.html` | die kurze interaktive Rechnung: ein Diagramm, sechs Regler |
+| `/complex.html` | `index.html` | die vollständige Auswertung mit allen Filtern und Nachleseteilen |
+
+Beide sind einzelne, in sich geschlossene Dateien ohne Netzzugriff.
+
+**Achtung beim Veröffentlichen:** die Dateinamen sind im Repository gegen
+die ausgelieferten Adressen vertauscht.
+
+```bash
+cp simplified.html <repo>/index.html      # wird zu /
+cp index.html      <repo>/complex.html   # wird zu /complex.html
+```
+
+Wer das umdreht, überschreibt die Kurzfassung mit der Langfassung.
+
 ## Was drin ist
 
 `index.html` ist eine **einzige, in sich geschlossene Datei** (ca. 600 KB). Die
@@ -26,6 +45,60 @@ Oben einstellen, alles darunter rechnet sich sofort neu:
 | **nur Mo–Fr** | Wochenenden ausblenden |
 | **Buslinien** | welche Linien als Anschluss zählen |
 | **Umsteigezeit** | Minuten von Zug zu Haltestelle plus Einstieg (Vorgabe 2) |
+| **Planänderung** | im Abschnitt „Was wäre, wenn der Bus anders fährt?": verschiebt alle Busse des Tages um x Minuten (Vorgabe +5) |
+
+Der Abschnitt **Was wäre, wenn der Bus anders fährt?** bündelt drei
+Stellschrauben, mit denen sich dieselbe Frage durchspielen lässt:
+
+| Stellschraube | Wirkung |
+|---|---|
+| **Bus fährt … später** | verschiebt alle Abfahrten der gewählten Buslinien um x Minuten |
+| **Alle Züge sind … zu spät** | unterstellt eine zusätzliche Verspätung auf jede Ankunft, statt der gemessenen |
+| **heutigen Fahrplan auf alle Fahrten rechnen** | wendet den Busfahrplan des jeweils letzten Tages auf die ganze Historie an — beantwortet „was wäre mit dem heutigen Bus damals passiert?" |
+
+Die Tabelle darunter zerlegt jede Fahrtgruppe in vier Stufen, die zusammen
+100 % ergeben: 0 Minuten Puffer, der Bus des Tages, der Bus mit dem
+gewünschten Versatz, und die Fahrten, die auch dann noch verpasst werden.
+Der grüne Balken ist die Differenz aus dem Versatz; die Maus darüber zeigt
+bis zu 20 konkrete Fahrten (neueste zuerst, älteste am Ende) zum Nachschlagen
+auf der Bahnhofstafel.
+
+Der frühere Abschnitt „Was ändert ein früherer/späterer Bus?" ist als
+aufklappbare Einzelheit darunter erhalten.
+
+Der Abschnitt **Was ändert ein früherer/späterer Bus?** rechnet dieselben
+Ankünfte mit verschobenen Buszeiten durch und zeigt je Zugslot den **Puffer**
+— wie viele Minuten Zugverspätung der Anschluss noch verträgt:
+
+    Puffer = Busabfahrt − geplante Ankunft − Fußweg − Umsteigezeit
+
+RE 4337 an 17:08 mit Bus 17:15, Fußweg 1 min und Umsteigezeit 2 min ergibt
+darum **4 min**, nicht 5: der Fußweg wird zusätzlich zur Umsteigezeit
+gezählt. Bei 17:25 (+10 min) sind es 14 min. Verschiebungen, die den Bus aus
+dem Anschlussfenster herausbugsieren, sind als „ohne Anschluss" markiert —
+deren Prozentwerte sind nicht mit „heute" vergleichbar.
+
+## Aufbau der Seite
+
+Die Seite ist auf das Nötigste eingedampft, damit sie auch ohne Vorwissen
+lesbar ist. Ganz oben stehen **drei große Knöpfe** — *Feierabend*, *Früher
+Morgen*, *Der ganze Tag* —, die die wichtigsten Fälle abdecken. Die 28
+einzelnen Regler (Richtung, Zeitfenster, Zeitraum, Buslinien, Umsteigezeit)
+liegen aufklappbar unter **Eigene Einstellungen** und sind für die allermeisten
+Besucher unnötig.
+
+Danach vier Blöcke: **Übersicht** mit drei Kennzahlen, der Rechner **„Was
+wäre, wenn der Bus anders fährt?"**, der **Busanschluss** mit drei Kennzahlen
+und alles Weitere als aufklappbare Nachlese (Einzelzugtabelle, Monatswerte,
+Zugverlauf, Fahrplan-Versionen, Detail-Simulation).
+
+Die Tabelle im „Was wäre"-Rechner kommt mit drei Spalten aus: Bus heute, Bus
+mit dem gewünschten Versatz, Bus trotzdem verpasst. Die frühere vierte Spalte
+„0 Min. Puffer" war in jedem Datensatz 0&thinsp;% und wurde in den Erklärungstext
+verschoben.
+
+Stationen ohne Omnibusanschluss verlieren die Busabschnitte samt Reglern
+automatisch.
 
 Ausgewertet werden: Pünktlichkeit (< 5 min), Median, Mittelwert, p90, p95,
 maximale Verspätung — nach Monat, je Zug und für den kompletten Zeitraum.
@@ -90,6 +163,40 @@ node test_pendler_core.js         # 403 Tests
 
 Die Logik liegt in `pendler_core.js` und wird unverändert in die HTML-Datei
 eingebettet, sodass Browser und Tests denselben Code ausführen.
+
+## Rohdaten als CSV
+
+`history.csv` — eine Zeile je Zugankunft, mit dem Bussen, der an dem Tag
+tatsächlich zur Verfügung stand:
+
+```bash
+node make_history_csv.js                            # ganzer Zeitraum, Linie 500
+node make_history_csv.js --transfer-time 2          # 2 min Einstieg (Seiten-Vorgabe)
+node make_history_csv.js --weekdays-only --lines 500,520
+```
+
+| Spalte | Bedeutung |
+|---|---|
+| `date`, `time`, `train_id` | Tag, geplante Ankunft, Zugnummer |
+| `direction_from`, `direction_to` | Startbahnhof, Zielbahnhof |
+| `expected_arrival`, `actual_arrival`, `delay` | Fahrplan, Wirklichkeit, Verspätung in Minuten |
+| `first_next_bus_time`, `second_next_bus_time` | der nächste Bus im Anschlussfenster, und der nächstdrüber |
+| `transfer_ok` | **der geplante Bus wurde erwischt** (das ist die „1. Bus"-Zahl der Seite) |
+| `any_connection_ok` | irgendein Bus im Fenster wurde erwischt |
+| `taken_bus_time` | der Bus, der tatsächlich erreichbar war |
+
+**Die beiden letzten Spalten darf man nicht verwechseln.** `transfer_ok` misst
+den *ersten* Bus; `any_connection_ok` liegt bei rund 99,7 %, weil die Linie 500
+stündlich fährt — nach dem verpassten 17:15 kommt der 18:15 noch im Fenster.
+„85,7 % transfer_ok" und „99,7 % Anschluss" sind dieselben Daten, zweimal
+gelesen.
+
+`time` und `expected_arrival` sind bewusst doppelt: die erste ist die
+gebuchte Ankunft, die zweite der Wert aus der Spalte **Ankunft** der
+Bahnhofstafel.
+
+Gerechnet wird mit `pendler_core.js`, also mit demselben Code, den die Seite
+ausführt — `transfer_time=0` bedeutet: Bus noch am Bahnsteig, ich steige ein.
 
 ## Daten nachziehen
 
