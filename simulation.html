@@ -461,7 +461,8 @@ function renderAll(){
   drawRouteLines();
 
   /* KPIs */
-  $("kpis").innerHTML = `
+  const kpis=$("kpis");
+  if(kpis) kpis.innerHTML = `
     <div class="kpi"><div class="k">Hamburg-Abdeckung</div>
       <div class="v ${r.hamRate>=90?'good':r.hamRate>=70?'':'bad'}">${pct(r.hamRate)}</div>
       <div class="s">${r.hamReached}/${r.hamTotal} Fahrten</div></div>
@@ -477,7 +478,8 @@ function renderAll(){
   `;
 
   /* Trips list */
-  const tc=$("tripsContainer"); tc.innerHTML="";
+  const tc=$("tripsContainer");
+  if(tc) tc.innerHTML="";
   for (const t of sim.trips){
     const st = state.trips[t.index];
     const savings = st.express ? Math.min(6 * sim.express_save_per_stop, 10) : 0;
@@ -485,7 +487,7 @@ function renderAll(){
     const adjDep = t.depOrig + st.shift;
     const adjRet = adjDep + routeTime;
 
-    tc.innerHTML += `
+    if(tc) tc.innerHTML += `
       <div class="trip-row">
         <div class="trip-time">${toHHMM(t.depOrig)} → <span class="prop">${toHHMM(adjDep)}</span></div>
         <div class="trip-ctrl">
@@ -510,7 +512,8 @@ function renderAll(){
   }
 
   /* Coverage table: distinct arrival times with best trip */
-  const ct=$("coverageTable"); ct.innerHTML="";
+  const ct=$("coverageTable");
+  if(ct) ct.innerHTML="";
   const allGroups = [...sim.ham_evening,...sim.sch_evening].sort((a,b)=>a.planned-b.planned);
   for (const g of allGroups){
     const h=Math.floor(g.planned/60), mm=g.planned%60;
@@ -526,7 +529,7 @@ function renderAll(){
     }
     const bufTxt = bestBuffer>=0 ? bestBuffer+" min" : "–";
     const reached = bestTrip ? "ja" : "nein";
-    ct.innerHTML+=`<tr${g.planned>=16*60&&g.planned<22*60?' class="cur"':''}>
+    if(ct) ct.innerHTML+=`<tr${g.planned>=16*60&&g.planned<22*60?' class="cur"':''}>
       <td>${toHHMM(g.planned)}</td><td>${src}</td><td class="num">${g.n}</td>
       <td class="num">${g.p90===null?"–":g.p90}</td>
       <td>${bestTrip?toHHMM(bestTrip.dep):"–"}</td>
@@ -536,39 +539,46 @@ function renderAll(){
 
   /* Constraints */
   const cc=$("constraints");
-  if(r.missedTrains.length===0 && r.turnIssues.length===0){
-    cc.innerHTML=`<div class="goodbox">✓ Alle Einschränkungen erfüllt: keine verpassten Zuganschlüsse, keine Turnaround-Probleme.</div>`;
-  } else {
-    let msg="";
-    if(r.missedTrains.length>0) msg+=`✗ ${r.missedTrains.length} abfahrende Zug${r.missedTrains.length!==1?'en':''} nicht erreichbar: ${r.missedTrains.map(toHHMM).join(", ")}. `;
-    if(r.turnIssues.length>0) msg+=`✗ ${r.turnIssues.length} Turnaround-Probleme.`;
-    cc.innerHTML=`<div class="badbox">${msg}</div>`;
+  if(cc){
+    if(r.missedTrains.length===0 && r.turnIssues.length===0){
+      cc.innerHTML=`<div class="goodbox">✓ Alle Einschränkungen erfüllt: keine verpassten Zuganschlüsse, keine Turnaround-Probleme.</div>`;
+    } else {
+      let msg="";
+      if(r.missedTrains.length>0) msg+=`✗ ${r.missedTrains.length} abfahrende Zug${r.missedTrains.length!==1?'en':''} nicht erreichbar: ${r.missedTrains.map(toHHMM).join(", ")}. `;
+      if(r.turnIssues.length>0) msg+=`✗ ${r.turnIssues.length} Turnaround-Probleme.`;
+      cc.innerHTML=`<div class="badbox">${msg}</div>`;
+    }
   }
 
   /* Verdict */
   const v=$("verdict");
-  const hamOk = r.hamRate>=90;
-  const schOk = r.schRate>=90;
-  const connOk = r.missedTrains.length===0;
-  const turnOk = r.turnIssues.length===0;
-  if(hamOk&&schOk&&connOk&&turnOk){
-    v.innerHTML=`<div class="goodbox"><b>Empfehlung:</b> Alle Ziele erreicht:
+  if(v){
+    const hamOk = r.hamRate>=90;
+    const schOk = r.schRate>=90;
+    const connOk = r.missedTrains.length===0;
+    const turnOk = r.turnIssues.length===0;
+    if(hamOk&&schOk&&connOk&&turnOk){
+      v.innerHTML=`<div class="goodbox"><b>Empfehlung:</b> Alle Ziele erreicht:
        ${pct(r.hamRate)} Hamburg, ${pct(r.schRate)} Schwerin, alle Zuganschlüsse, alle Turnarounds.</div>`;
-  } else {
-    let msg="<b>Kompromiss nötig:</b> ";
-    if(!hamOk) msg+=`Hamburg ${pct(r.hamRate)} (Ziel 90%). `;
-    if(!schOk) msg+=`Schwerin ${pct(r.schRate)} (Ziel 90%). `;
-    if(!connOk) msg+=`${r.missedTrains.length} Zuganschlüsse fehlen. `;
-    if(!turnOk) msg+=`${r.turnIssues.length} Turnaround-Probleme. `;
-    v.innerHTML=`<div class="warnbox">${msg}</div>`;
+    } else {
+      let msg="<b>Kompromiss nötig:</b> ";
+      if(!hamOk) msg+=`Hamburg ${pct(r.hamRate)} (Ziel 90%). `;
+      if(!schOk) msg+=`Schwerin ${pct(r.schRate)} (Ziel 90%). `;
+      if(!connOk) msg+=`${r.missedTrains.length} Zuganschlüsse fehlen. `;
+      if(!turnOk) msg+=`${r.turnIssues.length} Turnaround-Probleme. `;
+      v.innerHTML=`<div class="warnbox">${msg}</div>`;
+    }
   }
 
   drawTradeoffChart();
-  $("routeNote").textContent=`${expressCount()} Fahrt${expressCount()!==1?'en':''} als Express.`;
+  const rn=$("routeNote");
+  if(rn) rn.textContent=`${expressCount()} Fahrt${expressCount()!==1?'en':''} als Express.`;
 }
 
 /* ------------------------------------------------------------------ map */
 function initMap(){
+  const mapEl=$("map");
+  if(!mapEl) return;
   map = L.map("map", {zoomControl:false}).setView([53.3776, 10.7539], 13);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors", maxZoom: 18
@@ -585,6 +595,7 @@ function initMap(){
 }
 
 function updateMapMarkers(){
+  if(!map) return;
   const skipped = new Set();
   const nSkip = expressCount();
   const sorted = [...EXPRESS_CANDIDATES].sort((a,b)=>a.order-b.order);
@@ -620,7 +631,9 @@ function drawRouteLines(){
 
 /* ------------------------------------------------------------------ tradeoff chart */
 function drawTradeoffChart(){
-  const c=$("tradeoffCanvas"), ctx=c.getContext("2d");
+  const c=$("tradeoffCanvas");
+  if(!c) return;
+  const ctx=c.getContext("2d");
   const rect=c.getBoundingClientRect(); c.width=rect.width*devicePixelRatio; c.height=rect.height*devicePixelRatio;
   ctx.scale(devicePixelRatio,devicePixelRatio);
   const w=c.width/devicePixelRatio, h=c.height/devicePixelRatio;
