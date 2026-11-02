@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bus 500 — Fahrplansimulation Boizenburg Bahnhof</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root{--ink:#16232b;--muted:#5d6b72;--line:#dfe6ea;--bg:#f5f7f8;
+        --pos:#1a7f4b;--neg:#b3261e;--warn:#a76a00;--card:#fff;--accent:#12303d;
+        --ham:#2f6f9f;--sch:#8a6d1b;--bus:#12303d;--expr:#7a3e9d;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 70px;background:var(--bg);color:var(--ink);
+       font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--accent);color:#fff;padding:22px 20px 20px}
+  header .wrap{margin:0 auto;max-width:1200px}
+  header h1{margin:0 0 6px;font-size:20px}
+  header p{margin:0;color:#b9cdd6;max-width:1000px;font-size:13px}
+  main{padding:14px;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+        padding:12px 14px 10px;margin:0}
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .card-head h2{margin:0;font-size:16px}
+  .card-head p{margin:0;color:var(--muted);font-size:12px}
+  .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;
+            border-radius:8px;padding:10px 12px;margin-bottom:8px}
+  .ctl{min-width:170px;flex:1}
+  .ctl>label{display:block;font-weight:600;font-size:11px;margin-bottom:4px;color:var(--muted)}
+  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  input[type=range]{width:100%;cursor:pointer}
+  .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .minlabel{font-size:10.5px;color:var(--muted);margin-left:3px}
+  .kpis{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .kpi{flex:1 1 170px;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .kpi .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-size:20px;font-weight:700;margin-top:1px}
+  .kpi .s{color:var(--muted);font-size:11px;margin-top:1px}
+  .kpi .v.good{color:var(--pos)}.kpi .v.warn{color:var(--warn)}.kpi .v.bad{color:var(--neg)}
+  table{border-collapse:collapse;width:100%;font-size:11.5px;margin-bottom:6px}
+  th,td{text-align:right;padding:3px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
+  td.cur{color:var(--ink)}td.prop{color:var(--bus);font-weight:600}
+  td.ham{color:var(--ham)}td.sch{color:var(--sch)}
+  .note{color:var(--muted);font-size:12px;margin:6px 0;max-width:900px}
+  .warnbox{border-left:3px solid var(--warn);background:#fff8ec;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  .goodbox{border-left:3px solid var(--pos);background:#f0faf0;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  .badbox{border-left:3px solid var(--neg);background:#fdf0ee;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  canvas{width:100%;height:200px;display:block;margin:6px 0;background:#fff;border:1px solid var(--line);
+         border-radius:8px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0;font-size:11.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:3px}
+  .toggles{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .toggle{display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer}
+  .toggle input{accent-color:var(--accent)}
+  button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:7px;
+         background:#fff;cursor:pointer;color:var(--ink);font-size:12px}
+  button:hover{background:#eef3f5}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.primary:hover{opacity:0.9}
+  button.small{padding:4px 9px;font-size:11px}
+  .map-panel{display:flex;flex-direction:column;gap:6px}
+  #map{height:340px;width:100%;border:1px solid var(--line);border-radius:8px;margin:6px 0;background:#eef3f5}
+  .stop-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:11px}
+  .stop-legend span{display:flex;align-items:center;gap:4px}
+  .stop-legend i{display:inline-block;width:8px;height:8px;border-radius:50%}
+  .stop-kept{background:var(--pos)}.stop-skip{background:#a05195}
+  .trip-card{border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+  .trip-card.active{border-color:var(--accent);background:#f7fafb}
+  .trip-head{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;
+             background:#f1f4f6;font-size:12px;font-weight:600;cursor:pointer}
+  .trip-head:hover{background:#e4eaf0}
+  .trip-head.active{background:#dbe7ee;color:var(--accent)}
+  .trip-head .time{font-variant-numeric:tabular-nums}
+  .trip-body{padding:8px 10px;display:none}
+  .trip-body.open{display:block}
+  .trip-body table{font-size:11px;margin:4px 0}
+  .trip-body th{font-size:10px}
+  .buf-good{color:var(--pos);font-weight:600}
+  .buf-warn{color:var(--warn);font-weight:600}
+  .buf-bad{color:var(--neg);font-weight:600}
+  .wait-good{color:var(--pos)}.wait-warn{color:var(--warn)}.wait-bad{color:var(--neg)}
+  .opt-sugg{font-size:11px;margin-top:6px;padding:6px 8px;background:#f7fafb;border-radius:6px}
+  .opt-sugg b{color:var(--accent)}
+  .map-actions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+  .badge{display:inline-block;padding:1px 6px;border-radius:99px;font-size:10.5px;font-weight:600}
+  .badge.ok{background:#e7f3e7;color:var(--pos)}.badge.warn{background:#fff4e0;color:var(--warn)}.badge.bad{background:#fdeceb;color:var(--neg)}
+  .daysel{display:flex;gap:6px}
+  .daysel button{padding:5px 12px;font-size:12px}
+  .daysel button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Bus 500 — Fahrplansimulation</h1>
+  <p>Boizenburg Bahnhof · Jede Busfahrt einzeln: welche Züge sie abholt und welche sie bringt.
+     Optimierung: Wartezeit für Fahrgäste minimieren bei gleichzeitigem Puffer für Verspätete Züge.</p>
+</div></header>
+
+<main>
+  <div class="card">
+    <div class="card-head"><h2>Steuerung</h2></div>
+    <div class="controls">
+      <div class="ctl">
+        <label>Wochentyp</label>
+        <div class="daysel">
+          <button data-dt="wd" class="active" id="day-wd">Mo&ndash;Fr</button>
+          <button data-dt="sa" id="day-sa">Sa</button>
+          <button data-dt="so" id="day-so">So</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Ziel-Puffer (Verspätung, die noch aufgefangen wird)</label>
+        <div class="row">
+          <input type="range" id="targetDelay" min="2" max="25" step="1" value="8">
+          <span class="val" id="targetDelayVal">8</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Ein Zug gilt als erfasst, wenn seine Verspätung ≤ Puffer liegt.</div>
+      </div>
+      <div class="ctl">
+        <label>Bus-Verschiebung (alle Fahrten)</label>
+        <div class="row">
+          <input type="range" id="globalShift" min="-15" max="15" step="1" value="0">
+          <span class="val" id="globalShiftVal">0</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Negativ = früher, positiv = später. Gleiche Route, gleiche Anzahl Fahrten.</div>
+      </div>
+      <div class="ctl">
+        <label>Mindestpuffer abfahrende Züge</label>
+        <div class="row">
+          <input type="range" id="minDepBuffer" min="3" max="10" step="1" value="5">
+          <span class="val" id="minDepBufferVal">5</span><span class="minlabel">Minuten</span>
+        </div>
+      </div>
+    </div>
+    <div class="toggles">
+      <label class="toggle"><input type="checkbox" id="useP90" checked> p90-Verspätung als Puffer-Grenze</label>
+      <label class="toggle"><input type="checkbox" id="showOnlyEvening" checked> nur Abendfenster (16&ndash;22 Uhr)</label>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card map-panel">
+    <div class="card-head"><h2>Streckenverlauf &amp; Haltestellen</h2></div>
+    <div class="map-actions">
+      <span id="optStatus" class="badge ok">Bereit</span>
+      <button type="button" class="primary small" id="btnOpt">Fahrplan optimieren (OR)</button>
+      <button type="button" class="small" id="btnReset">Zurücksetzen</button>
+    </div>
+    <div id="map"></div>
+    <div class="stop-legend">
+      <span><i class="stop-kept"></i>Hält</span>
+      <span><i class="stop-skip"></i>Express: ausgelassen</span>
+      <span><i style="background:var(--ham);display:inline-block;width:8px;height:8px;border-radius:50%"></i>Zug aus Hamburg</span>
+      <span><i style="background:var(--sch);display:inline-block;width:8px;height:8px;border-radius:50%"></i>Zug aus Schwerin</span>
+      <span><i style="background:var(--bus);width:8px;height:2px"></i>Bus-Route</span>
+    </div>
+    <div class="note" id="routeNote"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Jede Busfahrt im Detail</h2>
+      <p>Klicke auf eine Fahrt für Einzelheiten. Grün = Puffer deckt Verspätung, Rot = Puffer zu klein.</p>
+    </div>
+    <div id="tripsContainer"></div>
+  </div>
+
+  <div class="card" id="constraintCard">
+    <div class="card-head"><h2>Verpasste Zuganschlüsse</h2></div>
+    <div id="constraints"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Wartezeit vs. Puffer (gewählte Fahrt)</h2>
+      <p>X-Achse: Bus-Abfahrt verschoben. Linien: Anteil erfassender Züge (Hamburg / Schwerin).
+         Der Punkt = aktuelle Stellung.</p>
+    </div>
+    <canvas id="tradeoffCanvas"></canvas>
+  </div>
+</main>
+
+<!-- Build placeholders - replaced by build_simulation.py -->
+<script>const SIM_DATA = __SIM_DATA_JSON_PLACEHOLDER__;</script>
+<script>__COMBINED_JS_PLACEHOLDER__</script>
+</body>
+</html>
