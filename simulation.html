@@ -612,6 +612,7 @@ function updateMapMarkers(){
 }
 
 function drawRouteLines(){
+  if(!map) return;
   if(routeLine) map.removeLayer(routeLine);
   if(routeLineExpr) map.removeLayer(routeLineExpr);
 
