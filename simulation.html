@@ -208,6 +208,18 @@ let state = {
   trips: {}   // tripIndex -> {shift, express}
 };
 
+// Global error handler to catch uncaught exceptions
+window.addEventListener("error", (e)=>{
+  console.error("Global JS error:", e.message, e.filename, e.lineno);
+  const status = $("optStatus");
+  if(status) status.textContent = "Fehler: " + e.message;
+});
+window.addEventListener("unhandledrejection", (e)=>{
+  console.error("Unhandled promise rejection:", e.reason);
+  const status = $("optStatus");
+  if(status) status.textContent = "Fehler: " + (e.reason && e.reason.message ? e.reason.message : String(e.reason));
+});
+
 /* All bus 500 stops in route order (from FPL_500-2026-09-23.txt). */
 const STOPS = [
   { name: "Ringstraße", lat: 53.378266, lon: 10.764826, keep: true,  order: 1 },
@@ -401,46 +413,62 @@ function simulate(){
           missedTrains, turnIssues, hamDetails, schDetails};
 }
 
-/* ------------------------------------------------------------------ Optimizer (coordinate descent OR) */
-function runOptimizer(){
-  $("optStatus").textContent = "Optimiere…";
-  $("optStatus").className = "badge warn";
+/* ------------------------------------------------------------------ Optimizer (coordinate descent OR, async to keep UI responsive) */
+async function runOptimizer(){
+  const btn = $("btnOpt");
+  const status = $("optStatus");
+  console.log("runOptimizer: start");   // debug
+  if(btn){ btn.disabled = true; btn.textContent = "Läuft…"; }
+  if(status){ status.textContent = "Optimiere…"; status.className = "badge warn"; }
 
-  let improved = true;
-  let iterations = 0;
-  const maxIter = 40;
+  try {
+    let improved = true;
+    let iterations = 0;
+    const maxIter = 10;
 
-  while(improved && iterations < maxIter){
-    improved = false;
-    iterations++;
-    for (const t of sim.trips){
-      const idx = t.index;
-      const cur = {...state.trips[idx]};
-      let best = {...cur};
-      let bestScore = scoreState();
+    while(improved && iterations < maxIter){
+      improved = false;
+      iterations++;
+      
+      for (const t of sim.trips){
+        const idx = t.index;
+        const cur = {...state.trips[idx]};
+        let best = {...cur};
+        let bestScore = scoreState();
 
-      // Try shifts
-      for (let s = -12; s <= 12; s += 2){
-        if (s === cur.shift) continue;
-        state.trips[idx].shift = s;
-        const sc = scoreState();
-        if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
+        // Try shifts (coarser step for speed)
+        for (let s = -12; s <= 12; s += 3){
+          if (s === cur.shift) continue;
+          state.trips[idx].shift = s;
+          const sc = scoreState();
+          if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
+        }
+        // Try express on/off
+        for (const ex of [true, false]){
+          if (ex === cur.express) continue;
+          state.trips[idx].express = ex;
+          const sc = scoreState();
+          if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
+        }
+        state.trips[idx] = best;
+        if (best.shift !== cur.shift || best.express !== cur.express) improved = true;
+        
+        // Yield to UI after each trip so the page stays responsive
+        await new Promise(r => setTimeout(r, 0));
       }
-      // Try express
-      for (const ex of [true, false]){
-        if (ex === cur.express) continue;
-        state.trips[idx].express = ex;
-        const sc = scoreState();
-        if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
-      }
-      state.trips[idx] = best;
-      if (best.shift !== cur.shift || best.express !== cur.express) improved = true;
+
+      // Yield to UI between iterations
+      await new Promise(r => setTimeout(r, 0));
     }
-  }
 
-  renderAll();
-  $("optStatus").textContent = "Optimiert (" + iterations + " Iter.)";
-  $("optStatus").className = "badge ok";
+    renderAll();
+    if(status){ status.textContent = "Optimiert (" + iterations + " Iter.)"; status.className = "badge ok"; }
+    if(btn){ btn.disabled = false; btn.textContent = "Fahrplan optimieren (OR)"; }
+  } catch(e){
+    console.error("Optimizer error:", e);
+    if(status){ status.textContent = "Fehler: " + e.message; status.className = "badge bad"; }
+    if(btn){ btn.disabled = false; btn.textContent = "Fahrplan optimieren (OR)"; }
+  }
 }
 
 function scoreState(){
