@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bus 500 — Fahrplansimulation (Operations Research)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root{--ink:#16232b;--muted:#5d6b72;--line:#dfe6ea;--bg:#f5f7f8;
+        --pos:#1a7f4b;--neg:#b3261e;--warn:#a76a00;--card:#fff;--accent:#12303d;
+        --ham:#2f6f9f;--sch:#8a6d1b;--bus:#12303d;--expr:#7a3e9d;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 64px;background:var(--bg);color:var(--ink);
+       font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--accent);color:#fff;padding:24px 20px 22px}
+  header .wrap{margin:0 auto;max-width:1200px}
+  header h1{margin:0 0 6px;font-size:20px}
+  header p{margin:0;color:#b9cdd6;max-width:1000px;font-size:13px}
+  main{padding:12px;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+        padding:12px 14px 10px;margin:0}
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .card-head h2{margin:0;font-size:16px}
+  .card-head p{margin:0;color:var(--muted);font-size:12px}
+  .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;
+            border-radius:8px;padding:10px 12px;margin-bottom:8px}
+  .ctl{min-width:170px;flex:1}
+  .ctl>label{display:block;font-weight:600;font-size:11px;margin-bottom:4px;color:var(--muted)}
+  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  input[type=range]{width:100%;cursor:pointer}
+  .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .minlabel{font-size:10.5px;color:var(--muted);margin-left:3px}
+  .kpis{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .kpi{flex:1 1 170px;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .kpi .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-size:20px;font-weight:700;margin-top:1px}
+  .kpi .s{color:var(--muted);font-size:11px;margin-top:1px}
+  .kpi .v.good{color:var(--pos)}.kpi .v.warn{color:var(--warn)}.kpi .v.bad{color:var(--neg)}
+  table{border-collapse:collapse;width:100%;font-size:11.5px;margin-bottom:6px}
+  th,td{text-align:right;padding:3px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
+  td.cur{color:var(--ink)}td.prop{color:var(--bus);font-weight:600}
+  .note{color:var(--muted);font-size:12px;margin:6px 0;max-width:900px}
+  .warnbox{border-left:3px solid var(--warn);background:#fff8ec;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  .goodbox{border-left:3px solid var(--pos);background:#f0faf0;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  .badbox{border-left:3px solid var(--neg);background:#fdf0ee;padding:8px 11px;
+           margin:8px 0;font-size:12px;border-radius:0 7px 7px 0}
+  canvas{width:100%;height:200px;display:block;margin:6px 0;background:#fff;border:1px solid var(--line);
+         border-radius:8px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0;font-size:11.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:3px}
+  .toggles{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .toggle{display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer}
+  .toggle input{accent-color:var(--accent)}
+  button{font:inherit;padding:6px 11px;border:1px solid var(--line);border-radius:7px;
+         background:#fff;cursor:pointer;color:var(--ink);font-size:12px}
+  button:hover{background:#eef3f5}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.primary:hover{opacity:0.9}
+  button.small{padding:4px 9px;font-size:11px}
+  .map-panel{display:flex;flex-direction:column;gap:6px}
+  #map{height:340px;width:100%;border:1px solid var(--line);border-radius:8px;margin:6px 0;background:#eef3f5}
+  .stop-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;font-size:11px}
+  .stop-legend span{display:flex;align-items:center;gap:4px}
+  .stop-legend i{display:inline-block;width:8px;height:8px;border-radius:50%}
+  .stop-kept{background:var(--pos)}.stop-skip{background:#a05195}
+  .trip-row{border-bottom:1px solid var(--line);padding:5px 0;display:flex;align-items:center;gap:8px}
+  .trip-row:last-child{border-bottom:none}
+  .trip-ctrl{flex:1;display:flex;gap:6px;align-items:center;min-width:0}
+  .trip-time{font-variant-numeric:tabular-nums;min-width:48px;font-size:11.5px}
+  .trip-hint{font-size:10px;color:#6c757d}
+  .constraint-ok{color:var(--pos)}.constraint-bad{color:var(--neg)}
+  .map-actions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+  .opt-bar{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+  .badge{display:inline-block;padding:1px 6px;border-radius:99px;font-size:10.5px;font-weight:600}
+  .badge.ok{background:#e7f3e7;color:var(--pos)}.badge.warn{background:#fff4e0;color:var(--warn)}.badge.bad{background:#fdeceb;color:var(--neg)}
+  .trip-gray{opacity:0.55}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Bus 500 — Fahrplansimulation (Operations Research)</h1>
+  <p>Boizenburg Bahnhof · Jede der 25 Busfahrten lässt sich einzeln verschieben und als Express fahren.
+     Der Bus braucht Zeit für die Ringroute und Pausen am Bahnhof. Alle Zugankünfte (Mo&ndash;So, ganzer Tag)
+     aus Hamburg und Schwerin werden berücksichtigt. Ziel: ≥90 % beider Richtungen erwischen, dabei
+     aber noch vor den abfahrenden Zügen am Bahnhof sein.</p>
+</div></header>
+
+<main>
+  <div class="card">
+    <div class="card-head"><h2>Globale Einstellungen</h2></div>
+    <div class="controls">
+      <div class="ctl">
+        <label>Ziel-Puffer (Verspätung, die noch aufgefangen wird)</label>
+        <div class="row">
+          <input type="range" id="targetDelay" min="2" max="25" step="1" value="8">
+          <span class="val" id="targetDelayVal">8</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Ein Zug gilt als erreicht, wenn seine Verspätung ≤ Puffer liegt.</div>
+      </div>
+      <div class="ctl">
+        <label>Mindestpuffer abfahrende Züge</label>
+        <div class="row">
+          <input type="range" id="minDepBuffer" min="3" max="10" step="1" value="5">
+          <span class="val" id="minDepBufferVal">5</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Bus muss ≥ so viele Min. vor Zugabfahrt am Bahnhof sein.</div>
+      </div>
+      <div class="ctl">
+        <label>Min. Turnaround am Bahnhof</label>
+        <div class="row">
+          <input type="range" id="minTurnaround" min="1" max="8" step="1" value="3">
+          <span class="val" id="minTurnaroundVal">3</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Pause zwischen Rückkunft und nächster Abfahrt.</div>
+      </div>
+      <div class="ctl">
+        <label>Min. Fahrzeit Ringroute</label>
+        <div class="row">
+          <input type="range" id="minRouteTime" min="10" max="25" step="1" value="15">
+          <span class="val" id="minRouteTimeVal">15</span><span class="minlabel">Minuten</span>
+        </div>
+        <div class="hint">Der Bus braucht mind. so lange für die Runde, auch als Express.</div>
+      </div>
+    </div>
+    <div class="toggles">
+      <label class="toggle"><input type="checkbox" id="useP90" checked> p90-Verspätung als Puffer-Basis</label>
+    </div>
+    <div class="hint" id="modeHint"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card map-panel">
+    <div class="card-head"><h2>Streckenverlauf &amp; Express-Haltestellen</h2></div>
+    <div class="map-actions">
+      <button type="button" class="primary small" id="btnOpt">Fahrplan optimieren (OR)</button>
+      <button type="button" class="small" id="btnReset">Zurücksetzen</button>
+    </div>
+    <div id="map"></div>
+    <div class="stop-legend">
+      <span><i class="stop-kept"></i>Hält</span>
+      <span><i class="stop-skip"></i>Express: ausgelassen</span>
+      <span><i style="background:var(--ham);display:inline-block;width:8px;height:8px;border-radius:50%"></i>Zug aus Hamburg</span>
+      <span><i style="background:var(--sch);display:inline-block;width:8px;height:8px;border-radius:50%"></i>Zug aus Schwerin</span>
+      <span><i style="background:var(--bus);width:8px;height:2px"></i>Bus-Route</span>
+    </div>
+    <div class="note" id="routeNote"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Alle 25 Busfahrten — einzeln steuerbar</h2>
+      <p>Jede Fahrt: Regler für Abfahrt am Bahnhof + Express-Schalter. Grau = Fahrt liegt außerhalb
+         des Hauptverkehrs, wird aber dennoch mitgerechnet.</p>
+    </div>
+    <div id="tripsContainer"></div>
+    <div class="opt-bar">
+      <span class="badge" id="optStatus">Bereit</span>
+      <span class="hint">Turnaround: benachbarte Fahrten desselben Busses brauchen genug Pause.</span>
+    </div>
+  </div>
+
+  <div class="card" id="constraintCard">
+    <div class="card-head"><h2>Anschluss an abfahrende Züge (Bus → Zug)</h2></div>
+    <div id="constraints"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Zug-Abdeckung (Zug → Bus)</h2>
+      <p>Ein Zug gilt als erreicht, wenn mindestens eine Busfahrt ihn noch erwischt (geplante Ankunft
+         + Verspätung + Fußweg 1 min + Einstieg 2 min ≤ Busabfahrt).</p>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Zug an</th><th>Von</th><th>Fahrten</th><th>p90 Versp.</th>
+        <th>Beste Busfahrt</th><th>Erreicht</th><th>Puffer</th>
+      </tr></thead>
+      <tbody id="coverageTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Kompromiss-Kurven (Beispielreise)</h2>
+      <p>Abdeckung vs. Abfahrt-Verschiebung für eine beispielhafte Abendfahrt (17:15), mit und ohne Express.</p>
+    </div>
+    <canvas id="tradeoffCanvas"></canvas>
+    <div class="hint">Der Punkt markiert die aktuelle Reglerstellung für diese Fahrt.</div>
+  </div>
+
+  <div class="warnbox" id="verdict"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>const SIM_DATA = {"generated": "2026-11-02", "ham_evening": [{"planned": 971, "n": 117, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 5, 5, 5, 10, 10, 10, 11, 11, 13, 14, 17, 22, 22, 25, 25, 25, 26, 34, 34, 36, 47], "p90": 14, "median": 0}, {"planned": 976, "n": 197, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 5, 6, 7, 7, 7, 8, 9, 9, 9, 10, 10, 11, 13, 19, 19, 20, 23, 24, 25, 25, 25, 26, 29, 37, 45, 49, 59, 61, 82], "p90": 10, "median": 1}, {"planned": 1027, "n": 208, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 9, 10, 10, 10, 11, 11, 13, 13, 14, 14, 14, 16, 16, 16, 17, 18, 18, 20, 22, 23, 23, 23, 24, 26, 26, 27, 29, 30, 30, 31, 31, 32, 33, 35, 35, 36, 36, 39, 39, 48, 51, 52, 62], "p90": 24, "median": 1}, {"planned": 1028, "n": 118, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 7, 8, 8, 8, 9, 9, 10, 16, 20, 31, 31, 44, 51, 54], "p90": 8, "median": 0}, {"planned": 1085, "n": 155, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 6, 6, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 15, 16, 19, 20, 24, 24, 25, 27, 30, 31, 34, 35, 71], "p90": 13, "median": 1}, {"planned": 1091, "n": 120, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 8, 8, 9, 10, 10, 10, 10, 10, 11, 11, 12, 12, 13, 13, 20, 24, 24, 28, 42, 48, 93], "p90": 11, "median": 0}, {"planned": 1096, "n": 39, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 14, 14, 14, 15, 15, 20, 21, 24, 25, 25, 26, 31, 39, 48, 56], "p90": 31, "median": 1}, {"planned": 1147, "n": 203, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 9, 10, 10, 10, 10, 11, 11, 11, 12, 12, 13, 14, 14, 14, 14, 15, 17, 18, 18, 19, 19, 23, 25, 27, 28, 28, 28, 28, 29, 29, 30, 30, 31, 31, 33, 33, 34, 35, 36, 36, 37, 46, 47, 58, 73, 79, 97, 113], "p90": 28, "median": 1}, {"planned": 1148, "n": 116, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 8, 8, 8, 8, 9, 10, 13, 15, 15, 16, 16, 16, 21, 38, 38, 39, 42, 81], "p90": 13, "median": 0}, {"planned": 1211, "n": 113, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 9, 9, 17, 17, 20, 21, 24, 30, 49], "p90": 7, "median": 0}, {"planned": 1216, "n": 184, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 6, 6, 6, 6, 7, 7, 8, 9, 9, 9, 11, 13, 13, 13, 14, 14, 15, 18, 19, 21, 25, 26, 29, 30, 30, 31, 39, 46, 94], "p90": 11, "median": 1}, {"planned": 1267, "n": 192, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 9, 10, 11, 11, 12, 15, 17, 17, 19, 20, 20, 22, 22, 22, 23, 24, 24, 24, 25, 26, 27, 28, 30, 31, 31, 31, 33, 34, 35, 36, 36, 38, 38, 42, 48, 65, 72], "p90": 24, "median": 1}], "sch_evening": [{"planned": 969, "n": 10, "delays": [0, 0, 0, 0, 1, 1, 1, 1, 4, 23], "p90": 23, "median": 1}, {"planned": 978, "n": 1, "delays": [], "p90": null, "median": null}, {"planned": 1010, "n": 119, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 8, 8, 8, 9, 9, 10, 10, 25, 25, 25, 44, 50], "p90": 8, "median": 0}, {"planned": 1011, "n": 21, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 3, 3], "p90": 2, "median": 0}, {"planned": 1089, "n": 8, "delays": [0, 0, 0, 0, 1, 1, 1, 5], "p90": 5, "median": 1}, {"planned": 1090, "n": 168, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 7, 9, 9, 11, 12, 12, 12, 13, 16, 20, 20, 28, 39, 65], "p90": 5, "median": 1}, {"planned": 1105, "n": 21, "delays": [0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 4, 4, 5, 7, 7, 9, 10, 15, 18, 23, 24], "p90": 18, "median": 4}, {"planned": 1130, "n": 119, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 9, 9, 12, 14, 15, 16, 17, 19, 20, 22, 24, 24, 25, 31, 33, 48, 119], "p90": 16, "median": 2}, {"planned": 1131, "n": 22, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 6], "p90": 2, "median": 0}, {"planned": 1190, "n": 12, "delays": [0, 4, 12, 16, 17, 20, 20, 20, 27, 29, 31, 51], "p90": 31, "median": 20}, {"planned": 1192, "n": 152, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 7, 7, 8, 9, 9, 9, 9, 12, 15, 15, 16, 17, 20, 22, 26, 40, 43, 71], "p90": 8, "median": 0}, {"planned": 1210, "n": 25, "delays": [0, 0, 0, 0, 0, 0, 2, 3, 3, 4, 4, 6, 7, 8, 8, 9, 9, 13, 14, 16, 19, 24, 37, 43], "p90": 24, "median": 7}, {"planned": 1250, "n": 2, "delays": [0, 5], "p90": 5, "median": 5}, {"planned": 1251, "n": 14, "delays": [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 5, 6], "p90": 5, "median": 0}], "departing_trains": [20, 78, 79, 276, 309, 338, 348, 362, 411, 412, 429, 461, 468, 498, 532, 588, 651, 652, 708, 771, 772, 789, 828, 891, 892, 909, 941, 948, 976, 1011, 1012, 1029, 1068, 1085, 1091, 1131, 1132, 1149, 1188, 1192, 1217, 1251, 1252, 1269, 1308, 1332, 1371, 1372, 1428], "bus_departures": [277, 300, 335, 355, 375, 415, 420, 449, 480, 500, 544, 615, 672, 735, 795, 855, 884, 915, 960, 992, 1035, 1095, 1155, 1215, 1275], "bus_arrivals": [298, 329, 364, 384, 404, 450, 449, 478, 509, 531, 576, 646, 703, 770, 826, 886, 915, 946, 991, 1023, 1066, 1126, 1186, 1246, 1306], "eve_start": 960, "eve_end": 1320, "walk_time": 1, "board_time": 2, "express_save_per_stop": 2, "max_express_stops": 3, "min_buffer_for_departing_train": 5};</script>
+<script>
+let sim = SIM_DATA;
+let map = null, routeLine = null, routeLineExpr = null, markers = {};
+let state = {
+  targetDelay: 8,
+  minDepBuffer: 5,
+  minTurnaround: 3,
+  minRouteTime: 15,
+  useP90: true,
+  trips: {}   // tripIndex -> {shift, express}
+};
+
+/* All bus 500 stops in route order (from FPL_500-2026-09-23.txt). */
+const STOPS = [
+  { name: "Ringstraße", lat: 53.378266, lon: 10.764826, keep: true,  order: 1 },
+  { name: "Gölzer Straße", lat: 53.3795,  lon: 10.7680,  keep: false, order: 2 },
+  { name: "Industriegebiet", lat: 53.381016, lon: 10.771065, keep: false, order: 3 },
+  { name: "Boizenburg Lindhorst", lat: 53.384955, lon: 10.773574, keep: false, order: 4 },
+  { name: "Boizenburg Bahnhof", lat: 53.377607, lon: 10.753858, keep: true, order: 5 },
+  { name: "Weg der Jugend", lat: 53.376622, lon: 10.741151, keep: false, order: 6 },
+  { name: "Boizenburg Markt", lat: 53.374904, lon: 10.723617, keep: true, order: 7 },
+  { name: "Schwartower Str.", lat: 53.379295, lon: 10.725350, keep: true, order: 8 },
+  { name: "Stiftstraße", lat: 53.375577, lon: 10.724527, keep: false, order: 9 },
+  { name: "Schulzentrum", lat: 53.382973, lon: 10.730846, keep: true, order: 10 },
+  { name: "Metlitzer Weg", lat: 53.385825, lon: 10.731288, keep: false, order: 11 },
+  { name: "Dr. Alexander Str.", lat: 53.386953, lon: 10.727786, keep: true, order: 12 },
+  { name: "R. Markmann Str.", lat: 53.383308, lon: 10.729840, keep: false, order: 13 },
+  { name: "Breitscheidstr.", lat: 53.382194, lon: 10.723278, keep: false, order: 14 },
+  { name: "H.-J.-P. Lemm Str.", lat: 53.382857, lon: 10.719083, keep: false, order: 15 },
+  { name: "Schiller Str.", lat: 53.382528, lon: 10.716176, keep: false, order: 16 },
+  { name: "Buchenweg", lat: 53.382555, lon: 10.710479, keep: false, order: 17 },
+  { name: "Schwartower Str. (Rück)", lat: 53.379295, lon: 10.725350, keep: true, order: 18 },
+  { name: "Stiftstraße (Rück)", lat: 53.375577, lon: 10.724527, keep: false, order: 19 },
+  { name: "Boizenburg Markt (Rück)", lat: 53.374904, lon: 10.723617, keep: true, order: 20 },
+  { name: "Weg der Jugend (Rück)", lat: 53.376622, lon: 10.741151, keep: false, order: 21 },
+  { name: "Boizenburg Bahnhof (Rück)", lat: 53.377607, lon: 10.753858, keep: true, order: 22 },
+  { name: "Boizenburg Lindhorst (Rück)", lat: 53.384955, lon: 10.773574, keep: false, order: 23 },
+  { name: "Industriegebiet (Rück)", lat: 53.381016, lon: 10.771065, keep: false, order: 24 },
+  { name: "Gölzer Straße (Rück)", lat: 53.3795,  lon: 10.7680,  keep: false, order: 25 },
+  { name: "Ringstraße (Rück)", lat: 53.378266, lon: 10.764826, keep: true, order: 26 },
+];
+
+const EXPRESS_CANDIDATES = STOPS.filter(s => !s.keep && !s.name.includes("(Rück)"));
+
+/* Data is embedded above as SIM_DATA - no fetch needed */
+document.addEventListener("DOMContentLoaded", ()=>{
+  initTrips();
+  initControls();
+  initMap();
+  renderAll();
+});
+
+function initTrips(){
+  const {bus_departures, bus_arrivals} = sim;
+  sim.trips = bus_departures.map((dep, i)=>{
+    const ret = bus_arrivals[i];
+    const routeTime = ret - dep;
+    return {
+      index: i,
+      depOrig: dep,
+      retOrig: ret,
+      routeTime: routeTime,
+    };
+  });
+  sim.trips.forEach(t=>{ state.trips[t.index] = {shift:0, express:false}; });
+}
+
+/* ------------------------------------------------------------------ controls */
+function initControls(){
+  for (const [id, key] of [["targetDelay","targetDelay"],["minDepBuffer","minDepBuffer"],
+                           ["minTurnaround","minTurnaround"],["minRouteTime","minRouteTime"]]) {
+    const el = $(id);
+    if(!el) continue;
+    el.addEventListener("input", e=>{ state[key]=Number(e.target.value); $(id+"Val").textContent=state[key]; renderAll(); });
+  }
+  const useP90 = $("useP90");
+  if(useP90) useP90.addEventListener("change", e=>{state.useP90=e.target.checked; renderAll();});
+  const btnOpt = $("btnOpt");
+  if(btnOpt) btnOpt.addEventListener("click", runOptimizer);
+  const btnReset = $("btnReset");
+  if(btnReset) btnReset.addEventListener("click", resetTrips);
+  const modeHint = $("modeHint");
+  if(modeHint) modeHint.textContent = state.useP90
+    ? "Ziel: ≥90% der Züge erreichen den Bus (p90-Verspätung als Puffer-Grenze)."
+    : "Puffer = tatsächliche gemessene Verspätung pro Zug.";
+}
+
+function setTripShift(index, val){
+  state.trips[index].shift = Number(val);
+  const el = $(`shift-${index}`);
+  if(el){ el.value = val; $(`shiftVal-${index}`).textContent = val; }
+  renderAll();
+}
+
+function setTripExpress(index, val){
+  state.trips[index].express = val;
+  const el = $(`expr-${index}`);
+  if(el) el.checked = val;
+  renderAll();
+}
+
+function resetTrips(){
+  sim.trips.forEach(t=>{
+    state.trips[t.index] = {shift:0, express:false};
+    const el = $(`shift-${t.index}`);
+    if(el){ el.value=0; $(`shiftVal-${t.index}`).textContent="0"; }
+    const ex = $(`expr-${t.index}`);
+    if(ex) ex.checked=false;
+  });
+  renderAll();
+}
+
+/* ------------------------------------------------------------------ simulation core (all trips, all days) */
+function toHHMM(m){const h=Math.floor(m/60),mm=m%60;return (h<10?'0':'')+h+':'+(mm<10?'0':'')+mm;}
+function pct(x){return (Math.round(x*10)/10).toFixed(1)+"%";}
+function escHtml(s){return String(s).replace(/[&<>]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+
+/* Compute adjusted timetable for all 25 trips */
+function computeTimetable(){
+  return sim.trips.map(t=>{
+    const st = state.trips[t.index] || {shift:0, express:false};
+    const shift = st.shift;
+    // Express savings: each skipped stop ~2 min, capped
+    const savings = st.express ? Math.min(6 * sim.express_save_per_stop, 10) : 0;
+    const dep = t.depOrig + shift;
+    const routeTime = Math.max(state.minRouteTime, t.routeTime - savings);
+    const ret = dep + routeTime;
+    return {...t, dep, ret, shift, express: st.express, savings, routeTime};
+  });
+}
+
+function expressCount(){
+  return sim.trips.filter(t=> state.trips[t.index]?.express).length;
+}
+
+/* Turnaround: consecutive trips (same physical bus) need minTurnaround between ret_i and dep_j */
+function checkTurnaround(trips){
+  const issues = [];
+  for (let i=0; i<trips.length-1; i++){
+    const ti = trips[i], tj = trips[i+1];
+    const gap = tj.dep - ti.ret;
+    if (gap < state.minTurnaround){
+      issues.push({trip1: ti.index, trip2: tj.index, gap, needed: state.minTurnaround});
+    }
+  }
+  return issues;
+}
+
+/* Does this arrival group get caught by ANY trip? */
+function groupCovered(g, trips, walk, board){
+  const P = g.planned;
+  const need = P + walk + board;
+  for (const t of trips){
+    if (t.dep >= need){
+      const buffer = t.dep - P - walk - board;
+      for (const d of g.delays){
+        if (d===null) continue;
+        const ok = state.useP90 ? (d <= buffer && d <= (g.p90||buffer)) : (d <= buffer);
+        if (ok) return true;
+      }
+    }
+  }
+  return false;
+}
+
+function simulate(){
+  const trips = computeTimetable();
+  const {ham_evening, sch_evening, departing_trains} = sim;
+  const walk = sim.walk_time, board = sim.board_time;
+  const minBuf = state.minDepBuffer;
+
+  /* Overall coverage: each arrival group covered if ANY trip catches it */
+  let hamTotal=0, hamReached=0, schTotal=0, schReached=0;
+  const hamDetails = [], schDetails = [];
+
+  for (const g of ham_evening){
+    hamTotal += g.n;
+    const covered = groupCovered(g, trips, walk, board);
+    if (covered) hamReached += g.n;
+    hamDetails.push({g, covered});
+  }
+  for (const g of sch_evening){
+    schTotal += g.n;
+    const covered = groupCovered(g, trips, walk, board);
+    if (covered) schReached += g.n;
+    schDetails.push({g, covered});
+  }
+
+  /* Departing train constraint: SOME bus arrival must be >= minBuf before train departs */
+  const eveDeparting = departing_trains.filter(dt=>dt>=5*60 && dt<24*60);  // all day from 5am
+  const missedTrains = [];
+  for (const dt of eveDeparting){
+    const latestBusArr = dt - minBuf;
+    const ok = trips.some(t => t.ret <= latestBusArr && t.ret >= dt - 120);  // bus within 2h before train
+    if(!ok) missedTrains.push(dt);
+  }
+
+  const turnIssues = checkTurnaround(trips);
+
+  return {trips, hamRate: hamTotal?hamReached/hamTotal*100:0,
+          schRate: schTotal?schReached/schTotal*100:0,
+          hamTotal, hamReached, schTotal, schReached,
+          missedTrains, turnIssues, hamDetails, schDetails};
+}
+
+/* ------------------------------------------------------------------ Optimizer (coordinate descent OR) */
+function runOptimizer(){
+  $("optStatus").textContent = "Optimiere…";
+  $("optStatus").className = "badge warn";
+
+  let improved = true;
+  let iterations = 0;
+  const maxIter = 40;
+
+  while(improved && iterations < maxIter){
+    improved = false;
+    iterations++;
+    for (const t of sim.trips){
+      const idx = t.index;
+      const cur = {...state.trips[idx]};
+      let best = {...cur};
+      let bestScore = scoreState();
+
+      // Try shifts
+      for (let s = -12; s <= 12; s += 2){
+        if (s === cur.shift) continue;
+        state.trips[idx].shift = s;
+        const sc = scoreState();
+        if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
+      }
+      // Try express
+      for (const ex of [true, false]){
+        if (ex === cur.express) continue;
+        state.trips[idx].express = ex;
+        const sc = scoreState();
+        if (sc > bestScore){ bestScore = sc; best = {...state.trips[idx]}; }
+      }
+      state.trips[idx] = best;
+      if (best.shift !== cur.shift || best.express !== cur.express) improved = true;
+    }
+  }
+
+  renderAll();
+  $("optStatus").textContent = "Optimiert (" + iterations + " Iter.)";
+  $("optStatus").className = "badge ok";
+}
+
+function scoreState(){
+  const r = simulate();
+  let score = r.hamRate + r.schRate;
+  score -= r.missedTrains.length * 15;
+  score -= r.turnIssues.length * 8;
+  if (r.hamRate >= 90 && r.schRate >= 90) score += 60;
+  return score;
+}
+
+/* ------------------------------------------------------------------ render */
+function renderAll(){
+  if(!sim) return;
+  const r = simulate();
+
+  updateMapMarkers();
+  drawRouteLines();
+
+  /* KPIs */
+  $("kpis").innerHTML = `
+    <div class="kpi"><div class="k">Hamburg-Abdeckung</div>
+      <div class="v ${r.hamRate>=90?'good':r.hamRate>=70?'':'bad'}">${pct(r.hamRate)}</div>
+      <div class="s">${r.hamReached}/${r.hamTotal} Fahrten</div></div>
+    <div class="kpi"><div class="k">Schwerin-Abdeckung</div>
+      <div class="v ${r.schRate>=90?'good':r.schRate>=70?'':'bad'}">${pct(r.schRate)}</div>
+      <div class="s">${r.schReached}/${r.schTotal} Fahrten</div></div>
+    <div class="kpi"><div class="k">Verpasste Zuganschlüsse</div>
+      <div class="v ${r.missedTrains.length===0?'good':r.missedTrains.length<=3?'warn':'bad'}">${r.missedTrains.length}</div>
+      <div class="s">${r.missedTrains.map(toHHMM).join(", ") || "keine"}</div></div>
+    <div class="kpi"><div class="k">Turnaround-Probleme</div>
+      <div class="v ${r.turnIssues.length===0?'good':'bad'}">${r.turnIssues.length}</div>
+      <div class="s">zu kurze Pausen</div></div>
+  `;
+
+  /* Trips list */
+  const tc=$("tripsContainer"); tc.innerHTML="";
+  for (const t of sim.trips){
+    const st = state.trips[t.index];
+    const savings = st.express ? Math.min(6 * sim.express_save_per_stop, 10) : 0;
+    const routeTime = Math.max(state.minRouteTime, t.routeTime - savings);
+    const adjDep = t.depOrig + st.shift;
+    const adjRet = adjDep + routeTime;
+
+    tc.innerHTML += `
+      <div class="trip-row">
+        <div class="trip-time">${toHHMM(t.depOrig)} → <span class="prop">${toHHMM(adjDep)}</span></div>
+        <div class="trip-ctrl">
+          <div class="row">
+            <label style="font-size:11px;margin:0">Δ Abfahrt Bahnhof</label>
+            <input type="range" id="shift-${t.index}" min="-15" max="15" step="1" value="${st.shift}"
+              oninput="setTripShift(${t.index}, this.value)">
+            <span class="val" id="shiftVal-${t.index}">${st.shift}</span><span class="minlabel">min</span>
+          </div>
+          <div class="row" style="margin:0">
+            <label class="toggle" style="margin:0;font-size:11px">
+              <input type="checkbox" id="expr-${t.index}" ${st.express?'checked':''}
+                onchange="setTripExpress(${t.index}, this.checked)"> Express (−${Math.min(savings,10)} min)
+            </label>
+          </div>
+        </div>
+        <div style="font-size:10px;color:#6c757d;min-width:110px">
+          Rückkunft: ${toHHMM(t.retOrig)} → ${toHHMM(adjRet)} · Route ${routeTime} min
+        </div>
+      </div>
+    `;
+  }
+
+  /* Coverage table: distinct arrival times with best trip */
+  const ct=$("coverageTable"); ct.innerHTML="";
+  const allGroups = [...sim.ham_evening,...sim.sch_evening].sort((a,b)=>a.planned-b.planned);
+  for (const g of allGroups){
+    const h=Math.floor(g.planned/60), mm=g.planned%60;
+    const src = sim.ham_evening.includes(g)?"Hamburg":"Schwerin";
+    // Find best (earliest sufficient) trip
+    let bestTrip=null, bestBuffer=-1;
+    for (const t of r.trips){
+      const need = g.planned + sim.walk_time + sim.board_time;
+      if (t.dep >= need){
+        const buf = t.dep - g.planned - sim.walk_time - sim.board_time;
+        if (buf > bestBuffer){ bestBuffer = buf; bestTrip = t; }
+      }
+    }
+    const bufTxt = bestBuffer>=0 ? bestBuffer+" min" : "–";
+    const reached = bestTrip ? "ja" : "nein";
+    ct.innerHTML+=`<tr${g.planned>=16*60&&g.planned<22*60?' class="cur"':''}>
+      <td>${toHHMM(g.planned)}</td><td>${src}</td><td class="num">${g.n}</td>
+      <td class="num">${g.p90===null?"–":g.p90}</td>
+      <td>${bestTrip?toHHMM(bestTrip.dep):"–"}</td>
+      <td class="num">${bestTrip?"✓":"✗"}</td><td class="num">${bufTxt}</td>
+    </tr>`;
+  }
+
+  /* Constraints */
+  const cc=$("constraints");
+  if(r.missedTrains.length===0 && r.turnIssues.length===0){
+    cc.innerHTML=`<div class="goodbox">✓ Alle Einschränkungen erfüllt: keine verpassten Zuganschlüsse, keine Turnaround-Probleme.</div>`;
+  } else {
+    let msg="";
+    if(r.missedTrains.length>0) msg+=`✗ ${r.missedTrains.length} abfahrende Zug${r.missedTrains.length!==1?'en':''} nicht erreichbar: ${r.missedTrains.map(toHHMM).join(", ")}. `;
+    if(r.turnIssues.length>0) msg+=`✗ ${r.turnIssues.length} Turnaround-Probleme.`;
+    cc.innerHTML=`<div class="badbox">${msg}</div>`;
+  }
+
+  /* Verdict */
+  const v=$("verdict");
+  const hamOk = r.hamRate>=90;
+  const schOk = r.schRate>=90;
+  const connOk = r.missedTrains.length===0;
+  const turnOk = r.turnIssues.length===0;
+  if(hamOk&&schOk&&connOk&&turnOk){
+    v.innerHTML=`<div class="goodbox"><b>Empfehlung:</b> Alle Ziele erreicht:
+       ${pct(r.hamRate)} Hamburg, ${pct(r.schRate)} Schwerin, alle Zuganschlüsse, alle Turnarounds.</div>`;
+  } else {
+    let msg="<b>Kompromiss nötig:</b> ";
+    if(!hamOk) msg+=`Hamburg ${pct(r.hamRate)} (Ziel 90%). `;
+    if(!schOk) msg+=`Schwerin ${pct(r.schRate)} (Ziel 90%). `;
+    if(!connOk) msg+=`${r.missedTrains.length} Zuganschlüsse fehlen. `;
+    if(!turnOk) msg+=`${r.turnIssues.length} Turnaround-Probleme. `;
+    v.innerHTML=`<div class="warnbox">${msg}</div>`;
+  }
+
+  drawTradeoffChart();
+  $("routeNote").textContent=`${expressCount()} Fahrt${expressCount()!==1?'en':''} als Express.`;
+}
+
+/* ------------------------------------------------------------------ map */
+function initMap(){
+  map = L.map("map", {zoomControl:false}).setView([53.3776, 10.7539], 13);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors", maxZoom: 18
+  }).addTo(map);
+  L.control.zoom({position:"topright"}).addTo(map);
+
+  STOPS.forEach(s=>{
+    const marker = L.circleMarker([s.lat, s.lon], {
+      radius: s.keep ? 7 : 6, color: "#6c757d", fillColor: "#6c757d", fillOpacity: 0.8, weight: 2
+    }).addTo(map);
+    marker.bindPopup(`<b>${escHtml(s.name)}</b>`);
+    markers[s.name] = marker;
+  });
+}
+
+function updateMapMarkers(){
+  const skipped = new Set();
+  const nSkip = expressCount();
+  const sorted = [...EXPRESS_CANDIDATES].sort((a,b)=>a.order-b.order);
+  for(let i=0;i<nSkip && i<sorted.length;i++) skipped.add(sorted[i].name);
+
+  STOPS.forEach(s=>{
+    const isSkip = skipped.has(s.name);
+    const m = markers[s.name];
+    let color = s.keep ? (isSkip ? "#a05195" : "#1a7f4b") : (isSkip ? "#a05195" : "#6c757d");
+    m.setStyle({color, fillColor: color});
+    m.setPopupContent(`<b>${escHtml(s.name)}</b><br>${isSkip ? "Express: ausgelassen" : "Hält"}`);
+  });
+  drawRouteLines();
+}
+
+function drawRouteLines(){
+  if(routeLine) map.removeLayer(routeLine);
+  if(routeLineExpr) map.removeLayer(routeLineExpr);
+
+  const skipped = new Set();
+  const nSkip = expressCount();
+  const sorted = [...EXPRESS_CANDIDATES].sort((a,b)=>a.order-b.order);
+  for(let i=0;i<nSkip && i<sorted.length;i++) skipped.add(sorted[i].name);
+
+  const curCoords = STOPS.map(s=>[s.lat, s.lon]);
+  routeLine = L.polyline(curCoords, {color:"#12303d", weight:3, opacity:0.5, dashArray:"5, 5"}).addTo(map);
+
+  const exprCoords = STOPS.filter(s=>!skipped.has(s.name)).map(s=>[s.lat, s.lon]);
+  routeLineExpr = L.polyline(exprCoords, {color:"#7a3e9d", weight:4, opacity:0.9}).addTo(map);
+
+  map.fitBounds(routeLineExpr.getBounds().pad(0.15));
+}
+
+/* ------------------------------------------------------------------ tradeoff chart */
+function drawTradeoffChart(){
+  const c=$("tradeoffCanvas"), ctx=c.getContext("2d");
+  const rect=c.getBoundingClientRect(); c.width=rect.width*devicePixelRatio; c.height=rect.height*devicePixelRatio;
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+  const w=c.width/devicePixelRatio, h=c.height/devicePixelRatio;
+  ctx.clearRect(0,0,w,h);
+
+  // Show coverage vs shift for the 17:15 trip (index of evening trip)
+  const tripIdx = sim.trips.findIndex(t=>t.depOrig===17*60+15);
+  const trip = sim.trips[tripIdx];
+  if(!trip) return;
+
+  const shifts=[-10,-7,-4,-1,0,1,4,7,10];
+  const hamRates=[], schRates=[];
+  const walk=sim.walk_time, board=sim.board_time;
+  shifts.forEach(s=>{
+    const dep = trip.depOrig + s;
+    let hamTot=0, hamRec=0, schTot=0, schRec=0;
+    for(const g of sim.ham_evening){
+      hamTot+=g.n;
+      const need=g.planned+walk+board;
+      if(dep>=need){
+        const buf=dep-g.planned-walk-board;
+        for(const d of g.delays){if(d===null)continue; if(d<=buf && d<=(g.p90||buf))hamRec++;}
+      }
+    }
+    for(const g of sim.sch_evening){
+      schTot+=g.n;
+      const need=g.planned+walk+board;
+      if(dep>=need){
+        const buf=dep-g.planned-walk-board;
+        for(const d of g.delays){if(d===null)continue; if(d<=buf && d<=(g.p90||buf))schRec++;}
+      }
+    }
+    hamRates.push(hamTot?hamRec/hamTot*100:0);
+    schRates.push(schTot?schRec/schTot*100:0);
+  });
+
+  const y0=25, y1=h-35;
+  const x0=40, x1=w-40;
+  const px=(s)=>(s+10)/20*(x1-x0)+x0;
+  const py=(r)=>y1-(r/100)*(y1-y0);
+
+  ctx.lineWidth=2;
+  ctx.strokeStyle="var(--ham)";
+  ctx.beginPath();
+  shifts.forEach((s,i)=>{const x=px(s),y=py(hamRates[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  ctx.strokeStyle="var(--sch)";
+  ctx.beginPath();
+  shifts.forEach((s,i)=>{const x=px(s),y=py(schRates[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+
+  const curShift = state.trips[tripIdx]?.shift || 0;
+  const ix = shifts.indexOf(curShift);
+  if(ix>=0){
+    const cx=px(curShift);
+    ctx.fillStyle="var(--bus)";
+    ctx.beginPath();ctx.arc(cx,py(hamRates[ix]),5,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,py(schRates[ix]),5,0,Math.PI*2);ctx.fill();
+  }
+
+  ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+  ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0,y1);ctx.lineTo(x1,y1);ctx.stroke();
+  ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+  ctx.font="11px sans-serif";
+  ctx.fillText("0%",x0-12,y1+12);ctx.fillText("100%",x0-20,y0-8);
+  shifts.forEach((s,i)=>{if(i%2===0){const x=px(s);ctx.fillText(s>0?"+"+s:s,x-6,y1+22);}});
+  ctx.fillText("Abfahrt-Verschiebung (Minuten)",w/2-70,h-8);
+
+  ctx.fillStyle="var(--ham)";ctx.fillRect(x0+15,y0-22,10,10);ctx.fillText("Hamburg",x0+30,y0-12);
+  ctx.fillStyle="var(--sch)";ctx.fillRect(x0+150,y0-22,10,10);ctx.fillText("Schwerin",x0+165,y0-12);
+  ctx.fillStyle="var(--bus)";ctx.beginPath();ctx.arc(x0+290,y0-12,5,0,Math.PI*2);ctx.fill();ctx.fillText("Aktuell (17:15)",x0+300,y0-9);
+}
+
+/* ------------------------------------------------------------------ helpers */
+function $(s){return document.querySelector(s);}
+</script>
+</body>
+</html>
