@@ -542,6 +542,19 @@ function renderAll(){
     }).filter(c=>c.connected);
 
     const active = (state.selectedTrip === t.index);
+
+    // Pre-compute suggestion text to avoid nested template literals
+    let suggText = "";
+    if (incConns.length > 0) {
+      const cnt = incConns.filter(c => c.buffer >= 0).length;
+      const plural = cnt !== 1 ? "en" : "";
+      const earliest = incConns.length ? ` (früheste: ${toHHMM(incConns[0].g.planned)})` : "";
+      suggText = `Puffer für ${cnt} Zug${plural}${earliest}`;
+    } else {
+      suggText = "Keine eingehenden Züge in diesem Fenster";
+    }
+    const outgoingTxt = outgoing.length > 0 ? ` · ${outgoing.filter(g => g.connected).length} abfahrende Züge erreichbar` : "";
+
     if(tc) tc.innerHTML += `
       <div class="trip-card ${active?'active':''}">
         <div class="trip-head" onclick="selectTrip(${t.index})">
@@ -586,10 +599,7 @@ function renderAll(){
             </div>
           </div>
           <div class="opt-sugg">
-            <b>Empfehlung:</b> ${incConns.length>0
-              ? `Puffer für ${incConns.filter(c=>c.buffer>=0).length} Zug${incConns.filter(c=>c.buffer>=0).length!==1?'en':''}` + (incConns.length?` (früheste: ${toHHMM(incConns[0].g.planned)})`:"")
-              : "Keine eingehenden Züge in diesem Fenster`}
-            ${outgoing.length>0?" · "+outgoing.filter(g=>g.connected).length+" abfahrende Züge erreichbar":""}
+            <b>Empfehlung:</b> ${suggText}${outgoingTxt}
           </div>
         </div>
       </div>
