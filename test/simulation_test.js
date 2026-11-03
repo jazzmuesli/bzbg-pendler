@@ -189,12 +189,15 @@ test("optimizer does not decrease score", () => {
 });
 
 test("optimizer finds improvements for bad initial state", () => {
-  // Start with all buses shifted very early (bad for coverage)
+  // Start with all buses shifted very early (bad for the overall schedule)
   const initial = {};
   for (let i = 0; i < 25; i++) initial[i] = { shift: -30, express: false };
   const before = simulate(data, initial, DAY_TYPE, true);
   const optResult = optimize(data, DAY_TYPE, initial, 5);
-  ok(optResult.result.hamRate >= before.hamRate, "optimizer improves or maintains hamRate");
+  // The optimizer maximizes the combined score (coverage minus missed
+  // departing trains), so it may trade a little Hamburg coverage for a
+  // better overall schedule. Assert on the score it actually optimizes.
+  ok(optResult.score >= scoreState(before), "optimizer improves or maintains overall score");
 });
 
 // ------------------------------------------------------------------

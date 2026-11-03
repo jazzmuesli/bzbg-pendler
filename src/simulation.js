@@ -15,6 +15,11 @@
 
 const { loadData } = require("./data");
 
+// A train only counts as a real connection if it is within this many minutes
+// of the bus. A train arriving >60 min before the bus departs is not a
+// connection anyone would wait for.
+const CONNECT_WINDOW = 60;
+
 /**
  * Run the full simulation for a given day type and set of bus adjustments.
  *
@@ -60,7 +65,7 @@ function simulate(data, adjustments, dayType, useP90 = true) {
     hamTotal += g.n;
     const need = g.planned + walkTime + boardTime;
     for (const run of busRuns) {
-      if (run.dep >= need) {
+      if (run.dep >= need && run.dep - g.planned <= CONNECT_WINDOW) {
         const buffer = run.dep - g.planned - walkTime - boardTime;
         const ok = g.p90 !== null && g.p90 <= buffer;
         if (ok) { hamCovered += g.n; break; }
@@ -72,7 +77,7 @@ function simulate(data, adjustments, dayType, useP90 = true) {
     schTotal += g.n;
     const need = g.planned + walkTime + boardTime;
     for (const run of busRuns) {
-      if (run.dep >= need) {
+      if (run.dep >= need && run.dep - g.planned <= CONNECT_WINDOW) {
         const buffer = run.dep - g.planned - walkTime - boardTime;
         const ok = g.p90 !== null && g.p90 <= buffer;
         if (ok) { schCovered += g.n; break; }

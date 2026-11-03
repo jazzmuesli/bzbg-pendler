@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bus 500 — Anschluss-Simulation Boizenburg Bahnhof</title>
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'&gt;&lt;text y='14' font-size='14'&gt;🚌&lt;/text&gt;&lt;/svg&gt;">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root{--ink:#16232b;--muted:#5d6b72;--line:#dfe6ea;--bg:#f5f7f8;
+        --pos:#1a7f4b;--neg:#b3261e;--warn:#a76a00;--card:#fff;--accent:#12303d;
+        --ham:#2f6f9f;--sch:#8a6d1b;--bus:#12303d;--expr:#7a3e9d;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 70px;background:var(--bg);color:var(--ink);
+       font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--accent);color:#fff;padding:22px 20px 20px}
+  header .wrap{margin:0 auto;max-width:1150px}
+  header h1{margin:0 0 6px;font-size:20px}
+  header p{margin:0;color:#b9cdd6;max-width:980px;font-size:13px}
+  main{padding:14px;max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px}
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .card-head h2{margin:0;font-size:16px}
+  .card-head p{margin:0;color:var(--muted);font-size:12px}
+  .controls{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;border-radius:8px;padding:12px 14px}
+  .ctl{min-width:190px;flex:1}
+  .ctl>label{display:block;font-weight:600;font-size:11px;margin-bottom:4px;color:var(--muted)}
+  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  input[type=range]{width:100%;cursor:pointer;accent-color:var(--accent)}
+  .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .minlabel{font-size:10.5px;color:var(--muted);margin-left:3px}
+  .hint{font-size:11px;color:var(--muted)}
+  .kpis{display:flex;gap:8px;flex-wrap:wrap}
+  .kpi{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .kpi .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-size:20px;font-weight:700;margin-top:1px}
+  .kpi .s{color:var(--muted);font-size:11px;margin-top:1px}
+  .kpi .v.good{color:var(--pos)}.kpi .v.warn{color:var(--warn)}.kpi .v.bad{color:var(--neg)}
+  table{border-collapse:collapse;width:100%;font-size:11.5px}
+  th,td{text-align:right;padding:4px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
+  td.ham{color:var(--ham)}td.sch{color:var(--sch)}td.prop{color:var(--bus);font-weight:600}
+  .good{color:var(--pos);font-weight:600}.warn{color:var(--warn);font-weight:600}.bad{color:var(--neg);font-weight:600}
+  tr.expr{background:#f7f1fb}
+  .daysel{display:flex;gap:6px}
+  .daysel button{padding:5px 12px;font-size:12px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer}
+  .daysel button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .toggle{display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer}
+  button.linkish{border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer;padding:4px 10px;font-size:11px}
+  button.linkish:hover{background:#eef3f5}
+  #map{height:340px;width:100%;border:1px solid var(--line);border-radius:8px;margin:6px 0;background:#eef3f5}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0;font-size:11.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
+  .exprbox{width:15px;height:15px;cursor:pointer;accent-color:var(--expr)}
+  .note{color:var(--muted);font-size:12px;margin:6px 0}
+  .scroll{max-height:460px;overflow:auto}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Bus 500 — Anschluss-Simulation</h1>
+  <p>Linie 500 ist <b>ein Bus, ein Umlauf pro Stunde</b>, der zwischen zwei RE1-Wellen pendelt:
+     RE1 kommt an → Bus fährt in die Stadt → ~31&nbsp;Min. Ring → zurück zum nächsten RE1.
+     Viel Spielraum gibt es nicht. Die einzigen Hebel: die <b>Abfahrt verschieben</b> und einzelne
+     Umläufe auf <b>Express</b> schalten (Fußweg-Halte auslassen → Bus früher zurück → mehr Puffer).</p>
+</div></header>
+
+<main>
+  <div class="card">
+    <div class="card-head"><h2>Steuerung</h2></div>
+    <div class="controls">
+      <div class="ctl">
+        <label>Wochentyp</label>
+        <div class="daysel">
+          <button data-dt="wd" class="active" id="day-wd">Mo&ndash;Fr</button>
+          <button data-dt="sa" id="day-sa">Sa</button>
+          <button data-dt="so" id="day-so">So</button>
+        </div>
+        <div class="hint" style="margin-top:8px"><button class="linkish" id="allExpr">alle Express</button>
+          <button class="linkish" id="noExpr">keiner Express</button></div>
+        <div class="hint" style="margin-top:8px">Schulzeit/Ferien:
+          <label class="toggle" style="display:inline-flex"><input type="radio" name="school" id="modeSchule" checked> Schultag</label>
+          <label class="toggle" style="display:inline-flex"><input type="radio" name="school" id="modeFerien"> Ferien</label>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>Alle Busse <b>verschieben</b></label>
+        <div class="row">
+          <input type="range" id="shift" min="-10" max="10" step="1" value="0">
+          <span class="val" id="shiftVal">0</span><span class="minlabel">Min.</span>
+        </div>
+        <div class="hint">Negativ = früher, positiv = später. Später = mehr Ankunftspuffer, aber Bus knapper zurück.</div>
+      </div>
+      <div class="ctl">
+        <label>Mindestpuffer <b>ankommend</b> (Zug → Bus)</label>
+        <div class="row">
+          <input type="range" id="arriveBufferMin" min="0" max="12" step="1" value="3">
+          <span class="val" id="arriveBufferMinVal">3</span><span class="minlabel">Min.</span>
+        </div>
+        <div class="hint">So viel Puffer muss der Anschluss mindestens haben, um als „erreicht" zu zählen.</div>
+      </div>
+      <div class="ctl">
+        <label>Mindestreserve <b>abfahrend</b> (Bus → Zug)</label>
+        <div class="row">
+          <input type="range" id="departReserveMin" min="0" max="12" step="1" value="2">
+          <span class="val" id="departReserveMinVal">2</span><span class="minlabel">Min.</span>
+        </div>
+        <div class="hint">So früh muss der Bus vor dem abfahrenden Zug zurück sein.</div>
+      </div>
+      <div class="ctl">
+        <label>Express-<b>Zeitersparnis</b></label>
+        <div class="row">
+          <input type="range" id="expressSaving" min="0" max="25" step="1" value="22">
+          <span class="val" id="expressSavingVal">22</span><span class="minlabel">Min.</span>
+        </div>
+        <div class="hint">Wie viele Minuten kürzer ein Express-Umlauf ist. Ring normal <b id="ringNormal">31</b>&nbsp;Min. → Express <b id="ringExpress">9</b>&nbsp;Min. (mind. 10).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card">
+    <div class="card-head"><h2>Die Umläufe — RE1 an → Bus → RE1 ab</h2>
+      <p id="runNote"></p>
+    </div>
+    <div class="scroll"><table id="runs"><thead><tr>
+      <th>Express</th><th>RE1 an</th><th>Richtung (aus → nach)</th><th>Bus ab</th><th>Ank.-Puffer</th>
+      <th>p90</th><th>robust?</th><th>Bus zurück</th><th>RE1 ab</th><th>Reserve</th>
+    </tr></thead><tbody id="runsBody"></tbody></table></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Streckenverlauf</h2><p id="routeNote"></p></div>
+    <div id="map"></div>
+    <div class="legend">
+      <span><i style="background:var(--pos)"></i>Halt (bleibt)</span>
+      <span><i style="background:var(--expr)"></i>Express-auslassbar (≤15 Min. Fußweg)</span>
+      <span><i style="background:var(--accent)"></i>Bahnhof</span>
+    </div>
+    <div class="note" id="exprNote"></div>
+  </div>
+</main>
+
+<script>const UMLAUF_DATA = __UMLAUF_DATA_JSON_PLACEHOLDER__;</script>
+<script>const RING_MODEL = __RING_MODEL_JSON_PLACEHOLDER__;</script>
+<script>__COMBINED_JS_PLACEHOLDER__</script>
+</body>
+</html>
