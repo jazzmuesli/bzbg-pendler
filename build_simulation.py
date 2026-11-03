@@ -176,6 +176,7 @@ function renderAll(){
   renderKpis(res);
   renderRuns(res);
   updateMap();
+  initTooltips();  // re-attach tooltip listeners to dynamically injected KPI tooltips
   var k = res.kpis;
   $("runNote").textContent = res.runs.length + " Umläufe · " + k.expressCount +
     " davon Express · Verschiebung " + (ui.shift>=0?"+":"") + ui.shift + " Min.";
