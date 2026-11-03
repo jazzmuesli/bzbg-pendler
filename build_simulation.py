@@ -65,8 +65,56 @@ document.addEventListener("DOMContentLoaded", function(){
   ["wd","sa","so"].forEach(function(dt){ ui.express[dt] = {}; });
   initControls();
   initMap();
+  initTooltips();
   renderAll();
 });
+
+/* ====================================================================== */
+/* Tooltip positioning (position:fixed so they are never clipped by .scroll) */
+/* ====================================================================== */
+function positionTip(tip){
+  var box = tip.querySelector(".tipbox");
+  if(!box) return;
+  var rect = tip.getBoundingClientRect();
+  var boxW = box.offsetWidth || 260;
+  var boxH = box.offsetHeight || 120;
+  var x = rect.left + rect.width/2 - boxW/2;
+  if(x < 10) x = 10;
+  if(x + boxW > window.innerWidth - 10) x = window.innerWidth - 10 - boxW;
+  var y = rect.top - boxH - 14;
+  if(y < 10){ y = rect.bottom + 14; box.classList.add("below"); }
+  else { box.classList.remove("below"); }
+  box.style.left = x + "px";
+  box.style.top = y + "px";
+}
+
+function showTip(e){
+  var tip = e.currentTarget;
+  var box = tip.querySelector(".tipbox");
+  if(!box) return;
+  positionTip(tip);
+  box.classList.add("show");
+}
+function hideTip(e){
+  var tip = e.currentTarget;
+  var box = tip.querySelector(".tipbox");
+  if(!box) return;
+  box.classList.remove("show");
+}
+
+function initTooltips(){
+  document.querySelectorAll(".tip").forEach(function(tip){
+    tip.addEventListener("mouseenter", showTip);
+    tip.addEventListener("focus", showTip);
+    tip.addEventListener("mouseleave", hideTip);
+    tip.addEventListener("blur", hideTip);
+  });
+  window.addEventListener("resize", function(){
+    document.querySelectorAll(".tip .tipbox.show").forEach(function(box){
+      box.classList.remove("show");
+    });
+  });
+}
 
 function initControls(){
   var dayBtns = document.querySelectorAll(".daysel button");
