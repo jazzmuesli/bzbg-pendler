@@ -4,6 +4,7 @@
 Reads:
   - data/umlauf_data.json        (per-run couplings to RE1, by day type)
   - data/ring_model.json         (ring stops + walk/ride times for the map)
+  - data/busti_route.json        (realistic GPS polyline of line 500 from busti.me)
   - src/engine/umlauf.js         (pure eval logic, shared with Node tests)
   - src/engine_template.html     (HTML + placeholders)
 
@@ -46,6 +47,18 @@ var map = null, markers = [], routeLine = null;
 function $(id){ return document.getElementById(id); }
 function hh(m){ if(m==null) return "--:--"; var x=((m%1440)+1440)%1440; return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0"); }
 function pct(x){ return (Math.round(x*10)/10).toFixed(1)+"%"; }
+
+/* Richtungskürzel: SN = Schwerin, HH = Hamburg, BZBG = Boizenburg */
+function dirBadge(f,t){
+  var key = (f==="Schwerin"?"SN":(f==="Hamburg"?"HH":f));
+  var cls = key==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge '+cls+'">'+key+'&rarr;BZBG</span>';
+}
+function depDirBadge(t){
+  var key = (t==="Schwerin"?"SN":(t==="Hamburg"?"HH":t));
+  var cls = key==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge dir-hh">BZBG&rarr;'+key+'</span>';
+}
 
 document.addEventListener("DOMContentLoaded", function(){
   ui.express = {};  // per day type set of express run indices
@@ -107,6 +120,9 @@ function toggleExpress(i){
   renderAll();
 }
 
+// Rufbus-Abfahrten (müssen online vorbestellt werden, nicht im Standardtakt)
+var RUFBUS_DEPS = [1215, 1262, 1275]; // 20:15, 21:02, 21:15
+
 function renderAll(){
   var res = currentEval();
   renderKpis(res);
@@ -117,7 +133,6 @@ function renderAll(){
     " davon Express · Verschiebung " + (ui.shift>=0?"+":"") + ui.shift + " Min.";
   $("routeNote").textContent = "Express spart " + ui.expressSaving +
     " Min. Ringdauer (lässt " + UMLAUF_DATA.express_skipped_stops.length + " Fußweg-Halte aus).";
-  // update the express-saving hint: typical ring 31 min -> express floored at 10
   var ringNormalEl = $("ringNormal"), ringExprEl = $("ringExpress");
   if (ringNormalEl) ringNormalEl.textContent = "31";
   if (ringExprEl) ringExprEl.textContent = String(Math.max(10, 31 - ui.expressSaving));
@@ -127,12 +142,15 @@ function renderAll(){
 
 function renderKpis(res){
   var k = res.kpis;
+  var tipArrival = '<span class="tip">ⓘ<span class="tipbox">Berechnung: Für jeden Zug wird geprüft, ob der Bus noch abfährt, nachdem der Zug am Bahnhof Boizenburg angekommen ist und die Fahrgäste eingestiegen sind. Puffer = Busabfahrt − Zugplanankunft − Einstieg 2 Min. Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist. Die Prozentzahl ist gewichtet mit den Fahrgastzahlen n (wie viele Leute tatsächlich in diesem Zug sitzen). Betroffene Pendler: RE1-Fahrgäste, die aussteigen und mit dem Bus weiterfahren – aus Hamburg kommend (HH→BZBG) oder aus Schwerin kommend (SN→BZBG).</span></span>';
+  var tipRobust = '<span class="tip">ⓘ<span class="tipbox">Grün ✓ = verspätungsrobust: Der Puffer reicht auch, wenn der Zug mit seiner p90-Verspätung kommt. Rot ✗ = nicht robust: Bei planmäßiger Ankunft reicht der Puffer gerade, bei der üblichen p90-Verspätung verpasst man den Bus. Verspätungsrobust bedeutet: Puffer ≥ p90-Verspätung.</span></span>';
+  var tipReturn = '<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min. ≥ 0 Min. heißt: Der Bus ist rechtzeitig zurück, damit Fahrgäste den abfahrenden RE1 noch erreichen. Unter 0 Min. rot: Der Bus käme zu spät, der Zug wäre weg. Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof ankommen und den RE1 erreichen wollen – mit dem Bus nach Hamburg (BZBG→HH) oder nach Schwerin (BZBG→SN).</span></span>';
   $("kpis").innerHTML =
-    kpi("Anschluss ankommend", pct(k.arrReachRate), cls(k.arrReachRate),
+    kpi("Anschluss ankommend " + tipArrival, pct(k.arrReachRate), cls(k.arrReachRate),
         "Bus erreicht (Puffer ≥ " + ui.arriveBufferMin + " Min.)")
-  + kpi("davon verspätungs­robust", pct(k.arrRobustRate), cls(k.arrRobustRate),
+  + kpi("davon verspätungs­robust " + tipRobust, pct(k.arrRobustRate), cls(k.arrRobustRate),
         "auch bei p90-Verspätung erreicht")
-  + kpi("Rückanschluss abfahrend", pct(k.depReachRate), cls(k.depReachRate),
+  + kpi("Rückanschluss abfahrend " + tipReturn, pct(k.depReachRate), cls(k.depReachRate),
         "Bus rechtzeitig zurück (Reserve ≥ " + ui.departReserveMin + " Min.)")
   + kpi("Ø Ankunftspuffer", k.meanArrBuffer.toFixed(1) + " Min.", "",
         "Wartezeit pünktlicher Fahrgäste");
@@ -148,20 +166,25 @@ function renderRuns(res){
     var arrBufCls = a ? (a.buffer < 0 ? "bad" : (a.buffer >= ui.arriveBufferMin ? "good" : "warn")) : "";
     var robust = a ? (a.robust ? '<span class="good">✓</span>' : '<span class="bad">✗</span>') : "–";
     var resCls = d ? (d.reserve < 0 ? "bad" : (d.reserve >= ui.departReserveMin ? "good" : "warn")) : "";
-    var dirTxt = a ? ("aus " + a.from + " → " + a.to) : "–";
     var svcBadge = r.service === "schule" ? ' <span style="color:var(--muted);font-size:10px">(Schultag)</span>'
                  : r.service === "ferien" ? ' <span style="color:var(--muted);font-size:10px">(Ferien)</span>' : '';
+    // Ankommender RE1 Richtung
+    var arrDirHtml = a ? dirBadge(a.from, a.to) : '<span class="blank">—</span>';
+    var arrDirTxt = a ? (a.from==="Schwerin"?"SN→BZBG":(a.from==="Hamburg"?"HH→BZBG":(a.from+"→BZBG"))) : "—";
+    // Abfahrender RE1 Richtung: zurück zum Herkunftsort des ankommenden Zuges
+    var depDirHtml = d ? depDirBadge(d.train ? "x" : "x") : '<span class="blank">—</span>';
+    var depDirTxt = d ? (a ? (a.from==="Schwerin"?"BZBG→SN":(a.from==="Hamburg"?"BZBG→HH":"BZBG→?")) : "BZBG→?") : "—";
     return '<tr class="' + (exprChecked?"expr":"") + '">'
-      + '<td><input type="checkbox" class="exprbox" ' + exprChecked + ' onchange="toggleExpress(' + i + ')"></td>'
-      + '<td class="ham">' + (a ? hh(a.train) : "–") + '</td>'
-      + '<td>' + dirTxt + '</td>'
+      + '<td>' + (a ? hh(a.train) : '<span class="blank">—</span>') + '</td>'
+      + '<td>' + arrDirHtml + '</td>'
       + '<td class="prop">' + hh(r.dep) + (r.express ? ' <span style="color:var(--expr)">(Exp)</span>' : '') + svcBadge + '</td>'
-      + '<td class="' + arrBufCls + '">' + (a ? a.buffer + " Min." : "–") + '</td>'
-      + '<td>' + (a && a.p90 != null ? a.p90 : "–") + '</td>'
+      + '<td class="' + arrBufCls + '">' + (a ? a.buffer + " Min." : '<span class="blank">—</span>') + '</td>'
+      + '<td>' + (a && a.p90 != null ? a.p90 : '<span class="blank">—</span>') + '</td>'
       + '<td>' + robust + '</td>'
       + '<td>' + hh(r.ret) + '</td>'
-      + '<td class="sch">' + (d ? hh(d.train) : "–") + '</td>'
-      + '<td class="' + resCls + '">' + (d ? d.reserve + " Min." : "–") + '</td>'
+      + '<td>' + (d ? hh(d.train) + ' <span style="font-size:10px;color:var(--muted)">'+depDirTxt+'</span>' : '<span class="blank">—</span>') + '</td>'
+      + '<td class="' + resCls + '">' + (d ? d.reserve + " Min." : '<span class="blank">—</span>') + '</td>'
+      + '<td><input type="checkbox" class="exprbox" ' + exprChecked + ' onchange="toggleExpress(' + i + ')"></td>'
       + '</tr>';
   }).join("");
   $("runsBody").innerHTML = rows || '<tr><td colspan="10" style="color:var(--muted)">Keine Umläufe</td></tr>';
@@ -182,9 +205,8 @@ function updateMap(){
   if(!map) return;
   markers.forEach(function(m){ map.removeLayer(m); }); markers = [];
   if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
-  // Show the ring; if ANY run is express, grey the express-skippable stops.
+  // Haltestellen aus dem Ringmodell
   var anyExpress = expressSet().length > 0;
-  var coords = [];
   RING_MODEL.stops.forEach(function(s){
     if(s.lat == null) return;
     var skip = anyExpress && s.express_skippable && !s.is_bahnhof;
@@ -193,10 +215,10 @@ function updateMap(){
     m.bindPopup("<b>"+s.name+"</b><br>"+(s.is_bahnhof?"Bahnhof":(skip?"Express: ausgelassen":"Halt"))+
       (s.walk_from_prev_min!=null?"<br>Fußweg: "+s.walk_from_prev_min+" Min.":""));
     markers.push(m);
-    if(!skip || s.is_bahnhof) coords.push([s.lat, s.lon]);
   });
-  routeLine = L.polyline(coords, {color:"#7a3e9d", weight:4, opacity:0.85}).addTo(map);
-  try { map.fitBounds(routeLine.getBounds().pad(0.15)); } catch(e){}
+  // Realistische Streckenführung der Linie 500 (GPS-Spur von busti.me).
+  routeLine = L.polyline(BUSTI_ROUTE, {color:"#12303d", weight:4, opacity:0.9}).addTo(map);
+  try { map.fitBounds(routeLine.getBounds().pad(0.18)); } catch(e){}
 }
 
 window.addEventListener("error", function(e){
@@ -208,6 +230,7 @@ window.addEventListener("error", function(e){
 def build():
     umlauf = read(os.path.join(HERE, "data", "umlauf_data.json"))
     ring = read(os.path.join(HERE, "data", "ring_model.json"))
+    busti = read(os.path.join(HERE, "data", "busti_route.json"))
     umlauf_js = strip_node(read(os.path.join(HERE, "src", "engine", "umlauf.js")))
     template = read(os.path.join(HERE, "src", "engine_template.html"))
 
@@ -219,6 +242,7 @@ def build():
 
     html = template.replace("__UMLAUF_DATA_JSON_PLACEHOLDER__", umlauf)
     html = html.replace("__RING_MODEL_JSON_PLACEHOLDER__", ring)
+    html = html.replace("__BUSTI_ROUTE_JSON_PLACEHOLDER__", busti)
     html = html.replace("__COMBINED_JS_PLACEHOLDER__", combined_js)
 
     out = os.path.join(HERE, "simulation.html")

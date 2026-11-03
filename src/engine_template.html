@@ -12,38 +12,39 @@
         --pos:#1a7f4b;--neg:#b3261e;--warn:#a76a00;--card:#fff;--accent:#12303d;
         --ham:#2f6f9f;--sch:#8a6d1b;--bus:#12303d;--expr:#7a3e9d;}
   *{box-sizing:border-box}
-  body{margin:0;padding:0 0 70px;background:var(--bg);color:var(--ink);
-       font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-  header{background:var(--accent);color:#fff;padding:22px 20px 20px}
-  header .wrap{margin:0 auto;max-width:1150px}
-  header h1{margin:0 0 6px;font-size:20px}
-  header p{margin:0;color:#b9cdd6;max-width:980px;font-size:13px}
-  main{padding:14px;max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  body{margin:0;padding:0 0 86px;background:var(--bg);color:var(--ink);
+       font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--accent);color:#fff;padding:24px 20px 22px}
+  header .wrap{margin:0 auto;max-width:1180px}
+  header h1{margin:0 0 8px;font-size:21px;font-weight:700}
+  header p{margin:0;color:#c9dde3;max-width:1080px;font-size:13px;line-height:1.5}
+  main{padding:16px;max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px}
   .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .card-head h2{margin:0;font-size:16px}
+  .card-head h2{margin:0;font-size:16px;font-weight:700}
   .card-head p{margin:0;color:var(--muted);font-size:12px}
-  .controls{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;border-radius:8px;padding:12px 14px}
-  .ctl{min-width:190px;flex:1}
-  .ctl>label{display:block;font-weight:600;font-size:11px;margin-bottom:4px;color:var(--muted)}
-  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;border-radius:8px;padding:12px 14px}
+  .ctl{min-width:175px;flex:1}
+  .ctl>label{display:block;font-weight:700;font-size:11.5px;margin-bottom:4px;color:var(--muted)}
+  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:4px}
   input[type=range]{width:100%;cursor:pointer;accent-color:var(--accent)}
-  .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .val{font-weight:800;font-variant-numeric:tabular-nums}
   .minlabel{font-size:10.5px;color:var(--muted);margin-left:3px}
-  .hint{font-size:11px;color:var(--muted)}
+  .hint{font-size:11px;color:var(--muted);margin-top:5px}
   .kpis{display:flex;gap:8px;flex-wrap:wrap}
-  .kpi{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
-  .kpi .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
-  .kpi .v{font-size:20px;font-weight:700;margin-top:1px}
-  .kpi .s{color:var(--muted);font-size:11px;margin-top:1px}
+  .kpi{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .kpi .k{color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:800}
+  .kpi .v{font-size:22px;font-weight:800;margin-top:2px}
+  .kpi .s{color:var(--muted);font-size:11px;margin-top:2px;line-height:1.4}
   .kpi .v.good{color:var(--pos)}.kpi .v.warn{color:var(--warn)}.kpi .v.bad{color:var(--neg)}
-  table{border-collapse:collapse;width:100%;font-size:11.5px}
-  th,td{text-align:right;padding:4px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+  table{border-collapse:collapse;width:100%;font-size:12px}
+  th,td{text-align:right;padding:5px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
   th:first-child,td:first-child{text-align:left}
-  th{font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
-  td.ham{color:var(--ham)}td.sch{color:var(--sch)}td.prop{color:var(--bus);font-weight:600}
-  .good{color:var(--pos);font-weight:600}.warn{color:var(--warn);font-weight:600}.bad{color:var(--neg);font-weight:600}
+  th{font-weight:800;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+  td.ham{color:var(--ham)}td.sch{color:var(--sch)}td.prop{color:var(--bus);font-weight:800}
+  .good{color:var(--pos);font-weight:800}.warn{color:var(--warn);font-weight:800}.bad{color:var(--neg);font-weight:800}
   tr.expr{background:#f7f1fb}
+  .blank{color:#c7d3d9}
   .daysel{display:flex;gap:6px}
   .daysel button{padding:5px 12px;font-size:12px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer}
   .daysel button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -54,18 +55,32 @@
   .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0;font-size:11.5px;color:var(--muted)}
   .legend span{display:flex;align-items:center;gap:4px}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
-  .exprbox{width:15px;height:15px;cursor:pointer;accent-color:var(--expr)}
+  .exprbox{width:16px;height:16px;cursor:pointer;accent-color:var(--expr)}
   .note{color:var(--muted);font-size:12px;margin:6px 0}
-  .scroll{max-height:460px;overflow:auto}
+  .scroll{max-height:520px;overflow:auto}
+  /* ---------- Tooltips (normal weight, not caps) ---------- */
+  .tip{position:relative;display:inline-block;width:17px;height:17px;border-radius:50%;background:#dfe6ea;color:#5d6b72;font-size:12px;line-height:17px;text-align:center;cursor:help;font-weight:800;vertical-align:middle;margin-left:4px}
+  .tip .tipbox{visibility:hidden;opacity:0;position:absolute;bottom:140%;left:50%;transform:translateX(-50%);background:#16232b;color:#fff;padding:11px 13px;border-radius:7px;font-size:12.5px;line-height:1.5;white-space:normal;max-width:340px;pointer-events:none;z-index:25;box-shadow:0 4px 14px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08)}
+  .tip .tipbox::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border-width:8px;border-style:solid;border-color:#16232b transparent transparent transparent}
+  .tip .tipbox b{color:#fff}
+  .tip:hover .tipbox,.tip:focus-visible .tipbox,.tip:focus .tipbox{visibility:visible;opacity:1}
+  .plain{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;font-size:13px;line-height:1.6}
+  .plain b{color:var(--accent)}
+  .pdf-link{margin:4px 0 0;font-size:11.5px;color:var(--muted)}
+  .pdf-link a{color:var(--ham);text-decoration:underline}
+  .pdf-link a:hover{color:var(--neg)}
+  .dir-badge{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:9px;background:#eef3f5;border:1px solid var(--line)}
+  .dir-sn{color:var(--sch)}.dir-hh{color:var(--ham)}
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <h1>Bus 500 — Anschluss-Simulation</h1>
-  <p>Linie 500 ist <b>ein Bus, ein Umlauf pro Stunde</b>, der zwischen zwei RE1-Wellen pendelt:
+  <p>Linie 500 ist <b>ein Bus, ein Umlauf pro Stunde</b> zwischen zwei RE1-Wellen:
      RE1 kommt an → Bus fährt in die Stadt → ~31&nbsp;Min. Ring → zurück zum nächsten RE1.
-     Viel Spielraum gibt es nicht. Die einzigen Hebel: die <b>Abfahrt verschieben</b> und einzelne
-     Umläufe auf <b>Express</b> schalten (Fußweg-Halte auslassen → Bus früher zurück → mehr Puffer).</p>
+     Die einzigen Hebel: die <b>Abfahrt verschieben</b> und einzelne Umläufe auf <b>Express</b> schalten.</p>
+  <div class="plain"><b>Worum es geht:</b> Ein verspäteter Zug bedeutet oft den verpassten Bus — der nächste Ringbus kommt erst eine Stunde später. Die Seite zeigt den <b>Trade-off</b>: Wer den Bus später abfahren lässt, gibt den Fahrgästen am Bahnsteig mehr Ankunftspuffer, hat aber weniger Reserve, um den abfahrenden RE1 zu erreichen. Einzelne Fahrten als <b>Express</b> zu fahren (wenige Haltestellen auslassen) bringt den Bus früher zurück und schafft Reserve, ohne den Ankunftspuffer zu opfern. Verschieben Sie die Regler und beobachten Sie, wie sich die drei Kennzahlen und die Tabelle ändern.</div>
+  <div class="pdf-link"><a href="https://www.vlp-lup.de/wp-content/uploads/2026/10/FPL_500-2026-09-23.pdf" target="_blank" rel="noopener">📄 Fahrplan-PDF der VLP Linie 500 (Stand 23.09.2026) öffnen</a> — Grundlage für die Busabfahrten in dieser Simulation.</div>
 </div></header>
 
 <main>
@@ -87,15 +102,15 @@
         </div>
       </div>
       <div class="ctl">
-        <label>Alle Busse <b>verschieben</b></label>
+        <label>Alle Busse <b>verschieben</b><span class="tip">ⓘ<span class="tipbox">Alle Busse des Tages um die eingestellten Minuten vor oder zurück verschieben.<br>• <b>Nach Boizenburg (Zug → Bus):</b> späterer Bus = mehr Zeit für Fahrgäste, die aus Hamburg (HH→BZBG) oder Schwerin (SN→BZBG) ankommen.<br>• <b>Vom Boizenburg Bahnhof (Bus → Zug):</b> späterer Bus = weniger Zeit, um den abfahrenden RE1 nach Hamburg (BZBG→HH) oder Schwerin (BZBG→SN) zu erreichen.</span></span></label>
         <div class="row">
           <input type="range" id="shift" min="-10" max="10" step="1" value="0">
           <span class="val" id="shiftVal">0</span><span class="minlabel">Min.</span>
         </div>
-        <div class="hint">Negativ = früher, positiv = später. Später = mehr Ankunftspuffer, aber Bus knapper zurück.</div>
+        <div class="hint">Negativ = früher, positiv = später. Später = mehr Puffer ankommend, aber weniger Reserve rückwärts.</div>
       </div>
       <div class="ctl">
-        <label>Mindestpuffer <b>ankommend</b> (Zug → Bus)</label>
+        <label>Mindestpuffer <b>ankommend</b> (Zug → Bus)<span class="tip">ⓘ<span class="tipbox">Betroffene Pendler: RE1-Fahrgäste, die am Bahnhof Boizenburg aussteigen und mit dem Bus weiterfahren.<br>Puffer = Busabfahrt − Zugplanankunft − Einstieg 2 Min.<br>Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist.</span></span></label>
         <div class="row">
           <input type="range" id="arriveBufferMin" min="0" max="12" step="1" value="3">
           <span class="val" id="arriveBufferMinVal">3</span><span class="minlabel">Min.</span>
@@ -103,7 +118,7 @@
         <div class="hint">So viel Puffer muss der Anschluss mindestens haben, um als „erreicht" zu zählen.</div>
       </div>
       <div class="ctl">
-        <label>Mindestreserve <b>abfahrend</b> (Bus → Zug)</label>
+        <label>Mindestreserve <b>abfahrend</b> (Bus → Zug)<span class="tip">ⓘ<span class="tipbox">Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof Boizenburg ankommen und den abfahrenden RE1 erreichen wollen.<br>Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min.<br>≥ 0 Min. = rechtzeitig zurück. Unter 0 Min. (rot): Der Zug wäre weg.</span></span></label>
         <div class="row">
           <input type="range" id="departReserveMin" min="0" max="12" step="1" value="2">
           <span class="val" id="departReserveMinVal">2</span><span class="minlabel">Min.</span>
@@ -111,12 +126,12 @@
         <div class="hint">So früh muss der Bus vor dem abfahrenden Zug zurück sein.</div>
       </div>
       <div class="ctl">
-        <label>Express-<b>Zeitersparnis</b></label>
+        <label>Express-<b>Zeitersparnis</b><span class="tip">ⓘ<span class="tipbox">Ein Express-Umlauf lässt die fußläufig erreichbaren Haltestellen aus und ist darum kürzer. Die gesparte Zeit kommt als zusätzliche Rückreserve zugute: Der Bus ist früher zurück, nicht als zusätzliche Fahrt. Das hilft den Bus→Zug-Pendlern (nach Hamburg oder Schwerin).</span></span></label>
         <div class="row">
           <input type="range" id="expressSaving" min="0" max="25" step="1" value="22">
           <span class="val" id="expressSavingVal">22</span><span class="minlabel">Min.</span>
         </div>
-        <div class="hint">Wie viele Minuten kürzer ein Express-Umlauf ist. Ring normal <b id="ringNormal">31</b>&nbsp;Min. → Express <b id="ringExpress">9</b>&nbsp;Min. (mind. 10).</div>
+        <div class="hint">Wie viele Minuten kürzer ein Express-Umlauf ist. Ring normal <b id="ringNormal">31</b> Min. → Express <b id="ringExpress">9</b> Min. (mind. 10).</div>
       </div>
     </div>
   </div>
@@ -128,9 +143,7 @@
       <p id="runNote"></p>
     </div>
     <div class="scroll"><table id="runs"><thead><tr>
-      <th>Express</th><th>RE1 an</th><th>Richtung (aus → nach)</th><th>Bus ab</th><th>Ank.-Puffer</th>
-      <th>p90</th><th>robust?</th><th>Bus zurück</th><th>RE1 ab</th><th>Reserve</th>
-    </tr></thead><tbody id="runsBody"></tbody></table></div>
+      <th>Zeit</th><th>RE1 Richtung</th><th>Bus ab</th><th>Puffer</th><th>p90<span class="tip">ⓘ<span class="tipbox">p90 = die Verspätung, die an 90 % der Tage <b>nicht</b> überschritten wird (nur 10 % der Tage sind schlechter). Ein typisch verspäteter Tag.<br>„Verspätungsrobust" bedeutet: der Puffer reicht auch, wenn der Zug mit p90-Verspätung kommt.</span></span></th><th>robust?<span class="tip">ⓘ<span class="tipbox">Grün ✓ = verspätungsrobust: Der Puffer reicht auch, wenn der Zug mit seiner p90-Verspätung kommt. Rot ✗ = nicht robust: Bei planmäßiger Ankunft reicht der Puffer gerade, bei der üblichen p90-Verspätung verpasst man den Bus. Formel: Puffer ≥ p90-Verspätung.</span></span></th><th>Bus zurück</th><th>RE1 ab</th><th>Reserve<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min.<br>Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof ankommen und den abfahrenden RE1 erreichen wollen.<br>≥ 0 Min. = rechtzeitig zurück. Unter 0 Min. (rot): Der Bus käme zu spät, der Zug wäre weg.</span></span></th><th>Express</th></tr></thead><tbody id="runsBody"></tbody></table></div>
   </div>
 
   <div class="card">
@@ -147,6 +160,7 @@
 
 <script>const UMLAUF_DATA = __UMLAUF_DATA_JSON_PLACEHOLDER__;</script>
 <script>const RING_MODEL = __RING_MODEL_JSON_PLACEHOLDER__;</script>
+<script>const BUSTI_ROUTE = __BUSTI_ROUTE_JSON_PLACEHOLDER__;</script>
 <script>__COMBINED_JS_PLACEHOLDER__</script>
 </body>
 </html>

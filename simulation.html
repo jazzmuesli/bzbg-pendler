@@ -12,38 +12,39 @@
         --pos:#1a7f4b;--neg:#b3261e;--warn:#a76a00;--card:#fff;--accent:#12303d;
         --ham:#2f6f9f;--sch:#8a6d1b;--bus:#12303d;--expr:#7a3e9d;}
   *{box-sizing:border-box}
-  body{margin:0;padding:0 0 70px;background:var(--bg);color:var(--ink);
-       font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-  header{background:var(--accent);color:#fff;padding:22px 20px 20px}
-  header .wrap{margin:0 auto;max-width:1150px}
-  header h1{margin:0 0 6px;font-size:20px}
-  header p{margin:0;color:#b9cdd6;max-width:980px;font-size:13px}
-  main{padding:14px;max-width:1150px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  body{margin:0;padding:0 0 86px;background:var(--bg);color:var(--ink);
+       font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--accent);color:#fff;padding:24px 20px 22px}
+  header .wrap{margin:0 auto;max-width:1180px}
+  header h1{margin:0 0 8px;font-size:21px;font-weight:700}
+  header p{margin:0;color:#c9dde3;max-width:1080px;font-size:13px;line-height:1.5}
+  main{padding:16px;max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 10px}
   .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .card-head h2{margin:0;font-size:16px}
+  .card-head h2{margin:0;font-size:16px;font-weight:700}
   .card-head p{margin:0;color:var(--muted);font-size:12px}
-  .controls{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;border-radius:8px;padding:12px 14px}
-  .ctl{min-width:190px;flex:1}
-  .ctl>label{display:block;font-weight:600;font-size:11px;margin-bottom:4px;color:var(--muted)}
-  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;background:#f1f4f6;border-radius:8px;padding:12px 14px}
+  .ctl{min-width:175px;flex:1}
+  .ctl>label{display:block;font-weight:700;font-size:11.5px;margin-bottom:4px;color:var(--muted)}
+  .ctl .row{display:flex;gap:8px;align-items:center;margin-bottom:4px}
   input[type=range]{width:100%;cursor:pointer;accent-color:var(--accent)}
-  .val{font-weight:700;font-variant-numeric:tabular-nums}
+  .val{font-weight:800;font-variant-numeric:tabular-nums}
   .minlabel{font-size:10.5px;color:var(--muted);margin-left:3px}
-  .hint{font-size:11px;color:var(--muted)}
+  .hint{font-size:11px;color:var(--muted);margin-top:5px}
   .kpis{display:flex;gap:8px;flex-wrap:wrap}
-  .kpi{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
-  .kpi .k{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
-  .kpi .v{font-size:20px;font-weight:700;margin-top:1px}
-  .kpi .s{color:var(--muted);font-size:11px;margin-top:1px}
+  .kpi{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .kpi .k{color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:800}
+  .kpi .v{font-size:22px;font-weight:800;margin-top:2px}
+  .kpi .s{color:var(--muted);font-size:11px;margin-top:2px;line-height:1.4}
   .kpi .v.good{color:var(--pos)}.kpi .v.warn{color:var(--warn)}.kpi .v.bad{color:var(--neg)}
-  table{border-collapse:collapse;width:100%;font-size:11.5px}
-  th,td{text-align:right;padding:4px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+  table{border-collapse:collapse;width:100%;font-size:12px}
+  th,td{text-align:right;padding:5px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
   th:first-child,td:first-child{text-align:left}
-  th{font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
-  td.ham{color:var(--ham)}td.sch{color:var(--sch)}td.prop{color:var(--bus);font-weight:600}
-  .good{color:var(--pos);font-weight:600}.warn{color:var(--warn);font-weight:600}.bad{color:var(--neg);font-weight:600}
+  th{font-weight:800;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+  td.ham{color:var(--ham)}td.sch{color:var(--sch)}td.prop{color:var(--bus);font-weight:800}
+  .good{color:var(--pos);font-weight:800}.warn{color:var(--warn);font-weight:800}.bad{color:var(--neg);font-weight:800}
   tr.expr{background:#f7f1fb}
+  .blank{color:#c7d3d9}
   .daysel{display:flex;gap:6px}
   .daysel button{padding:5px 12px;font-size:12px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer}
   .daysel button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -54,18 +55,32 @@
   .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0;font-size:11.5px;color:var(--muted)}
   .legend span{display:flex;align-items:center;gap:4px}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:50%}
-  .exprbox{width:15px;height:15px;cursor:pointer;accent-color:var(--expr)}
+  .exprbox{width:16px;height:16px;cursor:pointer;accent-color:var(--expr)}
   .note{color:var(--muted);font-size:12px;margin:6px 0}
-  .scroll{max-height:460px;overflow:auto}
+  .scroll{max-height:520px;overflow:auto}
+  /* ---------- Tooltips (normal weight, not caps) ---------- */
+  .tip{position:relative;display:inline-block;width:17px;height:17px;border-radius:50%;background:#dfe6ea;color:#5d6b72;font-size:12px;line-height:17px;text-align:center;cursor:help;font-weight:800;vertical-align:middle;margin-left:4px}
+  .tip .tipbox{visibility:hidden;opacity:0;position:absolute;bottom:140%;left:50%;transform:translateX(-50%);background:#16232b;color:#fff;padding:11px 13px;border-radius:7px;font-size:12.5px;line-height:1.5;white-space:normal;max-width:340px;pointer-events:none;z-index:25;box-shadow:0 4px 14px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08)}
+  .tip .tipbox::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border-width:8px;border-style:solid;border-color:#16232b transparent transparent transparent}
+  .tip .tipbox b{color:#fff}
+  .tip:hover .tipbox,.tip:focus-visible .tipbox,.tip:focus .tipbox{visibility:visible;opacity:1}
+  .plain{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;font-size:13px;line-height:1.6}
+  .plain b{color:var(--accent)}
+  .pdf-link{margin:4px 0 0;font-size:11.5px;color:var(--muted)}
+  .pdf-link a{color:var(--ham);text-decoration:underline}
+  .pdf-link a:hover{color:var(--neg)}
+  .dir-badge{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:9px;background:#eef3f5;border:1px solid var(--line)}
+  .dir-sn{color:var(--sch)}.dir-hh{color:var(--ham)}
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <h1>Bus 500 — Anschluss-Simulation</h1>
-  <p>Linie 500 ist <b>ein Bus, ein Umlauf pro Stunde</b>, der zwischen zwei RE1-Wellen pendelt:
+  <p>Linie 500 ist <b>ein Bus, ein Umlauf pro Stunde</b> zwischen zwei RE1-Wellen:
      RE1 kommt an → Bus fährt in die Stadt → ~31&nbsp;Min. Ring → zurück zum nächsten RE1.
-     Viel Spielraum gibt es nicht. Die einzigen Hebel: die <b>Abfahrt verschieben</b> und einzelne
-     Umläufe auf <b>Express</b> schalten (Fußweg-Halte auslassen → Bus früher zurück → mehr Puffer).</p>
+     Die einzigen Hebel: die <b>Abfahrt verschieben</b> und einzelne Umläufe auf <b>Express</b> schalten.</p>
+  <div class="plain"><b>Worum es geht:</b> Ein verspäteter Zug bedeutet oft den verpassten Bus — der nächste Ringbus kommt erst eine Stunde später. Die Seite zeigt den <b>Trade-off</b>: Wer den Bus später abfahren lässt, gibt den Fahrgästen am Bahnsteig mehr Ankunftspuffer, hat aber weniger Reserve, um den abfahrenden RE1 zu erreichen. Einzelne Fahrten als <b>Express</b> zu fahren (wenige Haltestellen auslassen) bringt den Bus früher zurück und schafft Reserve, ohne den Ankunftspuffer zu opfern. Verschieben Sie die Regler und beobachten Sie, wie sich die drei Kennzahlen und die Tabelle ändern.</div>
+  <div class="pdf-link"><a href="https://www.vlp-lup.de/wp-content/uploads/2026/10/FPL_500-2026-09-23.pdf" target="_blank" rel="noopener">📄 Fahrplan-PDF der VLP Linie 500 (Stand 23.09.2026) öffnen</a> — Grundlage für die Busabfahrten in dieser Simulation.</div>
 </div></header>
 
 <main>
@@ -87,15 +102,15 @@
         </div>
       </div>
       <div class="ctl">
-        <label>Alle Busse <b>verschieben</b></label>
+        <label>Alle Busse <b>verschieben</b><span class="tip">ⓘ<span class="tipbox">Alle Busse des Tages um die eingestellten Minuten vor oder zurück verschieben.<br>• <b>Nach Boizenburg (Zug → Bus):</b> späterer Bus = mehr Zeit für Fahrgäste, die aus Hamburg (HH→BZBG) oder Schwerin (SN→BZBG) ankommen.<br>• <b>Vom Boizenburg Bahnhof (Bus → Zug):</b> späterer Bus = weniger Zeit, um den abfahrenden RE1 nach Hamburg (BZBG→HH) oder Schwerin (BZBG→SN) zu erreichen.</span></span></label>
         <div class="row">
           <input type="range" id="shift" min="-10" max="10" step="1" value="0">
           <span class="val" id="shiftVal">0</span><span class="minlabel">Min.</span>
         </div>
-        <div class="hint">Negativ = früher, positiv = später. Später = mehr Ankunftspuffer, aber Bus knapper zurück.</div>
+        <div class="hint">Negativ = früher, positiv = später. Später = mehr Puffer ankommend, aber weniger Reserve rückwärts.</div>
       </div>
       <div class="ctl">
-        <label>Mindestpuffer <b>ankommend</b> (Zug → Bus)</label>
+        <label>Mindestpuffer <b>ankommend</b> (Zug → Bus)<span class="tip">ⓘ<span class="tipbox">Betroffene Pendler: RE1-Fahrgäste, die am Bahnhof Boizenburg aussteigen und mit dem Bus weiterfahren.<br>Puffer = Busabfahrt − Zugplanankunft − Einstieg 2 Min.<br>Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist.</span></span></label>
         <div class="row">
           <input type="range" id="arriveBufferMin" min="0" max="12" step="1" value="3">
           <span class="val" id="arriveBufferMinVal">3</span><span class="minlabel">Min.</span>
@@ -103,7 +118,7 @@
         <div class="hint">So viel Puffer muss der Anschluss mindestens haben, um als „erreicht" zu zählen.</div>
       </div>
       <div class="ctl">
-        <label>Mindestreserve <b>abfahrend</b> (Bus → Zug)</label>
+        <label>Mindestreserve <b>abfahrend</b> (Bus → Zug)<span class="tip">ⓘ<span class="tipbox">Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof Boizenburg ankommen und den abfahrenden RE1 erreichen wollen.<br>Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min.<br>≥ 0 Min. = rechtzeitig zurück. Unter 0 Min. (rot): Der Zug wäre weg.</span></span></label>
         <div class="row">
           <input type="range" id="departReserveMin" min="0" max="12" step="1" value="2">
           <span class="val" id="departReserveMinVal">2</span><span class="minlabel">Min.</span>
@@ -111,12 +126,12 @@
         <div class="hint">So früh muss der Bus vor dem abfahrenden Zug zurück sein.</div>
       </div>
       <div class="ctl">
-        <label>Express-<b>Zeitersparnis</b></label>
+        <label>Express-<b>Zeitersparnis</b><span class="tip">ⓘ<span class="tipbox">Ein Express-Umlauf lässt die fußläufig erreichbaren Haltestellen aus und ist darum kürzer. Die gesparte Zeit kommt als zusätzliche Rückreserve zugute: Der Bus ist früher zurück, nicht als zusätzliche Fahrt. Das hilft den Bus→Zug-Pendlern (nach Hamburg oder Schwerin).</span></span></label>
         <div class="row">
           <input type="range" id="expressSaving" min="0" max="25" step="1" value="22">
           <span class="val" id="expressSavingVal">22</span><span class="minlabel">Min.</span>
         </div>
-        <div class="hint">Wie viele Minuten kürzer ein Express-Umlauf ist. Ring normal <b id="ringNormal">31</b>&nbsp;Min. → Express <b id="ringExpress">9</b>&nbsp;Min. (mind. 10).</div>
+        <div class="hint">Wie viele Minuten kürzer ein Express-Umlauf ist. Ring normal <b id="ringNormal">31</b> Min. → Express <b id="ringExpress">9</b> Min. (mind. 10).</div>
       </div>
     </div>
   </div>
@@ -128,9 +143,7 @@
       <p id="runNote"></p>
     </div>
     <div class="scroll"><table id="runs"><thead><tr>
-      <th>Express</th><th>RE1 an</th><th>Richtung (aus → nach)</th><th>Bus ab</th><th>Ank.-Puffer</th>
-      <th>p90</th><th>robust?</th><th>Bus zurück</th><th>RE1 ab</th><th>Reserve</th>
-    </tr></thead><tbody id="runsBody"></tbody></table></div>
+      <th>Zeit</th><th>RE1 Richtung</th><th>Bus ab</th><th>Puffer</th><th>p90<span class="tip">ⓘ<span class="tipbox">p90 = die Verspätung, die an 90 % der Tage <b>nicht</b> überschritten wird (nur 10 % der Tage sind schlechter). Ein typisch verspäteter Tag.<br>„Verspätungsrobust" bedeutet: der Puffer reicht auch, wenn der Zug mit p90-Verspätung kommt.</span></span></th><th>robust?<span class="tip">ⓘ<span class="tipbox">Grün ✓ = verspätungsrobust: Der Puffer reicht auch, wenn der Zug mit seiner p90-Verspätung kommt. Rot ✗ = nicht robust: Bei planmäßiger Ankunft reicht der Puffer gerade, bei der üblichen p90-Verspätung verpasst man den Bus. Formel: Puffer ≥ p90-Verspätung.</span></span></th><th>Bus zurück</th><th>RE1 ab</th><th>Reserve<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min.<br>Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof ankommen und den abfahrenden RE1 erreichen wollen.<br>≥ 0 Min. = rechtzeitig zurück. Unter 0 Min. (rot): Der Bus käme zu spät, der Zug wäre weg.</span></span></th><th>Express</th></tr></thead><tbody id="runsBody"></tbody></table></div>
   </div>
 
   <div class="card">
@@ -146,3482 +159,3483 @@
 </main>
 
 <script>const UMLAUF_DATA = {
- "express_saving": 22,
- "express_skipped_stops": [
-  "Gülzer Straße",
-  "Industriegebiet",
-  "Schwartower Str.",
-  "Metlitzer Weg",
-  "R. Markmann Str.",
-  "Breitscheidstr.",
-  "H.-J.-P. Lemm Str.",
-  "Schiller Str.",
-  "Stiftstraße",
-  "Industriegebiet",
-  "Gülzer Straße"
- ],
- "board": 2,
- "walk": 1,
- "days": {
-  "wd": {
-   "runs": [
-    {
-     "dep": 277,
-     "ret": 298,
-     "ring": 21,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 275,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 5,
-      "n": 301
-     },
-     "depTrain": {
-      "min": 308,
-      "p90": null,
-      "n": 0
-     }
+  "express_saving": 22,
+  "express_skipped_stops": [
+    "Gülzer Straße",
+    "Industriegebiet",
+    "Schwartower Str.",
+    "Metlitzer Weg",
+    "R. Markmann Str.",
+    "Breitscheidstr.",
+    "H.-J.-P. Lemm Str.",
+    "Schiller Str.",
+    "Stiftstraße",
+    "Industriegebiet",
+    "Gülzer Straße"
+  ],
+  "board": 2,
+  "walk": 1,
+  "days": {
+    "wd": {
+      "runs": [
+        {
+          "dep": 277,
+          "ret": 298,
+          "ring": 21,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 275,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 5,
+            "n": 301
+          },
+          "depTrain": {
+            "min": 308,
+            "p90": null,
+            "n": 0
+          }
+        },
+        {
+          "dep": 300,
+          "ret": 329,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 275,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 5,
+            "n": 301
+          },
+          "depTrain": {
+            "min": 338,
+            "p90": 10,
+            "n": 10
+          }
+        },
+        {
+          "dep": 335,
+          "ret": 364,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 331,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 0,
+            "n": 1
+          },
+          "depTrain": {
+            "min": 372,
+            "p90": null,
+            "n": 0
+          }
+        },
+        {
+          "dep": 355,
+          "ret": 384,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 339,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 6,
+            "n": 1
+          },
+          "depTrain": {
+            "min": 411,
+            "p90": 5,
+            "n": 117
+          }
+        },
+        {
+          "dep": 375,
+          "ret": 404,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 371,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 1,
+            "n": 108
+          },
+          "depTrain": {
+            "min": 411,
+            "p90": 5,
+            "n": 117
+          }
+        },
+        {
+          "dep": 415,
+          "ret": 450,
+          "ring": 35,
+          "service": "schule",
+          "besonderheit": "S",
+          "arr": {
+            "min": 411,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 0,
+            "n": 13
+          },
+          "depTrain": {
+            "min": 461,
+            "p90": 2,
+            "n": 10
+          }
+        },
+        {
+          "dep": 420,
+          "ret": 449,
+          "ring": 29,
+          "service": "ferien",
+          "besonderheit": "Fw",
+          "arr": {
+            "min": 411,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 0,
+            "n": 13
+          },
+          "depTrain": {
+            "min": 461,
+            "p90": 2,
+            "n": 10
+          }
+        },
+        {
+          "dep": 449,
+          "ret": 478,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 428,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 4,
+            "n": 113
+          },
+          "depTrain": {
+            "min": 492,
+            "p90": null,
+            "n": 0
+          }
+        },
+        {
+          "dep": 480,
+          "ret": 509,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": null,
+          "arr": {
+            "min": 468,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 22,
+            "n": 1
+          },
+          "depTrain": {
+            "min": 532,
+            "p90": 13,
+            "n": 10
+          }
+        },
+        {
+          "dep": 500,
+          "ret": 531,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 497,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 7,
+            "n": 187
+          },
+          "depTrain": {
+            "min": 532,
+            "p90": 13,
+            "n": 10
+          }
+        },
+        {
+          "dep": 544,
+          "ret": 576,
+          "ring": 32,
+          "service": "regular",
+          "besonderheit": null,
+          "arr": {
+            "min": 531,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 2,
+            "n": 12
+          },
+          "depTrain": {
+            "min": 588,
+            "p90": 11,
+            "n": 123
+          }
+        },
+        {
+          "dep": 615,
+          "ret": 646,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 611,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 7,
+            "n": 118
+          },
+          "depTrain": {
+            "min": 651,
+            "p90": 0,
+            "n": 2
+          }
+        },
+        {
+          "dep": 672,
+          "ret": 703,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 668,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 0,
+            "n": 3
+          },
+          "depTrain": {
+            "min": 708,
+            "p90": 15,
+            "n": 124
+          }
+        },
+        {
+          "dep": 735,
+          "ret": 770,
+          "ring": 35,
+          "service": "regular",
+          "besonderheit": null,
+          "arr": {
+            "min": 731,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 6,
+            "n": 120
+          },
+          "depTrain": {
+            "min": 771,
+            "p90": 0,
+            "n": 1
+          }
+        },
+        {
+          "dep": 795,
+          "ret": 826,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": null,
+          "arr": {
+            "min": 787,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 15,
+            "n": 196
+          },
+          "depTrain": {
+            "min": 828,
+            "p90": 20,
+            "n": 121
+          }
+        },
+        {
+          "dep": 855,
+          "ret": 886,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 851,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 10,
+            "n": 120
+          },
+          "depTrain": {
+            "min": 891,
+            "p90": 7,
+            "n": 131
+          }
+        },
+        {
+          "dep": 884,
+          "ret": 915,
+          "ring": 31,
+          "service": "ferien",
+          "besonderheit": "F",
+          "arr": {
+            "min": 851,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 10,
+            "n": 120
+          },
+          "depTrain": {
+            "min": 941,
+            "p90": 11,
+            "n": 10
+          }
+        },
+        {
+          "dep": 915,
+          "ret": 946,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 908,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 7,
+            "n": 113
+          },
+          "depTrain": {
+            "min": 948,
+            "p90": 19,
+            "n": 121
+          }
+        },
+        {
+          "dep": 960,
+          "ret": 991,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 941,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 8,
+            "n": 27
+          },
+          "depTrain": {
+            "min": 1011,
+            "p90": 8,
+            "n": 119
+          }
+        },
+        {
+          "dep": 992,
+          "ret": 1023,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 978,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": null,
+            "n": 1
+          },
+          "depTrain": {
+            "min": 1028,
+            "p90": null,
+            "n": 0
+          }
+        },
+        {
+          "dep": 1035,
+          "ret": 1066,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 1028,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 8,
+            "n": 118
+          },
+          "depTrain": {
+            "min": 1068,
+            "p90": 20,
+            "n": 121
+          }
+        },
+        {
+          "dep": 1095,
+          "ret": 1126,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 1091,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 11,
+            "n": 120
+          },
+          "depTrain": {
+            "min": 1131,
+            "p90": 15,
+            "n": 137
+          }
+        },
+        {
+          "dep": 1155,
+          "ret": 1186,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 1148,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 13,
+            "n": 116
+          },
+          "depTrain": {
+            "min": 1188,
+            "p90": 23,
+            "n": 122
+          }
+        },
+        {
+          "dep": 1215,
+          "ret": 1246,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 1211,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 7,
+            "n": 113
+          },
+          "depTrain": {
+            "min": 1251,
+            "p90": 7,
+            "n": 1
+          }
+        },
+        {
+          "dep": 1262,
+          "ret": 1291,
+          "ring": 29,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 1251,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 5,
+            "n": 14
+          },
+          "depTrain": {
+            "min": 1308,
+            "p90": 31,
+            "n": 110
+          }
+        },
+        {
+          "dep": 1275,
+          "ret": 1306,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "w",
+          "arr": {
+            "min": 1267,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 24,
+            "n": 192
+          },
+          "depTrain": {
+            "min": 1308,
+            "p90": 31,
+            "n": 110
+          }
+        }
+      ],
+      "arrivals": [
+        {
+          "min": 78,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 223
+        },
+        {
+          "min": 275,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 301
+        },
+        {
+          "min": 328,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 3,
+          "n": 14
+        },
+        {
+          "min": 331,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 337,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 192
+        },
+        {
+          "min": 339,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 6,
+          "n": 1
+        },
+        {
+          "min": 361,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 115
+        },
+        {
+          "min": 371,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 108
+        },
+        {
+          "min": 410,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 119
+        },
+        {
+          "min": 411,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 13
+        },
+        {
+          "min": 427,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 24,
+          "n": 197
+        },
+        {
+          "min": 428,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 4,
+          "n": 113
+        },
+        {
+          "min": 460,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 11,
+          "n": 188
+        },
+        {
+          "min": 468,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 22,
+          "n": 1
+        },
+        {
+          "min": 491,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 114
+        },
+        {
+          "min": 497,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 187
+        },
+        {
+          "min": 531,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 12
+        },
+        {
+          "min": 547,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 22,
+          "n": 202
+        },
+        {
+          "min": 579,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 609,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 11
+        },
+        {
+          "min": 611,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 118
+        },
+        {
+          "min": 616,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 2,
+          "n": 8
+        },
+        {
+          "min": 650,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 4
+        },
+        {
+          "min": 651,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 20
+        },
+        {
+          "min": 667,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 14,
+          "n": 202
+        },
+        {
+          "min": 668,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 729,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 11
+        },
+        {
+          "min": 731,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 120
+        },
+        {
+          "min": 736,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 740,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 62,
+          "n": 10
+        },
+        {
+          "min": 771,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 7,
+          "n": 21
+        },
+        {
+          "min": 787,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 15,
+          "n": 196
+        },
+        {
+          "min": 851,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 10,
+          "n": 120
+        },
+        {
+          "min": 890,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 7,
+          "n": 117
+        },
+        {
+          "min": 891,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 21
+        },
+        {
+          "min": 907,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 20,
+          "n": 200
+        },
+        {
+          "min": 908,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 113
+        },
+        {
+          "min": 940,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 10,
+          "n": 172
+        },
+        {
+          "min": 941,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 27
+        },
+        {
+          "min": 969,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 23,
+          "n": 10
+        },
+        {
+          "min": 971,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 14,
+          "n": 117
+        },
+        {
+          "min": 976,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 10,
+          "n": 197
+        },
+        {
+          "min": 978,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": null,
+          "n": 1
+        },
+        {
+          "min": 1010,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 119
+        },
+        {
+          "min": 1011,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 21
+        },
+        {
+          "min": 1027,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 24,
+          "n": 208
+        },
+        {
+          "min": 1028,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 8,
+          "n": 118
+        },
+        {
+          "min": 1085,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 13,
+          "n": 155
+        },
+        {
+          "min": 1089,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 8
+        },
+        {
+          "min": 1090,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 168
+        },
+        {
+          "min": 1091,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 11,
+          "n": 120
+        },
+        {
+          "min": 1096,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 31,
+          "n": 39
+        },
+        {
+          "min": 1105,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 18,
+          "n": 21
+        },
+        {
+          "min": 1130,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 16,
+          "n": 119
+        },
+        {
+          "min": 1131,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 22
+        },
+        {
+          "min": 1147,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 28,
+          "n": 203
+        },
+        {
+          "min": 1148,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 13,
+          "n": 116
+        },
+        {
+          "min": 1190,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 31,
+          "n": 12
+        },
+        {
+          "min": 1192,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 152
+        },
+        {
+          "min": 1210,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 24,
+          "n": 25
+        },
+        {
+          "min": 1211,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 113
+        },
+        {
+          "min": 1216,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 11,
+          "n": 184
+        },
+        {
+          "min": 1250,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 2
+        },
+        {
+          "min": 1251,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 14
+        },
+        {
+          "min": 1267,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 24,
+          "n": 192
+        },
+        {
+          "min": 1330,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 2,
+          "n": 1
+        },
+        {
+          "min": 1331,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 97
+        },
+        {
+          "min": 1370,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 39,
+          "n": 10
+        },
+        {
+          "min": 1371,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 34,
+          "n": 13
+        },
+        {
+          "min": 1399,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 3,
+          "n": 2
+        },
+        {
+          "min": 1415,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 4,
+          "n": 1
+        },
+        {
+          "min": 1417,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1417,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 5
+        },
+        {
+          "min": 1418,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 10,
+          "n": 170
+        },
+        {
+          "min": 1418,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 18,
+          "n": 51
+        }
+      ],
+      "departures": [
+        {
+          "min": 20,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 78,
+          "p90": 1,
+          "n": 8
+        },
+        {
+          "min": 79,
+          "p90": 14,
+          "n": 99
+        },
+        {
+          "min": 276,
+          "p90": 4,
+          "n": 150
+        },
+        {
+          "min": 308,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 309,
+          "p90": 3,
+          "n": 120
+        },
+        {
+          "min": 310,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 338,
+          "p90": 10,
+          "n": 10
+        },
+        {
+          "min": 348,
+          "p90": 9,
+          "n": 120
+        },
+        {
+          "min": 362,
+          "p90": 2,
+          "n": 8
+        },
+        {
+          "min": 372,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 411,
+          "p90": 5,
+          "n": 117
+        },
+        {
+          "min": 412,
+          "p90": 2,
+          "n": 10
+        },
+        {
+          "min": 428,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 429,
+          "p90": 4,
+          "n": 113
+        },
+        {
+          "min": 461,
+          "p90": 2,
+          "n": 10
+        },
+        {
+          "min": 468,
+          "p90": 10,
+          "n": 121
+        },
+        {
+          "min": 492,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 498,
+          "p90": 1,
+          "n": 9
+        },
+        {
+          "min": 532,
+          "p90": 13,
+          "n": 10
+        },
+        {
+          "min": 548,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 588,
+          "p90": 11,
+          "n": 123
+        },
+        {
+          "min": 612,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 651,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 652,
+          "p90": 41,
+          "n": 10
+        },
+        {
+          "min": 668,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 669,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 708,
+          "p90": 15,
+          "n": 124
+        },
+        {
+          "min": 732,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 771,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 772,
+          "p90": 14,
+          "n": 10
+        },
+        {
+          "min": 788,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 789,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 828,
+          "p90": 20,
+          "n": 121
+        },
+        {
+          "min": 852,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 891,
+          "p90": 7,
+          "n": 131
+        },
+        {
+          "min": 892,
+          "p90": 38,
+          "n": 10
+        },
+        {
+          "min": 908,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 909,
+          "p90": 7,
+          "n": 119
+        },
+        {
+          "min": 941,
+          "p90": 11,
+          "n": 10
+        },
+        {
+          "min": 948,
+          "p90": 19,
+          "n": 121
+        },
+        {
+          "min": 972,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 976,
+          "p90": 23,
+          "n": 9
+        },
+        {
+          "min": 1011,
+          "p90": 8,
+          "n": 119
+        },
+        {
+          "min": 1012,
+          "p90": 17,
+          "n": 10
+        },
+        {
+          "min": 1028,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1029,
+          "p90": 10,
+          "n": 122
+        },
+        {
+          "min": 1068,
+          "p90": 20,
+          "n": 121
+        },
+        {
+          "min": 1085,
+          "p90": 6,
+          "n": 10
+        },
+        {
+          "min": 1091,
+          "p90": 1,
+          "n": 14
+        },
+        {
+          "min": 1092,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1131,
+          "p90": 15,
+          "n": 137
+        },
+        {
+          "min": 1132,
+          "p90": 12,
+          "n": 10
+        },
+        {
+          "min": 1148,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1149,
+          "p90": 15,
+          "n": 119
+        },
+        {
+          "min": 1188,
+          "p90": 23,
+          "n": 122
+        },
+        {
+          "min": 1192,
+          "p90": 18,
+          "n": 9
+        },
+        {
+          "min": 1212,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1217,
+          "p90": 2,
+          "n": 9
+        },
+        {
+          "min": 1251,
+          "p90": 7,
+          "n": 1
+        },
+        {
+          "min": 1252,
+          "p90": 60,
+          "n": 9
+        },
+        {
+          "min": 1268,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1269,
+          "p90": 3,
+          "n": 1
+        },
+        {
+          "min": 1308,
+          "p90": 31,
+          "n": 110
+        },
+        {
+          "min": 1331,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1332,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1371,
+          "p90": 39,
+          "n": 10
+        },
+        {
+          "min": 1372,
+          "p90": 6,
+          "n": 9
+        },
+        {
+          "min": 1415,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1418,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1428,
+          "p90": 31,
+          "n": 102
+        }
+      ]
     },
-    {
-     "dep": 300,
-     "ret": 329,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 275,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 5,
-      "n": 301
-     },
-     "depTrain": {
-      "min": 338,
-      "p90": 10,
-      "n": 10
-     }
+    "sa": {
+      "runs": [
+        {
+          "dep": 500,
+          "ret": 531,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 491,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 6,
+            "n": 24
+          },
+          "depTrain": {
+            "min": 532,
+            "p90": 1,
+            "n": 1
+          }
+        },
+        {
+          "dep": 544,
+          "ret": 576,
+          "ring": 32,
+          "service": "regular",
+          "besonderheit": null,
+          "arr": {
+            "min": 531,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 6,
+            "n": 2
+          },
+          "depTrain": {
+            "min": 588,
+            "p90": 14,
+            "n": 23
+          }
+        },
+        {
+          "dep": 615,
+          "ret": 646,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 611,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 7,
+            "n": 25
+          },
+          "depTrain": {
+            "min": 651,
+            "p90": 4,
+            "n": 23
+          }
+        },
+        {
+          "dep": 960,
+          "ret": 991,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 927,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 0,
+            "n": 1
+          },
+          "depTrain": {
+            "min": 1011,
+            "p90": 8,
+            "n": 25
+          }
+        },
+        {
+          "dep": 1035,
+          "ret": 1066,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 1028,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 8,
+            "n": 24
+          },
+          "depTrain": {
+            "min": 1068,
+            "p90": 12,
+            "n": 25
+          }
+        }
+      ],
+      "arrivals": [
+        {
+          "min": 78,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 47
+        },
+        {
+          "min": 328,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 34
+        },
+        {
+          "min": 337,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 6,
+          "n": 4
+        },
+        {
+          "min": 348,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 27
+        },
+        {
+          "min": 371,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 20
+        },
+        {
+          "min": 410,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 5,
+          "n": 25
+        },
+        {
+          "min": 411,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 427,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 10,
+          "n": 35
+        },
+        {
+          "min": 428,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 3,
+          "n": 17
+        },
+        {
+          "min": 491,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 24
+        },
+        {
+          "min": 531,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 6,
+          "n": 2
+        },
+        {
+          "min": 547,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 40
+        },
+        {
+          "min": 579,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 24,
+          "n": 7
+        },
+        {
+          "min": 609,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 31
+        },
+        {
+          "min": 611,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 25
+        },
+        {
+          "min": 616,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 30
+        },
+        {
+          "min": 650,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 23
+        },
+        {
+          "min": 651,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 3
+        },
+        {
+          "min": 667,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 12,
+          "n": 38
+        },
+        {
+          "min": 668,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 8,
+          "n": 22
+        },
+        {
+          "min": 729,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 36
+        },
+        {
+          "min": 731,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 23
+        },
+        {
+          "min": 736,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 7
+        },
+        {
+          "min": 738,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 1
+        },
+        {
+          "min": 740,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 24
+        },
+        {
+          "min": 771,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 56,
+          "n": 13
+        },
+        {
+          "min": 787,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 16,
+          "n": 38
+        },
+        {
+          "min": 788,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 7
+        },
+        {
+          "min": 851,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 18,
+          "n": 25
+        },
+        {
+          "min": 890,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 12
+        },
+        {
+          "min": 891,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 907,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 11,
+          "n": 40
+        },
+        {
+          "min": 908,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 26,
+          "n": 7
+        },
+        {
+          "min": 925,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 927,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 969,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 34
+        },
+        {
+          "min": 971,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 25
+        },
+        {
+          "min": 976,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 16
+        },
+        {
+          "min": 978,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 18,
+          "n": 2
+        },
+        {
+          "min": 1010,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 25
+        },
+        {
+          "min": 1011,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 1027,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 17,
+          "n": 40
+        },
+        {
+          "min": 1028,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 8,
+          "n": 24
+        },
+        {
+          "min": 1085,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 14,
+          "n": 16
+        },
+        {
+          "min": 1089,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 34
+        },
+        {
+          "min": 1091,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 25
+        },
+        {
+          "min": 1096,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 14,
+          "n": 7
+        },
+        {
+          "min": 1104,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 1130,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 9,
+          "n": 10
+        },
+        {
+          "min": 1131,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 3
+        },
+        {
+          "min": 1147,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 32,
+          "n": 36
+        },
+        {
+          "min": 1148,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 7
+        },
+        {
+          "min": 1211,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 23
+        },
+        {
+          "min": 1250,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 3,
+          "n": 27
+        },
+        {
+          "min": 1251,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 1267,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 43,
+          "n": 38
+        },
+        {
+          "min": 1268,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 11,
+          "n": 1
+        },
+        {
+          "min": 1331,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 22
+        },
+        {
+          "min": 1370,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 26
+        },
+        {
+          "min": 1371,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 33,
+          "n": 2
+        },
+        {
+          "min": 1418,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 16,
+          "n": 41
+        },
+        {
+          "min": 1418,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 8
+        },
+        {
+          "min": 1420,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 1
+        }
+      ],
+      "departures": [
+        {
+          "min": 78,
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 79,
+          "p90": 12,
+          "n": 20
+        },
+        {
+          "min": 329,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 348,
+          "p90": 1,
+          "n": 24
+        },
+        {
+          "min": 372,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 411,
+          "p90": 6,
+          "n": 24
+        },
+        {
+          "min": 412,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 428,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 429,
+          "p90": 2,
+          "n": 24
+        },
+        {
+          "min": 468,
+          "p90": 8,
+          "n": 25
+        },
+        {
+          "min": 492,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 532,
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 548,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 588,
+          "p90": 14,
+          "n": 23
+        },
+        {
+          "min": 589,
+          "p90": 20,
+          "n": 1
+        },
+        {
+          "min": 610,
+          "p90": 4,
+          "n": 1
+        },
+        {
+          "min": 612,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 617,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 651,
+          "p90": 4,
+          "n": 23
+        },
+        {
+          "min": 652,
+          "p90": 5,
+          "n": 1
+        },
+        {
+          "min": 668,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 669,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 708,
+          "p90": 18,
+          "n": 23
+        },
+        {
+          "min": 709,
+          "p90": 18,
+          "n": 2
+        },
+        {
+          "min": 730,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 732,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 740,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 771,
+          "p90": 56,
+          "n": 11
+        },
+        {
+          "min": 772,
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 788,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 789,
+          "p90": 7,
+          "n": 6
+        },
+        {
+          "min": 828,
+          "p90": 39,
+          "n": 25
+        },
+        {
+          "min": 852,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 891,
+          "p90": 8,
+          "n": 13
+        },
+        {
+          "min": 892,
+          "p90": 5,
+          "n": 1
+        },
+        {
+          "min": 908,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 909,
+          "p90": 7,
+          "n": 9
+        },
+        {
+          "min": 948,
+          "p90": 16,
+          "n": 25
+        },
+        {
+          "min": 970,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 972,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 976,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1011,
+          "p90": 8,
+          "n": 25
+        },
+        {
+          "min": 1012,
+          "p90": 4,
+          "n": 1
+        },
+        {
+          "min": 1028,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1029,
+          "p90": 9,
+          "n": 27
+        },
+        {
+          "min": 1068,
+          "p90": 12,
+          "n": 25
+        },
+        {
+          "min": 1085,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1090,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1092,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1131,
+          "p90": 3,
+          "n": 9
+        },
+        {
+          "min": 1132,
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 1148,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1149,
+          "p90": 7,
+          "n": 6
+        },
+        {
+          "min": 1188,
+          "p90": 14,
+          "n": 23
+        },
+        {
+          "min": 1189,
+          "p90": 30,
+          "n": 2
+        },
+        {
+          "min": 1212,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1251,
+          "p90": 4,
+          "n": 26
+        },
+        {
+          "min": 1252,
+          "p90": 2,
+          "n": 1
+        },
+        {
+          "min": 1268,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1269,
+          "p90": 4,
+          "n": 24
+        },
+        {
+          "min": 1308,
+          "p90": 28,
+          "n": 24
+        },
+        {
+          "min": 1332,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1371,
+          "p90": 6,
+          "n": 24
+        },
+        {
+          "min": 1372,
+          "p90": 1,
+          "n": 1
+        },
+        {
+          "min": 1418,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1428,
+          "p90": 7,
+          "n": 22
+        }
+      ]
     },
-    {
-     "dep": 335,
-     "ret": 364,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 331,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 0,
-      "n": 1
-     },
-     "depTrain": {
-      "min": 372,
-      "p90": null,
-      "n": 0
-     }
-    },
-    {
-     "dep": 355,
-     "ret": 384,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 339,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 6,
-      "n": 1
-     },
-     "depTrain": {
-      "min": 411,
-      "p90": 5,
-      "n": 117
-     }
-    },
-    {
-     "dep": 375,
-     "ret": 404,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 371,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 1,
-      "n": 108
-     },
-     "depTrain": {
-      "min": 411,
-      "p90": 5,
-      "n": 117
-     }
-    },
-    {
-     "dep": 415,
-     "ret": 450,
-     "ring": 35,
-     "service": "schule",
-     "besonderheit": "S",
-     "arr": {
-      "min": 411,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 0,
-      "n": 13
-     },
-     "depTrain": {
-      "min": 461,
-      "p90": 2,
-      "n": 10
-     }
-    },
-    {
-     "dep": 420,
-     "ret": 449,
-     "ring": 29,
-     "service": "ferien",
-     "besonderheit": "Fw",
-     "arr": {
-      "min": 411,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 0,
-      "n": 13
-     },
-     "depTrain": {
-      "min": 461,
-      "p90": 2,
-      "n": 10
-     }
-    },
-    {
-     "dep": 449,
-     "ret": 478,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 428,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 4,
-      "n": 113
-     },
-     "depTrain": {
-      "min": 492,
-      "p90": null,
-      "n": 0
-     }
-    },
-    {
-     "dep": 480,
-     "ret": 509,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": null,
-     "arr": {
-      "min": 468,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 22,
-      "n": 1
-     },
-     "depTrain": {
-      "min": 532,
-      "p90": 13,
-      "n": 10
-     }
-    },
-    {
-     "dep": 500,
-     "ret": 531,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 497,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 7,
-      "n": 187
-     },
-     "depTrain": {
-      "min": 532,
-      "p90": 13,
-      "n": 10
-     }
-    },
-    {
-     "dep": 544,
-     "ret": 576,
-     "ring": 32,
-     "service": "regular",
-     "besonderheit": null,
-     "arr": {
-      "min": 531,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 2,
-      "n": 12
-     },
-     "depTrain": {
-      "min": 588,
-      "p90": 11,
-      "n": 123
-     }
-    },
-    {
-     "dep": 615,
-     "ret": 646,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 611,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 7,
-      "n": 118
-     },
-     "depTrain": {
-      "min": 651,
-      "p90": 0,
-      "n": 2
-     }
-    },
-    {
-     "dep": 672,
-     "ret": 703,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 668,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 0,
-      "n": 3
-     },
-     "depTrain": {
-      "min": 708,
-      "p90": 15,
-      "n": 124
-     }
-    },
-    {
-     "dep": 735,
-     "ret": 770,
-     "ring": 35,
-     "service": "regular",
-     "besonderheit": null,
-     "arr": {
-      "min": 731,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 6,
-      "n": 120
-     },
-     "depTrain": {
-      "min": 771,
-      "p90": 0,
-      "n": 1
-     }
-    },
-    {
-     "dep": 795,
-     "ret": 826,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": null,
-     "arr": {
-      "min": 787,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 15,
-      "n": 196
-     },
-     "depTrain": {
-      "min": 828,
-      "p90": 20,
-      "n": 121
-     }
-    },
-    {
-     "dep": 855,
-     "ret": 886,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 851,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 10,
-      "n": 120
-     },
-     "depTrain": {
-      "min": 891,
-      "p90": 7,
-      "n": 131
-     }
-    },
-    {
-     "dep": 884,
-     "ret": 915,
-     "ring": 31,
-     "service": "ferien",
-     "besonderheit": "F",
-     "arr": {
-      "min": 851,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 10,
-      "n": 120
-     },
-     "depTrain": {
-      "min": 941,
-      "p90": 11,
-      "n": 10
-     }
-    },
-    {
-     "dep": 915,
-     "ret": 946,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 908,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 7,
-      "n": 113
-     },
-     "depTrain": {
-      "min": 948,
-      "p90": 19,
-      "n": 121
-     }
-    },
-    {
-     "dep": 960,
-     "ret": 991,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 941,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 8,
-      "n": 27
-     },
-     "depTrain": {
-      "min": 1011,
-      "p90": 8,
-      "n": 119
-     }
-    },
-    {
-     "dep": 992,
-     "ret": 1023,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 978,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": null,
-      "n": 1
-     },
-     "depTrain": {
-      "min": 1028,
-      "p90": null,
-      "n": 0
-     }
-    },
-    {
-     "dep": 1035,
-     "ret": 1066,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 1028,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 8,
-      "n": 118
-     },
-     "depTrain": {
-      "min": 1068,
-      "p90": 20,
-      "n": 121
-     }
-    },
-    {
-     "dep": 1095,
-     "ret": 1126,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 1091,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 11,
-      "n": 120
-     },
-     "depTrain": {
-      "min": 1131,
-      "p90": 15,
-      "n": 137
-     }
-    },
-    {
-     "dep": 1155,
-     "ret": 1186,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 1148,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 13,
-      "n": 116
-     },
-     "depTrain": {
-      "min": 1188,
-      "p90": 23,
-      "n": 122
-     }
-    },
-    {
-     "dep": 1215,
-     "ret": 1246,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 1211,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 7,
-      "n": 113
-     },
-     "depTrain": {
-      "min": 1251,
-      "p90": 7,
-      "n": 1
-     }
-    },
-    {
-     "dep": 1262,
-     "ret": 1291,
-     "ring": 29,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 1251,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 5,
-      "n": 14
-     },
-     "depTrain": {
-      "min": 1308,
-      "p90": 31,
-      "n": 110
-     }
-    },
-    {
-     "dep": 1275,
-     "ret": 1306,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "w",
-     "arr": {
-      "min": 1267,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 24,
-      "n": 192
-     },
-     "depTrain": {
-      "min": 1308,
-      "p90": 31,
-      "n": 110
-     }
+    "so": {
+      "runs": [
+        {
+          "dep": 500,
+          "ret": 531,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 497,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 0,
+            "n": 9
+          },
+          "depTrain": {
+            "min": 532,
+            "p90": 1,
+            "n": 2
+          }
+        },
+        {
+          "dep": 615,
+          "ret": 646,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "b",
+          "arr": {
+            "min": 611,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 5,
+            "n": 22
+          },
+          "depTrain": {
+            "min": 651,
+            "p90": 7,
+            "n": 24
+          }
+        },
+        {
+          "dep": 960,
+          "ret": 991,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 940,
+            "from": "Schwerin",
+            "to": "Hamburg",
+            "p90": 0,
+            "n": 5
+          },
+          "depTrain": {
+            "min": 1011,
+            "p90": 8,
+            "n": 25
+          }
+        },
+        {
+          "dep": 1035,
+          "ret": 1066,
+          "ring": 31,
+          "service": "regular",
+          "besonderheit": "cw",
+          "arr": {
+            "min": 1028,
+            "from": "Hamburg",
+            "to": "Schwerin",
+            "p90": 9,
+            "n": 25
+          },
+          "depTrain": {
+            "min": 1068,
+            "p90": 19,
+            "n": 25
+          }
+        }
+      ],
+      "arrivals": [
+        {
+          "min": 78,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 47
+        },
+        {
+          "min": 275,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 11
+        },
+        {
+          "min": 328,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 32
+        },
+        {
+          "min": 337,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 7,
+          "n": 13
+        },
+        {
+          "min": 348,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 361,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 7
+        },
+        {
+          "min": 371,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 22
+        },
+        {
+          "min": 410,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 3,
+          "n": 27
+        },
+        {
+          "min": 411,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 427,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 34
+        },
+        {
+          "min": 428,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 2,
+          "n": 19
+        },
+        {
+          "min": 460,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 6
+        },
+        {
+          "min": 491,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 2,
+          "n": 24
+        },
+        {
+          "min": 497,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 9
+        },
+        {
+          "min": 531,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 24,
+          "n": 2
+        },
+        {
+          "min": 547,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 11,
+          "n": 37
+        },
+        {
+          "min": 579,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 5
+        },
+        {
+          "min": 609,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 30
+        },
+        {
+          "min": 611,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 22
+        },
+        {
+          "min": 616,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 4,
+          "n": 28
+        },
+        {
+          "min": 650,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 25
+        },
+        {
+          "min": 651,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 3
+        },
+        {
+          "min": 667,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 16,
+          "n": 38
+        },
+        {
+          "min": 668,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 8,
+          "n": 15
+        },
+        {
+          "min": 729,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 33
+        },
+        {
+          "min": 731,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 25
+        },
+        {
+          "min": 736,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 13,
+          "n": 7
+        },
+        {
+          "min": 738,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 9,
+          "n": 2
+        },
+        {
+          "min": 740,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 5,
+          "n": 18
+        },
+        {
+          "min": 771,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 9
+        },
+        {
+          "min": 787,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 22,
+          "n": 43
+        },
+        {
+          "min": 788,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 15,
+          "n": 7
+        },
+        {
+          "min": 851,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 13,
+          "n": 25
+        },
+        {
+          "min": 890,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 10
+        },
+        {
+          "min": 891,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 9,
+          "n": 3
+        },
+        {
+          "min": 907,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 24,
+          "n": 41
+        },
+        {
+          "min": 908,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 9,
+          "n": 9
+        },
+        {
+          "min": 926,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 2
+        },
+        {
+          "min": 940,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 5
+        },
+        {
+          "min": 969,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 3,
+          "n": 34
+        },
+        {
+          "min": 971,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 1,
+          "n": 25
+        },
+        {
+          "min": 976,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 2,
+          "n": 18
+        },
+        {
+          "min": 978,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 17,
+          "n": 2
+        },
+        {
+          "min": 1010,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 24
+        },
+        {
+          "min": 1011,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 2,
+          "n": 3
+        },
+        {
+          "min": 1027,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 15,
+          "n": 41
+        },
+        {
+          "min": 1028,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 9,
+          "n": 25
+        },
+        {
+          "min": 1085,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 15,
+          "n": 15
+        },
+        {
+          "min": 1089,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 8,
+          "n": 35
+        },
+        {
+          "min": 1090,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 1091,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 12,
+          "n": 25
+        },
+        {
+          "min": 1096,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 6,
+          "n": 6
+        },
+        {
+          "min": 1104,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 15,
+          "n": 2
+        },
+        {
+          "min": 1130,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 6
+        },
+        {
+          "min": 1131,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 1,
+          "n": 3
+        },
+        {
+          "min": 1147,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 40
+        },
+        {
+          "min": 1148,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 9,
+          "n": 6
+        },
+        {
+          "min": 1192,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 1211,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 4,
+          "n": 25
+        },
+        {
+          "min": 1216,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 1250,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 4,
+          "n": 25
+        },
+        {
+          "min": 1251,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 1252,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 13,
+          "n": 1
+        },
+        {
+          "min": 1267,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 15,
+          "n": 36
+        },
+        {
+          "min": 1268,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1281,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1331,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 7,
+          "n": 23
+        },
+        {
+          "min": 1370,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 9,
+          "n": 20
+        },
+        {
+          "min": 1371,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 47,
+          "n": 2
+        },
+        {
+          "min": 1417,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 1418,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 16,
+          "n": 42
+        },
+        {
+          "min": 1418,
+          "from": "Schwerin",
+          "to": "Hamburg",
+          "p90": 18,
+          "n": 6
+        },
+        {
+          "min": 1428,
+          "from": "Hamburg",
+          "to": "Schwerin",
+          "p90": 9,
+          "n": 1
+        }
+      ],
+      "departures": [
+        {
+          "min": 78,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 79,
+          "p90": 5,
+          "n": 23
+        },
+        {
+          "min": 276,
+          "p90": 0,
+          "n": 7
+        },
+        {
+          "min": 308,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 309,
+          "p90": 0,
+          "n": 22
+        },
+        {
+          "min": 310,
+          "p90": 0,
+          "n": 1
+        },
+        {
+          "min": 329,
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 338,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 348,
+          "p90": 4,
+          "n": 21
+        },
+        {
+          "min": 362,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 372,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 411,
+          "p90": 3,
+          "n": 25
+        },
+        {
+          "min": 412,
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 428,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 429,
+          "p90": 3,
+          "n": 23
+        },
+        {
+          "min": 461,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 468,
+          "p90": 5,
+          "n": 25
+        },
+        {
+          "min": 492,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 498,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 532,
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 548,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 588,
+          "p90": 9,
+          "n": 23
+        },
+        {
+          "min": 589,
+          "p90": 7,
+          "n": 2
+        },
+        {
+          "min": 610,
+          "p90": 0,
+          "n": 3
+        },
+        {
+          "min": 612,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 617,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 651,
+          "p90": 7,
+          "n": 24
+        },
+        {
+          "min": 652,
+          "p90": 2,
+          "n": 2
+        },
+        {
+          "min": 668,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 669,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 708,
+          "p90": 9,
+          "n": 23
+        },
+        {
+          "min": 709,
+          "p90": 23,
+          "n": 2
+        },
+        {
+          "min": 730,
+          "p90": 1,
+          "n": 4
+        },
+        {
+          "min": 732,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 740,
+          "p90": 0,
+          "n": 2
+        },
+        {
+          "min": 771,
+          "p90": 1,
+          "n": 8
+        },
+        {
+          "min": 772,
+          "p90": 2,
+          "n": 2
+        },
+        {
+          "min": 788,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 789,
+          "p90": 15,
+          "n": 6
+        },
+        {
+          "min": 828,
+          "p90": 31,
+          "n": 25
+        },
+        {
+          "min": 852,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 891,
+          "p90": 4,
+          "n": 10
+        },
+        {
+          "min": 892,
+          "p90": 9,
+          "n": 2
+        },
+        {
+          "min": 908,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 909,
+          "p90": 7,
+          "n": 8
+        },
+        {
+          "min": 948,
+          "p90": 33,
+          "n": 23
+        },
+        {
+          "min": 970,
+          "p90": 4,
+          "n": 3
+        },
+        {
+          "min": 972,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 976,
+          "p90": 2,
+          "n": 2
+        },
+        {
+          "min": 1011,
+          "p90": 8,
+          "n": 25
+        },
+        {
+          "min": 1012,
+          "p90": 9,
+          "n": 2
+        },
+        {
+          "min": 1028,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1029,
+          "p90": 9,
+          "n": 27
+        },
+        {
+          "min": 1068,
+          "p90": 19,
+          "n": 25
+        },
+        {
+          "min": 1085,
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 1090,
+          "p90": 9,
+          "n": 2
+        },
+        {
+          "min": 1092,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1131,
+          "p90": 2,
+          "n": 10
+        },
+        {
+          "min": 1132,
+          "p90": 8,
+          "n": 2
+        },
+        {
+          "min": 1148,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1149,
+          "p90": 9,
+          "n": 7
+        },
+        {
+          "min": 1188,
+          "p90": 27,
+          "n": 23
+        },
+        {
+          "min": 1189,
+          "p90": 13,
+          "n": 2
+        },
+        {
+          "min": 1212,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1251,
+          "p90": 4,
+          "n": 25
+        },
+        {
+          "min": 1252,
+          "p90": 4,
+          "n": 2
+        },
+        {
+          "min": 1268,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1269,
+          "p90": 6,
+          "n": 27
+        },
+        {
+          "min": 1308,
+          "p90": 27,
+          "n": 24
+        },
+        {
+          "min": 1332,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1371,
+          "p90": 9,
+          "n": 18
+        },
+        {
+          "min": 1372,
+          "p90": 1,
+          "n": 2
+        },
+        {
+          "min": 1418,
+          "p90": null,
+          "n": 0
+        },
+        {
+          "min": 1428,
+          "p90": 10,
+          "n": 22
+        }
+      ]
     }
-   ],
-   "arrivals": [
-    {
-     "min": 78,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 223
-    },
-    {
-     "min": 275,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 301
-    },
-    {
-     "min": 328,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 3,
-     "n": 14
-    },
-    {
-     "min": 331,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 337,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 192
-    },
-    {
-     "min": 339,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 6,
-     "n": 1
-    },
-    {
-     "min": 361,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 115
-    },
-    {
-     "min": 371,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 108
-    },
-    {
-     "min": 410,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 119
-    },
-    {
-     "min": 411,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 13
-    },
-    {
-     "min": 427,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 24,
-     "n": 197
-    },
-    {
-     "min": 428,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 4,
-     "n": 113
-    },
-    {
-     "min": 460,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 11,
-     "n": 188
-    },
-    {
-     "min": 468,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 22,
-     "n": 1
-    },
-    {
-     "min": 491,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 114
-    },
-    {
-     "min": 497,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 187
-    },
-    {
-     "min": 531,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 12
-    },
-    {
-     "min": 547,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 22,
-     "n": 202
-    },
-    {
-     "min": 579,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 609,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 11
-    },
-    {
-     "min": 611,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 118
-    },
-    {
-     "min": 616,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 2,
-     "n": 8
-    },
-    {
-     "min": 650,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 4
-    },
-    {
-     "min": 651,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 20
-    },
-    {
-     "min": 667,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 14,
-     "n": 202
-    },
-    {
-     "min": 668,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 729,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 11
-    },
-    {
-     "min": 731,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 120
-    },
-    {
-     "min": 736,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 740,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 62,
-     "n": 10
-    },
-    {
-     "min": 771,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 7,
-     "n": 21
-    },
-    {
-     "min": 787,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 15,
-     "n": 196
-    },
-    {
-     "min": 851,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 10,
-     "n": 120
-    },
-    {
-     "min": 890,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 7,
-     "n": 117
-    },
-    {
-     "min": 891,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 21
-    },
-    {
-     "min": 907,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 20,
-     "n": 200
-    },
-    {
-     "min": 908,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 113
-    },
-    {
-     "min": 940,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 10,
-     "n": 172
-    },
-    {
-     "min": 941,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 27
-    },
-    {
-     "min": 969,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 23,
-     "n": 10
-    },
-    {
-     "min": 971,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 14,
-     "n": 117
-    },
-    {
-     "min": 976,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 10,
-     "n": 197
-    },
-    {
-     "min": 978,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": null,
-     "n": 1
-    },
-    {
-     "min": 1010,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 119
-    },
-    {
-     "min": 1011,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 21
-    },
-    {
-     "min": 1027,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 24,
-     "n": 208
-    },
-    {
-     "min": 1028,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 8,
-     "n": 118
-    },
-    {
-     "min": 1085,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 13,
-     "n": 155
-    },
-    {
-     "min": 1089,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 8
-    },
-    {
-     "min": 1090,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 168
-    },
-    {
-     "min": 1091,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 11,
-     "n": 120
-    },
-    {
-     "min": 1096,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 31,
-     "n": 39
-    },
-    {
-     "min": 1105,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 18,
-     "n": 21
-    },
-    {
-     "min": 1130,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 16,
-     "n": 119
-    },
-    {
-     "min": 1131,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 22
-    },
-    {
-     "min": 1147,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 28,
-     "n": 203
-    },
-    {
-     "min": 1148,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 13,
-     "n": 116
-    },
-    {
-     "min": 1190,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 31,
-     "n": 12
-    },
-    {
-     "min": 1192,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 152
-    },
-    {
-     "min": 1210,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 24,
-     "n": 25
-    },
-    {
-     "min": 1211,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 113
-    },
-    {
-     "min": 1216,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 11,
-     "n": 184
-    },
-    {
-     "min": 1250,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 2
-    },
-    {
-     "min": 1251,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 14
-    },
-    {
-     "min": 1267,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 24,
-     "n": 192
-    },
-    {
-     "min": 1330,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 2,
-     "n": 1
-    },
-    {
-     "min": 1331,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 97
-    },
-    {
-     "min": 1370,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 39,
-     "n": 10
-    },
-    {
-     "min": 1371,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 34,
-     "n": 13
-    },
-    {
-     "min": 1399,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 3,
-     "n": 2
-    },
-    {
-     "min": 1415,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 4,
-     "n": 1
-    },
-    {
-     "min": 1417,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1417,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 5
-    },
-    {
-     "min": 1418,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 10,
-     "n": 170
-    },
-    {
-     "min": 1418,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 18,
-     "n": 51
-    }
-   ],
-   "departures": [
-    {
-     "min": 20,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 78,
-     "p90": 1,
-     "n": 8
-    },
-    {
-     "min": 79,
-     "p90": 14,
-     "n": 99
-    },
-    {
-     "min": 276,
-     "p90": 4,
-     "n": 150
-    },
-    {
-     "min": 308,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 309,
-     "p90": 3,
-     "n": 120
-    },
-    {
-     "min": 310,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 338,
-     "p90": 10,
-     "n": 10
-    },
-    {
-     "min": 348,
-     "p90": 9,
-     "n": 120
-    },
-    {
-     "min": 362,
-     "p90": 2,
-     "n": 8
-    },
-    {
-     "min": 372,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 411,
-     "p90": 5,
-     "n": 117
-    },
-    {
-     "min": 412,
-     "p90": 2,
-     "n": 10
-    },
-    {
-     "min": 428,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 429,
-     "p90": 4,
-     "n": 113
-    },
-    {
-     "min": 461,
-     "p90": 2,
-     "n": 10
-    },
-    {
-     "min": 468,
-     "p90": 10,
-     "n": 121
-    },
-    {
-     "min": 492,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 498,
-     "p90": 1,
-     "n": 9
-    },
-    {
-     "min": 532,
-     "p90": 13,
-     "n": 10
-    },
-    {
-     "min": 548,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 588,
-     "p90": 11,
-     "n": 123
-    },
-    {
-     "min": 612,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 651,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 652,
-     "p90": 41,
-     "n": 10
-    },
-    {
-     "min": 668,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 669,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 708,
-     "p90": 15,
-     "n": 124
-    },
-    {
-     "min": 732,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 771,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 772,
-     "p90": 14,
-     "n": 10
-    },
-    {
-     "min": 788,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 789,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 828,
-     "p90": 20,
-     "n": 121
-    },
-    {
-     "min": 852,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 891,
-     "p90": 7,
-     "n": 131
-    },
-    {
-     "min": 892,
-     "p90": 38,
-     "n": 10
-    },
-    {
-     "min": 908,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 909,
-     "p90": 7,
-     "n": 119
-    },
-    {
-     "min": 941,
-     "p90": 11,
-     "n": 10
-    },
-    {
-     "min": 948,
-     "p90": 19,
-     "n": 121
-    },
-    {
-     "min": 972,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 976,
-     "p90": 23,
-     "n": 9
-    },
-    {
-     "min": 1011,
-     "p90": 8,
-     "n": 119
-    },
-    {
-     "min": 1012,
-     "p90": 17,
-     "n": 10
-    },
-    {
-     "min": 1028,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1029,
-     "p90": 10,
-     "n": 122
-    },
-    {
-     "min": 1068,
-     "p90": 20,
-     "n": 121
-    },
-    {
-     "min": 1085,
-     "p90": 6,
-     "n": 10
-    },
-    {
-     "min": 1091,
-     "p90": 1,
-     "n": 14
-    },
-    {
-     "min": 1092,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1131,
-     "p90": 15,
-     "n": 137
-    },
-    {
-     "min": 1132,
-     "p90": 12,
-     "n": 10
-    },
-    {
-     "min": 1148,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1149,
-     "p90": 15,
-     "n": 119
-    },
-    {
-     "min": 1188,
-     "p90": 23,
-     "n": 122
-    },
-    {
-     "min": 1192,
-     "p90": 18,
-     "n": 9
-    },
-    {
-     "min": 1212,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1217,
-     "p90": 2,
-     "n": 9
-    },
-    {
-     "min": 1251,
-     "p90": 7,
-     "n": 1
-    },
-    {
-     "min": 1252,
-     "p90": 60,
-     "n": 9
-    },
-    {
-     "min": 1268,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1269,
-     "p90": 3,
-     "n": 1
-    },
-    {
-     "min": 1308,
-     "p90": 31,
-     "n": 110
-    },
-    {
-     "min": 1331,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1332,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1371,
-     "p90": 39,
-     "n": 10
-    },
-    {
-     "min": 1372,
-     "p90": 6,
-     "n": 9
-    },
-    {
-     "min": 1415,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1418,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1428,
-     "p90": 31,
-     "n": 102
-    }
-   ]
-  },
-  "sa": {
-   "runs": [
-    {
-     "dep": 500,
-     "ret": 531,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 491,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 6,
-      "n": 24
-     },
-     "depTrain": {
-      "min": 532,
-      "p90": 1,
-      "n": 1
-     }
-    },
-    {
-     "dep": 544,
-     "ret": 576,
-     "ring": 32,
-     "service": "regular",
-     "besonderheit": null,
-     "arr": {
-      "min": 531,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 6,
-      "n": 2
-     },
-     "depTrain": {
-      "min": 588,
-      "p90": 14,
-      "n": 23
-     }
-    },
-    {
-     "dep": 615,
-     "ret": 646,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 611,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 7,
-      "n": 25
-     },
-     "depTrain": {
-      "min": 651,
-      "p90": 4,
-      "n": 23
-     }
-    },
-    {
-     "dep": 960,
-     "ret": 991,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 927,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 0,
-      "n": 1
-     },
-     "depTrain": {
-      "min": 1011,
-      "p90": 8,
-      "n": 25
-     }
-    },
-    {
-     "dep": 1035,
-     "ret": 1066,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 1028,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 8,
-      "n": 24
-     },
-     "depTrain": {
-      "min": 1068,
-      "p90": 12,
-      "n": 25
-     }
-    }
-   ],
-   "arrivals": [
-    {
-     "min": 78,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 47
-    },
-    {
-     "min": 328,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 34
-    },
-    {
-     "min": 337,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 6,
-     "n": 4
-    },
-    {
-     "min": 348,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 27
-    },
-    {
-     "min": 371,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 20
-    },
-    {
-     "min": 410,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 5,
-     "n": 25
-    },
-    {
-     "min": 411,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 427,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 10,
-     "n": 35
-    },
-    {
-     "min": 428,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 3,
-     "n": 17
-    },
-    {
-     "min": 491,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 24
-    },
-    {
-     "min": 531,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 6,
-     "n": 2
-    },
-    {
-     "min": 547,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 40
-    },
-    {
-     "min": 579,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 24,
-     "n": 7
-    },
-    {
-     "min": 609,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 31
-    },
-    {
-     "min": 611,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 25
-    },
-    {
-     "min": 616,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 30
-    },
-    {
-     "min": 650,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 23
-    },
-    {
-     "min": 651,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 3
-    },
-    {
-     "min": 667,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 12,
-     "n": 38
-    },
-    {
-     "min": 668,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 8,
-     "n": 22
-    },
-    {
-     "min": 729,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 36
-    },
-    {
-     "min": 731,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 23
-    },
-    {
-     "min": 736,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 7
-    },
-    {
-     "min": 738,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 1
-    },
-    {
-     "min": 740,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 24
-    },
-    {
-     "min": 771,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 56,
-     "n": 13
-    },
-    {
-     "min": 787,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 16,
-     "n": 38
-    },
-    {
-     "min": 788,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 7
-    },
-    {
-     "min": 851,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 18,
-     "n": 25
-    },
-    {
-     "min": 890,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 12
-    },
-    {
-     "min": 891,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 907,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 11,
-     "n": 40
-    },
-    {
-     "min": 908,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 26,
-     "n": 7
-    },
-    {
-     "min": 925,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 927,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 969,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 34
-    },
-    {
-     "min": 971,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 25
-    },
-    {
-     "min": 976,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 16
-    },
-    {
-     "min": 978,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 18,
-     "n": 2
-    },
-    {
-     "min": 1010,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 25
-    },
-    {
-     "min": 1011,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 1027,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 17,
-     "n": 40
-    },
-    {
-     "min": 1028,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 8,
-     "n": 24
-    },
-    {
-     "min": 1085,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 14,
-     "n": 16
-    },
-    {
-     "min": 1089,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 34
-    },
-    {
-     "min": 1091,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 25
-    },
-    {
-     "min": 1096,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 14,
-     "n": 7
-    },
-    {
-     "min": 1104,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 1130,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 9,
-     "n": 10
-    },
-    {
-     "min": 1131,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 3
-    },
-    {
-     "min": 1147,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 32,
-     "n": 36
-    },
-    {
-     "min": 1148,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 7
-    },
-    {
-     "min": 1211,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 23
-    },
-    {
-     "min": 1250,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 3,
-     "n": 27
-    },
-    {
-     "min": 1251,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 1267,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 43,
-     "n": 38
-    },
-    {
-     "min": 1268,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 11,
-     "n": 1
-    },
-    {
-     "min": 1331,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 22
-    },
-    {
-     "min": 1370,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 26
-    },
-    {
-     "min": 1371,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 33,
-     "n": 2
-    },
-    {
-     "min": 1418,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 16,
-     "n": 41
-    },
-    {
-     "min": 1418,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 8
-    },
-    {
-     "min": 1420,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 1
-    }
-   ],
-   "departures": [
-    {
-     "min": 78,
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 79,
-     "p90": 12,
-     "n": 20
-    },
-    {
-     "min": 329,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 348,
-     "p90": 1,
-     "n": 24
-    },
-    {
-     "min": 372,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 411,
-     "p90": 6,
-     "n": 24
-    },
-    {
-     "min": 412,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 428,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 429,
-     "p90": 2,
-     "n": 24
-    },
-    {
-     "min": 468,
-     "p90": 8,
-     "n": 25
-    },
-    {
-     "min": 492,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 532,
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 548,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 588,
-     "p90": 14,
-     "n": 23
-    },
-    {
-     "min": 589,
-     "p90": 20,
-     "n": 1
-    },
-    {
-     "min": 610,
-     "p90": 4,
-     "n": 1
-    },
-    {
-     "min": 612,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 617,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 651,
-     "p90": 4,
-     "n": 23
-    },
-    {
-     "min": 652,
-     "p90": 5,
-     "n": 1
-    },
-    {
-     "min": 668,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 669,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 708,
-     "p90": 18,
-     "n": 23
-    },
-    {
-     "min": 709,
-     "p90": 18,
-     "n": 2
-    },
-    {
-     "min": 730,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 732,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 740,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 771,
-     "p90": 56,
-     "n": 11
-    },
-    {
-     "min": 772,
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 788,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 789,
-     "p90": 7,
-     "n": 6
-    },
-    {
-     "min": 828,
-     "p90": 39,
-     "n": 25
-    },
-    {
-     "min": 852,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 891,
-     "p90": 8,
-     "n": 13
-    },
-    {
-     "min": 892,
-     "p90": 5,
-     "n": 1
-    },
-    {
-     "min": 908,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 909,
-     "p90": 7,
-     "n": 9
-    },
-    {
-     "min": 948,
-     "p90": 16,
-     "n": 25
-    },
-    {
-     "min": 970,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 972,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 976,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1011,
-     "p90": 8,
-     "n": 25
-    },
-    {
-     "min": 1012,
-     "p90": 4,
-     "n": 1
-    },
-    {
-     "min": 1028,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1029,
-     "p90": 9,
-     "n": 27
-    },
-    {
-     "min": 1068,
-     "p90": 12,
-     "n": 25
-    },
-    {
-     "min": 1085,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1090,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1092,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1131,
-     "p90": 3,
-     "n": 9
-    },
-    {
-     "min": 1132,
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 1148,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1149,
-     "p90": 7,
-     "n": 6
-    },
-    {
-     "min": 1188,
-     "p90": 14,
-     "n": 23
-    },
-    {
-     "min": 1189,
-     "p90": 30,
-     "n": 2
-    },
-    {
-     "min": 1212,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1251,
-     "p90": 4,
-     "n": 26
-    },
-    {
-     "min": 1252,
-     "p90": 2,
-     "n": 1
-    },
-    {
-     "min": 1268,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1269,
-     "p90": 4,
-     "n": 24
-    },
-    {
-     "min": 1308,
-     "p90": 28,
-     "n": 24
-    },
-    {
-     "min": 1332,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1371,
-     "p90": 6,
-     "n": 24
-    },
-    {
-     "min": 1372,
-     "p90": 1,
-     "n": 1
-    },
-    {
-     "min": 1418,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1428,
-     "p90": 7,
-     "n": 22
-    }
-   ]
-  },
-  "so": {
-   "runs": [
-    {
-     "dep": 500,
-     "ret": 531,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 497,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 0,
-      "n": 9
-     },
-     "depTrain": {
-      "min": 532,
-      "p90": 1,
-      "n": 2
-     }
-    },
-    {
-     "dep": 615,
-     "ret": 646,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "b",
-     "arr": {
-      "min": 611,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 5,
-      "n": 22
-     },
-     "depTrain": {
-      "min": 651,
-      "p90": 7,
-      "n": 24
-     }
-    },
-    {
-     "dep": 960,
-     "ret": 991,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 940,
-      "from": "Schwerin",
-      "to": "Hamburg",
-      "p90": 0,
-      "n": 5
-     },
-     "depTrain": {
-      "min": 1011,
-      "p90": 8,
-      "n": 25
-     }
-    },
-    {
-     "dep": 1035,
-     "ret": 1066,
-     "ring": 31,
-     "service": "regular",
-     "besonderheit": "cw",
-     "arr": {
-      "min": 1028,
-      "from": "Hamburg",
-      "to": "Schwerin",
-      "p90": 9,
-      "n": 25
-     },
-     "depTrain": {
-      "min": 1068,
-      "p90": 19,
-      "n": 25
-     }
-    }
-   ],
-   "arrivals": [
-    {
-     "min": 78,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 47
-    },
-    {
-     "min": 275,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 11
-    },
-    {
-     "min": 328,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 32
-    },
-    {
-     "min": 337,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 7,
-     "n": 13
-    },
-    {
-     "min": 348,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 361,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 7
-    },
-    {
-     "min": 371,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 22
-    },
-    {
-     "min": 410,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 3,
-     "n": 27
-    },
-    {
-     "min": 411,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 427,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 34
-    },
-    {
-     "min": 428,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 2,
-     "n": 19
-    },
-    {
-     "min": 460,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 6
-    },
-    {
-     "min": 491,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 2,
-     "n": 24
-    },
-    {
-     "min": 497,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 9
-    },
-    {
-     "min": 531,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 24,
-     "n": 2
-    },
-    {
-     "min": 547,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 11,
-     "n": 37
-    },
-    {
-     "min": 579,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 5
-    },
-    {
-     "min": 609,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 30
-    },
-    {
-     "min": 611,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 22
-    },
-    {
-     "min": 616,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 4,
-     "n": 28
-    },
-    {
-     "min": 650,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 25
-    },
-    {
-     "min": 651,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 3
-    },
-    {
-     "min": 667,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 16,
-     "n": 38
-    },
-    {
-     "min": 668,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 8,
-     "n": 15
-    },
-    {
-     "min": 729,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 33
-    },
-    {
-     "min": 731,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 25
-    },
-    {
-     "min": 736,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 13,
-     "n": 7
-    },
-    {
-     "min": 738,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 9,
-     "n": 2
-    },
-    {
-     "min": 740,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 5,
-     "n": 18
-    },
-    {
-     "min": 771,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 9
-    },
-    {
-     "min": 787,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 22,
-     "n": 43
-    },
-    {
-     "min": 788,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 15,
-     "n": 7
-    },
-    {
-     "min": 851,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 13,
-     "n": 25
-    },
-    {
-     "min": 890,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 10
-    },
-    {
-     "min": 891,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 9,
-     "n": 3
-    },
-    {
-     "min": 907,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 24,
-     "n": 41
-    },
-    {
-     "min": 908,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 9,
-     "n": 9
-    },
-    {
-     "min": 926,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 2
-    },
-    {
-     "min": 940,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 5
-    },
-    {
-     "min": 969,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 3,
-     "n": 34
-    },
-    {
-     "min": 971,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 1,
-     "n": 25
-    },
-    {
-     "min": 976,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 2,
-     "n": 18
-    },
-    {
-     "min": 978,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 17,
-     "n": 2
-    },
-    {
-     "min": 1010,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 24
-    },
-    {
-     "min": 1011,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 2,
-     "n": 3
-    },
-    {
-     "min": 1027,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 15,
-     "n": 41
-    },
-    {
-     "min": 1028,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 9,
-     "n": 25
-    },
-    {
-     "min": 1085,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 15,
-     "n": 15
-    },
-    {
-     "min": 1089,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 8,
-     "n": 35
-    },
-    {
-     "min": 1090,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 1091,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 12,
-     "n": 25
-    },
-    {
-     "min": 1096,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 6,
-     "n": 6
-    },
-    {
-     "min": 1104,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 15,
-     "n": 2
-    },
-    {
-     "min": 1130,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 6
-    },
-    {
-     "min": 1131,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 1,
-     "n": 3
-    },
-    {
-     "min": 1147,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 40
-    },
-    {
-     "min": 1148,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 9,
-     "n": 6
-    },
-    {
-     "min": 1192,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 1211,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 4,
-     "n": 25
-    },
-    {
-     "min": 1216,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 1250,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 4,
-     "n": 25
-    },
-    {
-     "min": 1251,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 1252,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 13,
-     "n": 1
-    },
-    {
-     "min": 1267,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 15,
-     "n": 36
-    },
-    {
-     "min": 1268,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1281,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1331,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 7,
-     "n": 23
-    },
-    {
-     "min": 1370,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 9,
-     "n": 20
-    },
-    {
-     "min": 1371,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 47,
-     "n": 2
-    },
-    {
-     "min": 1417,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 1418,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 16,
-     "n": 42
-    },
-    {
-     "min": 1418,
-     "from": "Schwerin",
-     "to": "Hamburg",
-     "p90": 18,
-     "n": 6
-    },
-    {
-     "min": 1428,
-     "from": "Hamburg",
-     "to": "Schwerin",
-     "p90": 9,
-     "n": 1
-    }
-   ],
-   "departures": [
-    {
-     "min": 78,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 79,
-     "p90": 5,
-     "n": 23
-    },
-    {
-     "min": 276,
-     "p90": 0,
-     "n": 7
-    },
-    {
-     "min": 308,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 309,
-     "p90": 0,
-     "n": 22
-    },
-    {
-     "min": 310,
-     "p90": 0,
-     "n": 1
-    },
-    {
-     "min": 329,
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 338,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 348,
-     "p90": 4,
-     "n": 21
-    },
-    {
-     "min": 362,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 372,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 411,
-     "p90": 3,
-     "n": 25
-    },
-    {
-     "min": 412,
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 428,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 429,
-     "p90": 3,
-     "n": 23
-    },
-    {
-     "min": 461,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 468,
-     "p90": 5,
-     "n": 25
-    },
-    {
-     "min": 492,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 498,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 532,
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 548,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 588,
-     "p90": 9,
-     "n": 23
-    },
-    {
-     "min": 589,
-     "p90": 7,
-     "n": 2
-    },
-    {
-     "min": 610,
-     "p90": 0,
-     "n": 3
-    },
-    {
-     "min": 612,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 617,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 651,
-     "p90": 7,
-     "n": 24
-    },
-    {
-     "min": 652,
-     "p90": 2,
-     "n": 2
-    },
-    {
-     "min": 668,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 669,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 708,
-     "p90": 9,
-     "n": 23
-    },
-    {
-     "min": 709,
-     "p90": 23,
-     "n": 2
-    },
-    {
-     "min": 730,
-     "p90": 1,
-     "n": 4
-    },
-    {
-     "min": 732,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 740,
-     "p90": 0,
-     "n": 2
-    },
-    {
-     "min": 771,
-     "p90": 1,
-     "n": 8
-    },
-    {
-     "min": 772,
-     "p90": 2,
-     "n": 2
-    },
-    {
-     "min": 788,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 789,
-     "p90": 15,
-     "n": 6
-    },
-    {
-     "min": 828,
-     "p90": 31,
-     "n": 25
-    },
-    {
-     "min": 852,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 891,
-     "p90": 4,
-     "n": 10
-    },
-    {
-     "min": 892,
-     "p90": 9,
-     "n": 2
-    },
-    {
-     "min": 908,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 909,
-     "p90": 7,
-     "n": 8
-    },
-    {
-     "min": 948,
-     "p90": 33,
-     "n": 23
-    },
-    {
-     "min": 970,
-     "p90": 4,
-     "n": 3
-    },
-    {
-     "min": 972,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 976,
-     "p90": 2,
-     "n": 2
-    },
-    {
-     "min": 1011,
-     "p90": 8,
-     "n": 25
-    },
-    {
-     "min": 1012,
-     "p90": 9,
-     "n": 2
-    },
-    {
-     "min": 1028,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1029,
-     "p90": 9,
-     "n": 27
-    },
-    {
-     "min": 1068,
-     "p90": 19,
-     "n": 25
-    },
-    {
-     "min": 1085,
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 1090,
-     "p90": 9,
-     "n": 2
-    },
-    {
-     "min": 1092,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1131,
-     "p90": 2,
-     "n": 10
-    },
-    {
-     "min": 1132,
-     "p90": 8,
-     "n": 2
-    },
-    {
-     "min": 1148,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1149,
-     "p90": 9,
-     "n": 7
-    },
-    {
-     "min": 1188,
-     "p90": 27,
-     "n": 23
-    },
-    {
-     "min": 1189,
-     "p90": 13,
-     "n": 2
-    },
-    {
-     "min": 1212,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1251,
-     "p90": 4,
-     "n": 25
-    },
-    {
-     "min": 1252,
-     "p90": 4,
-     "n": 2
-    },
-    {
-     "min": 1268,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1269,
-     "p90": 6,
-     "n": 27
-    },
-    {
-     "min": 1308,
-     "p90": 27,
-     "n": 24
-    },
-    {
-     "min": 1332,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1371,
-     "p90": 9,
-     "n": 18
-    },
-    {
-     "min": 1372,
-     "p90": 1,
-     "n": 2
-    },
-    {
-     "min": 1418,
-     "p90": null,
-     "n": 0
-    },
-    {
-     "min": 1428,
-     "p90": 10,
-     "n": 22
-    }
-   ]
   }
- }
 };</script>
 <script>const RING_MODEL = {
- "walk_limit_min": 15,
- "walk_speed_kmh": 4.8,
- "cycle_min": 31,
- "bahnhof_stop_indices": [
-  4,
-  20
- ],
- "stops": [
-  {
-   "name": "Ringstraße",
-   "lat": 53.378266,
-   "lon": 10.764826,
-   "is_bahnhof": false,
-   "ride_from_prev": null,
-   "walk_from_prev_min": null,
-   "express_skippable": false
-  },
-  {
-   "name": "Gülzer Straße",
-   "lat": 53.3795,
-   "lon": 10.768,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 3.1,
-   "express_skippable": true
-  },
-  {
-   "name": "Industriegebiet",
-   "lat": 53.381016,
-   "lon": 10.771065,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 3.3,
-   "express_skippable": true
-  },
-  {
-   "name": "Boizenburg Lindhorst",
-   "lat": 53.384955,
-   "lon": 10.773574,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 5.9,
-   "express_skippable": false
-  },
-  {
-   "name": "Boizenburg Bahnhof",
-   "lat": 53.377607,
-   "lon": 10.753858,
-   "is_bahnhof": true,
-   "ride_from_prev": 4,
-   "walk_from_prev_min": 19.3,
-   "express_skippable": false
-  },
-  {
-   "name": "Weg der Jugend",
-   "lat": 53.376622,
-   "lon": 10.741151,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 10.6,
-   "express_skippable": false
-  },
-  {
-   "name": "Boizenburg Markt",
-   "lat": 53.374904,
-   "lon": 10.723617,
-   "is_bahnhof": false,
-   "ride_from_prev": 3,
-   "walk_from_prev_min": 14.7,
-   "express_skippable": false
-  },
-  {
-   "name": "Schwartower Str.",
-   "lat": 53.379295,
-   "lon": 10.72535,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 6.3,
-   "express_skippable": true
-  },
-  {
-   "name": "Stiftstraße",
-   "lat": 53.375577,
-   "lon": 10.724527,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 5.2,
-   "express_skippable": false
-  },
-  {
-   "name": "Schulzentrum",
-   "lat": 53.382973,
-   "lon": 10.730846,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 11.5,
-   "express_skippable": false
-  },
-  {
-   "name": "Metlitzer Weg",
-   "lat": 53.385825,
-   "lon": 10.731288,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 4.0,
-   "express_skippable": true
-  },
-  {
-   "name": "R. Markmann Str.",
-   "lat": 53.383308,
-   "lon": 10.72984,
-   "is_bahnhof": false,
-   "ride_from_prev": 6,
-   "walk_from_prev_min": 3.7,
-   "express_skippable": true
-  },
-  {
-   "name": "Breitscheidstr.",
-   "lat": 53.382194,
-   "lon": 10.723278,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 5.7,
-   "express_skippable": true
-  },
-  {
-   "name": "H.-J.-P. Lemm Str.",
-   "lat": 53.382857,
-   "lon": 10.719083,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 3.6,
-   "express_skippable": true
-  },
-  {
-   "name": "Schiller Str.",
-   "lat": 53.382528,
-   "lon": 10.716176,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 2.5,
-   "express_skippable": true
-  },
-  {
-   "name": "Buchenweg",
-   "lat": 53.382555,
-   "lon": 10.710479,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 4.7,
-   "express_skippable": false
-  },
-  {
-   "name": "Schwartower Str.",
-   "lat": 53.379295,
-   "lon": 10.72535,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 13.1,
-   "express_skippable": false
-  },
-  {
-   "name": "Stiftstraße",
-   "lat": 53.375577,
-   "lon": 10.724527,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 5.2,
-   "express_skippable": true
-  },
-  {
-   "name": "Boizenburg Markt",
-   "lat": 53.374904,
-   "lon": 10.723617,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 1.2,
-   "express_skippable": false
-  },
-  {
-   "name": "Weg der Jugend",
-   "lat": 53.376622,
-   "lon": 10.741151,
-   "is_bahnhof": false,
-   "ride_from_prev": 3,
-   "walk_from_prev_min": 14.7,
-   "express_skippable": false
-  },
-  {
-   "name": "Boizenburg Bahnhof",
-   "lat": 53.377607,
-   "lon": 10.753858,
-   "is_bahnhof": true,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 10.6,
-   "express_skippable": false
-  },
-  {
-   "name": "Boizenburg Lindhorst",
-   "lat": 53.384955,
-   "lon": 10.773574,
-   "is_bahnhof": false,
-   "ride_from_prev": 4,
-   "walk_from_prev_min": 19.3,
-   "express_skippable": false
-  },
-  {
-   "name": "Industriegebiet",
-   "lat": 53.381016,
-   "lon": 10.771065,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 5.9,
-   "express_skippable": true
-  },
-  {
-   "name": "Gülzer Straße",
-   "lat": 53.3795,
-   "lon": 10.768,
-   "is_bahnhof": false,
-   "ride_from_prev": 2,
-   "walk_from_prev_min": 3.3,
-   "express_skippable": true
-  },
-  {
-   "name": "Ringstraße",
-   "lat": 53.378266,
-   "lon": 10.764826,
-   "is_bahnhof": false,
-   "ride_from_prev": 1,
-   "walk_from_prev_min": 3.1,
-   "express_skippable": false
-  }
- ]
+  "walk_limit_min": 15,
+  "walk_speed_kmh": 4.8,
+  "cycle_min": 31,
+  "bahnhof_stop_indices": [
+    4,
+    20
+  ],
+  "stops": [
+    {
+      "name": "Ringstraße",
+      "lat": 53.378266,
+      "lon": 10.764826,
+      "is_bahnhof": false,
+      "ride_from_prev": null,
+      "walk_from_prev_min": null,
+      "express_skippable": false
+    },
+    {
+      "name": "Gülzer Straße",
+      "lat": 53.3795,
+      "lon": 10.768,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 3.1,
+      "express_skippable": true
+    },
+    {
+      "name": "Industriegebiet",
+      "lat": 53.381016,
+      "lon": 10.771065,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 3.3,
+      "express_skippable": true
+    },
+    {
+      "name": "Boizenburg Lindhorst",
+      "lat": 53.384955,
+      "lon": 10.773574,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 5.9,
+      "express_skippable": false
+    },
+    {
+      "name": "Boizenburg Bahnhof",
+      "lat": 53.377607,
+      "lon": 10.753858,
+      "is_bahnhof": true,
+      "ride_from_prev": 4,
+      "walk_from_prev_min": 19.3,
+      "express_skippable": false
+    },
+    {
+      "name": "Weg der Jugend",
+      "lat": 53.376622,
+      "lon": 10.741151,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 10.6,
+      "express_skippable": false
+    },
+    {
+      "name": "Boizenburg Markt",
+      "lat": 53.374904,
+      "lon": 10.723617,
+      "is_bahnhof": false,
+      "ride_from_prev": 3,
+      "walk_from_prev_min": 14.7,
+      "express_skippable": false
+    },
+    {
+      "name": "Schwartower Str.",
+      "lat": 53.379295,
+      "lon": 10.72535,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 6.3,
+      "express_skippable": true
+    },
+    {
+      "name": "Stiftstraße",
+      "lat": 53.375577,
+      "lon": 10.724527,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 5.2,
+      "express_skippable": false
+    },
+    {
+      "name": "Schulzentrum",
+      "lat": 53.382973,
+      "lon": 10.730846,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 11.5,
+      "express_skippable": false
+    },
+    {
+      "name": "Metlitzer Weg",
+      "lat": 53.385825,
+      "lon": 10.731288,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 4,
+      "express_skippable": true
+    },
+    {
+      "name": "R. Markmann Str.",
+      "lat": 53.383308,
+      "lon": 10.72984,
+      "is_bahnhof": false,
+      "ride_from_prev": 6,
+      "walk_from_prev_min": 3.7,
+      "express_skippable": true
+    },
+    {
+      "name": "Breitscheidstr.",
+      "lat": 53.382194,
+      "lon": 10.723278,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 5.7,
+      "express_skippable": true
+    },
+    {
+      "name": "H.-J.-P. Lemm Str.",
+      "lat": 53.382857,
+      "lon": 10.719083,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 3.6,
+      "express_skippable": true
+    },
+    {
+      "name": "Schiller Str.",
+      "lat": 53.382528,
+      "lon": 10.716176,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 2.5,
+      "express_skippable": true
+    },
+    {
+      "name": "Buchenweg",
+      "lat": 53.382555,
+      "lon": 10.710479,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 4.7,
+      "express_skippable": false
+    },
+    {
+      "name": "Schwartower Str.",
+      "lat": 53.379295,
+      "lon": 10.72535,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 13.1,
+      "express_skippable": false
+    },
+    {
+      "name": "Stiftstraße",
+      "lat": 53.375577,
+      "lon": 10.724527,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 5.2,
+      "express_skippable": true
+    },
+    {
+      "name": "Boizenburg Markt",
+      "lat": 53.374904,
+      "lon": 10.723617,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 1.2,
+      "express_skippable": false
+    },
+    {
+      "name": "Weg der Jugend",
+      "lat": 53.376622,
+      "lon": 10.741151,
+      "is_bahnhof": false,
+      "ride_from_prev": 3,
+      "walk_from_prev_min": 14.7,
+      "express_skippable": false
+    },
+    {
+      "name": "Boizenburg Bahnhof",
+      "lat": 53.377607,
+      "lon": 10.753858,
+      "is_bahnhof": true,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 10.6,
+      "express_skippable": false
+    },
+    {
+      "name": "Boizenburg Lindhorst",
+      "lat": 53.384955,
+      "lon": 10.773574,
+      "is_bahnhof": false,
+      "ride_from_prev": 4,
+      "walk_from_prev_min": 19.3,
+      "express_skippable": false
+    },
+    {
+      "name": "Industriegebiet",
+      "lat": 53.381016,
+      "lon": 10.771065,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 5.9,
+      "express_skippable": true
+    },
+    {
+      "name": "Gülzer Straße",
+      "lat": 53.3795,
+      "lon": 10.768,
+      "is_bahnhof": false,
+      "ride_from_prev": 2,
+      "walk_from_prev_min": 3.3,
+      "express_skippable": true
+    },
+    {
+      "name": "Ringstraße",
+      "lat": 53.378266,
+      "lon": 10.764826,
+      "is_bahnhof": false,
+      "ride_from_prev": 1,
+      "walk_from_prev_min": 3.1,
+      "express_skippable": false
+    }
+  ]
 };</script>
+<script>const BUSTI_ROUTE = [[53.37791,10.76307],[53.37826,10.76309],[53.37824,10.76365],[53.37823,10.76414],[53.37828,10.7651],[53.37827,10.76527],[53.37824,10.76539],[53.37818,10.76557],[53.37782,10.76616],[53.37775,10.7663],[53.37771,10.76642],[53.37768,10.76657],[53.37767,10.76675],[53.3777,10.76693],[53.37862,10.77099],[53.38062,10.76966],[53.38094,10.77111],[53.38062,10.76966],[53.38104,10.76941],[53.38126,10.76935],[53.38148,10.76934],[53.38174,10.76941],[53.38255,10.76986],[53.383,10.77018],[53.38339,10.77049],[53.38345,10.7706],[53.38347,10.77074],[53.38352,10.77158],[53.3836,10.77186],[53.38504,10.77368],[53.3836,10.77186],[53.38352,10.77158],[53.38347,10.77074],[53.38345,10.7706],[53.38339,10.77049],[53.383,10.77018],[53.38255,10.76986],[53.3817,10.76939],[53.38148,10.76934],[53.38126,10.76935],[53.38104,10.76941],[53.38062,10.76966],[53.37794,10.75747],[53.37749,10.75555],[53.37723,10.75438],[53.37738,10.75431],[53.37744,10.75419],[53.37765,10.75353],[53.3778,10.75361],[53.37765,10.75428],[53.37757,10.7544],[53.37738,10.75431],[53.37723,10.75438],[53.37612,10.74952],[53.37482,10.74379],[53.37295,10.73553],[53.37288,10.73494],[53.37285,10.73395],[53.37288,10.73351],[53.37292,10.73318],[53.37297,10.73288],[53.37315,10.73203],[53.3733,10.73134],[53.37339,10.73065],[53.37376,10.727],[53.37378,10.72665],[53.3738,10.72571],[53.37383,10.72519],[53.37399,10.72385],[53.37486,10.72411],[53.37486,10.7235],[53.37485,10.72289],[53.37482,10.72277],[53.37481,10.72154],[53.37481,10.72018],[53.3748,10.72004],[53.37514,10.71975],[53.37533,10.71954],[53.37553,10.7193],[53.37571,10.7191],[53.37595,10.71887],[53.37608,10.71877],[53.37635,10.71859],[53.37673,10.71825],[53.37688,10.71805],[53.37702,10.71818],[53.37709,10.71821],[53.37758,10.7183],[53.37761,10.71848],[53.37776,10.71911],[53.3778,10.71934],[53.37798,10.72068],[53.37803,10.72095],[53.37825,10.72174],[53.37868,10.72315],[53.37901,10.72414],[53.3791,10.72449],[53.37953,10.72641],[53.37984,10.72804],[53.37987,10.72818],[53.37997,10.72849],[53.3801,10.72884],[53.38032,10.72924],[53.38065,10.72981],[53.38079,10.73],[53.38194,10.73134],[53.38225,10.73075],[53.38261,10.73033],[53.38271,10.73054],[53.38297,10.73073],[53.38312,10.73083],[53.3832,10.73083],[53.38338,10.73072],[53.38357,10.73062],[53.38366,10.7305],[53.38373,10.73033],[53.38375,10.73016],[53.38394,10.73009],[53.38407,10.73034],[53.38427,10.73127],[53.38435,10.73135],[53.38503,10.73136],[53.38542,10.73125],[53.38565,10.73126],[53.38586,10.73129],[53.38603,10.73137],[53.38621,10.73151],[53.38603,10.73137],[53.38586,10.73129],[53.38565,10.73126],[53.38542,10.73125],[53.38506,10.73128],[53.38504,10.73115],[53.38505,10.72992],[53.38485,10.72988],[53.38473,10.72987],[53.38456,10.72988],[53.38413,10.73],[53.3838,10.73016],[53.38371,10.73009],[53.38362,10.72967],[53.38345,10.72869],[53.38337,10.72802],[53.38329,10.72651],[53.38325,10.72364],[53.38318,10.72347],[53.38311,10.72337],[53.38303,10.72322],[53.38177,10.72331],[53.38303,10.72322],[53.38295,10.72299],[53.38292,10.72163],[53.38279,10.71777],[53.38257,10.71778],[53.38249,10.71479],[53.38247,10.71463],[53.38292,10.7141],[53.38236,10.71232],[53.38292,10.7141],[53.38245,10.71457],[53.38091,10.71616],[53.38043,10.7166],[53.37938,10.71748],[53.37903,10.71775],[53.37879,10.71792],[53.37857,10.71807],[53.37828,10.71819],[53.37807,10.71825],[53.37785,10.7183],[53.37773,10.71831],[53.37758,10.7183],[53.37761,10.71848],[53.37776,10.71911],[53.3778,10.71934],[53.37798,10.72068],[53.37803,10.72095],[53.37825,10.72174],[53.37868,10.72315],[53.37901,10.72414],[53.3791,10.72449],[53.3794,10.72583],[53.37928,10.72587],[53.37901,10.72591],[53.37759,10.72611],[53.3774,10.72612],[53.3772,10.7261],[53.37696,10.72603],[53.37671,10.72592],[53.37643,10.72574],[53.37626,10.72559],[53.37605,10.72535],[53.37593,10.72519],[53.37584,10.72504],[53.37548,10.72435],[53.37538,10.72426],[53.37486,10.72411],[53.37486,10.72342],[53.374,10.72339],[53.37399,10.72385],[53.37383,10.72519],[53.3738,10.72571],[53.37378,10.72665],[53.37376,10.727],[53.37339,10.73065],[53.3733,10.73134],[53.37315,10.73203],[53.37297,10.73288],[53.37292,10.73318],[53.37288,10.73351],[53.37285,10.73395],[53.37288,10.73494],[53.37295,10.73553],[53.37612,10.74952],[53.37723,10.75438],[53.37738,10.75431],[53.37744,10.75419],[53.37765,10.75353],[53.3778,10.75361],[53.37765,10.75428],[53.37757,10.7544],[53.37738,10.75431],[53.37723,10.75438],[53.37749,10.75555],[53.37794,10.75747],[53.38082,10.77056],[53.38062,10.76966],[53.37862,10.77099],[53.37806,10.76855],[53.3777,10.76693],[53.37767,10.76675],[53.37768,10.76657],[53.37771,10.76642],[53.37775,10.7663],[53.37782,10.76616],[53.37818,10.76557],[53.37824,10.76539],[53.37827,10.76527],[53.37828,10.7651],[53.37823,10.76414],[53.37824,10.76365],[53.37826,10.76309],[53.37791,10.76307],[53.37791,10.76307]];</script>
 <script>/* ===== Auto-generated by build_simulation.py — DO NOT EDIT ===== */
 /**
  * umlauf.js — The honest, simple line-500 model.
@@ -3768,6 +3782,18 @@ function $(id){ return document.getElementById(id); }
 function hh(m){ if(m==null) return "--:--"; var x=((m%1440)+1440)%1440; return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0"); }
 function pct(x){ return (Math.round(x*10)/10).toFixed(1)+"%"; }
 
+/* Richtungskürzel: SN = Schwerin, HH = Hamburg, BZBG = Boizenburg */
+function dirBadge(f,t){
+  var key = (f==="Schwerin"?"SN":(f==="Hamburg"?"HH":f));
+  var cls = key==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge '+cls+'">'+key+'&rarr;BZBG</span>';
+}
+function depDirBadge(t){
+  var key = (t==="Schwerin"?"SN":(t==="Hamburg"?"HH":t));
+  var cls = key==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge dir-hh">BZBG&rarr;'+key+'</span>';
+}
+
 document.addEventListener("DOMContentLoaded", function(){
   ui.express = {};  // per day type set of express run indices
   ["wd","sa","so"].forEach(function(dt){ ui.express[dt] = {}; });
@@ -3828,6 +3854,9 @@ function toggleExpress(i){
   renderAll();
 }
 
+// Rufbus-Abfahrten (müssen online vorbestellt werden, nicht im Standardtakt)
+var RUFBUS_DEPS = [1215, 1262, 1275]; // 20:15, 21:02, 21:15
+
 function renderAll(){
   var res = currentEval();
   renderKpis(res);
@@ -3838,7 +3867,6 @@ function renderAll(){
     " davon Express · Verschiebung " + (ui.shift>=0?"+":"") + ui.shift + " Min.";
   $("routeNote").textContent = "Express spart " + ui.expressSaving +
     " Min. Ringdauer (lässt " + UMLAUF_DATA.express_skipped_stops.length + " Fußweg-Halte aus).";
-  // update the express-saving hint: typical ring 31 min -> express floored at 10
   var ringNormalEl = $("ringNormal"), ringExprEl = $("ringExpress");
   if (ringNormalEl) ringNormalEl.textContent = "31";
   if (ringExprEl) ringExprEl.textContent = String(Math.max(10, 31 - ui.expressSaving));
@@ -3848,12 +3876,15 @@ function renderAll(){
 
 function renderKpis(res){
   var k = res.kpis;
+  var tipArrival = '<span class="tip">ⓘ<span class="tipbox">Berechnung: Für jeden Zug wird geprüft, ob der Bus noch abfährt, nachdem der Zug am Bahnhof Boizenburg angekommen ist und die Fahrgäste eingestiegen sind. Puffer = Busabfahrt − Zugplanankunft − Einstieg 2 Min. Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist. Die Prozentzahl ist gewichtet mit den Fahrgastzahlen n (wie viele Leute tatsächlich in diesem Zug sitzen). Betroffene Pendler: RE1-Fahrgäste, die aussteigen und mit dem Bus weiterfahren – aus Hamburg kommend (HH→BZBG) oder aus Schwerin kommend (SN→BZBG).</span></span>';
+  var tipRobust = '<span class="tip">ⓘ<span class="tipbox">Grün ✓ = verspätungsrobust: Der Puffer reicht auch, wenn der Zug mit seiner p90-Verspätung kommt. Rot ✗ = nicht robust: Bei planmäßiger Ankunft reicht der Puffer gerade, bei der üblichen p90-Verspätung verpasst man den Bus. Verspätungsrobust bedeutet: Puffer ≥ p90-Verspätung.</span></span>';
+  var tipReturn = '<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min. ≥ 0 Min. heißt: Der Bus ist rechtzeitig zurück, damit Fahrgäste den abfahrenden RE1 noch erreichen. Unter 0 Min. rot: Der Bus käme zu spät, der Zug wäre weg. Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof ankommen und den RE1 erreichen wollen – mit dem Bus nach Hamburg (BZBG→HH) oder nach Schwerin (BZBG→SN).</span></span>';
   $("kpis").innerHTML =
-    kpi("Anschluss ankommend", pct(k.arrReachRate), cls(k.arrReachRate),
+    kpi("Anschluss ankommend " + tipArrival, pct(k.arrReachRate), cls(k.arrReachRate),
         "Bus erreicht (Puffer ≥ " + ui.arriveBufferMin + " Min.)")
-  + kpi("davon verspätungs­robust", pct(k.arrRobustRate), cls(k.arrRobustRate),
+  + kpi("davon verspätungs­robust " + tipRobust, pct(k.arrRobustRate), cls(k.arrRobustRate),
         "auch bei p90-Verspätung erreicht")
-  + kpi("Rückanschluss abfahrend", pct(k.depReachRate), cls(k.depReachRate),
+  + kpi("Rückanschluss abfahrend " + tipReturn, pct(k.depReachRate), cls(k.depReachRate),
         "Bus rechtzeitig zurück (Reserve ≥ " + ui.departReserveMin + " Min.)")
   + kpi("Ø Ankunftspuffer", k.meanArrBuffer.toFixed(1) + " Min.", "",
         "Wartezeit pünktlicher Fahrgäste");
@@ -3869,20 +3900,25 @@ function renderRuns(res){
     var arrBufCls = a ? (a.buffer < 0 ? "bad" : (a.buffer >= ui.arriveBufferMin ? "good" : "warn")) : "";
     var robust = a ? (a.robust ? '<span class="good">✓</span>' : '<span class="bad">✗</span>') : "–";
     var resCls = d ? (d.reserve < 0 ? "bad" : (d.reserve >= ui.departReserveMin ? "good" : "warn")) : "";
-    var dirTxt = a ? ("aus " + a.from + " → " + a.to) : "–";
     var svcBadge = r.service === "schule" ? ' <span style="color:var(--muted);font-size:10px">(Schultag)</span>'
                  : r.service === "ferien" ? ' <span style="color:var(--muted);font-size:10px">(Ferien)</span>' : '';
+    // Ankommender RE1 Richtung
+    var arrDirHtml = a ? dirBadge(a.from, a.to) : '<span class="blank">—</span>';
+    var arrDirTxt = a ? (a.from==="Schwerin"?"SN→BZBG":(a.from==="Hamburg"?"HH→BZBG":(a.from+"→BZBG"))) : "—";
+    // Abfahrender RE1 Richtung: zurück zum Herkunftsort des ankommenden Zuges
+    var depDirHtml = d ? depDirBadge(d.train ? "x" : "x") : '<span class="blank">—</span>';
+    var depDirTxt = d ? (a ? (a.from==="Schwerin"?"BZBG→SN":(a.from==="Hamburg"?"BZBG→HH":"BZBG→?")) : "BZBG→?") : "—";
     return '<tr class="' + (exprChecked?"expr":"") + '">'
-      + '<td><input type="checkbox" class="exprbox" ' + exprChecked + ' onchange="toggleExpress(' + i + ')"></td>'
-      + '<td class="ham">' + (a ? hh(a.train) : "–") + '</td>'
-      + '<td>' + dirTxt + '</td>'
+      + '<td>' + (a ? hh(a.train) : '<span class="blank">—</span>') + '</td>'
+      + '<td>' + arrDirHtml + '</td>'
       + '<td class="prop">' + hh(r.dep) + (r.express ? ' <span style="color:var(--expr)">(Exp)</span>' : '') + svcBadge + '</td>'
-      + '<td class="' + arrBufCls + '">' + (a ? a.buffer + " Min." : "–") + '</td>'
-      + '<td>' + (a && a.p90 != null ? a.p90 : "–") + '</td>'
+      + '<td class="' + arrBufCls + '">' + (a ? a.buffer + " Min." : '<span class="blank">—</span>') + '</td>'
+      + '<td>' + (a && a.p90 != null ? a.p90 : '<span class="blank">—</span>') + '</td>'
       + '<td>' + robust + '</td>'
       + '<td>' + hh(r.ret) + '</td>'
-      + '<td class="sch">' + (d ? hh(d.train) : "–") + '</td>'
-      + '<td class="' + resCls + '">' + (d ? d.reserve + " Min." : "–") + '</td>'
+      + '<td>' + (d ? hh(d.train) + ' <span style="font-size:10px;color:var(--muted)">'+depDirTxt+'</span>' : '<span class="blank">—</span>') + '</td>'
+      + '<td class="' + resCls + '">' + (d ? d.reserve + " Min." : '<span class="blank">—</span>') + '</td>'
+      + '<td><input type="checkbox" class="exprbox" ' + exprChecked + ' onchange="toggleExpress(' + i + ')"></td>'
       + '</tr>';
   }).join("");
   $("runsBody").innerHTML = rows || '<tr><td colspan="10" style="color:var(--muted)">Keine Umläufe</td></tr>';
@@ -3903,9 +3939,8 @@ function updateMap(){
   if(!map) return;
   markers.forEach(function(m){ map.removeLayer(m); }); markers = [];
   if(routeLine){ map.removeLayer(routeLine); routeLine = null; }
-  // Show the ring; if ANY run is express, grey the express-skippable stops.
+  // Haltestellen aus dem Ringmodell
   var anyExpress = expressSet().length > 0;
-  var coords = [];
   RING_MODEL.stops.forEach(function(s){
     if(s.lat == null) return;
     var skip = anyExpress && s.express_skippable && !s.is_bahnhof;
@@ -3914,10 +3949,10 @@ function updateMap(){
     m.bindPopup("<b>"+s.name+"</b><br>"+(s.is_bahnhof?"Bahnhof":(skip?"Express: ausgelassen":"Halt"))+
       (s.walk_from_prev_min!=null?"<br>Fußweg: "+s.walk_from_prev_min+" Min.":""));
     markers.push(m);
-    if(!skip || s.is_bahnhof) coords.push([s.lat, s.lon]);
   });
-  routeLine = L.polyline(coords, {color:"#7a3e9d", weight:4, opacity:0.85}).addTo(map);
-  try { map.fitBounds(routeLine.getBounds().pad(0.15)); } catch(e){}
+  // Realistische Streckenführung der Linie 500 (GPS-Spur von busti.me).
+  routeLine = L.polyline(BUSTI_ROUTE, {color:"#12303d", weight:4, opacity:0.9}).addTo(map);
+  try { map.fitBounds(routeLine.getBounds().pad(0.18)); } catch(e){}
 }
 
 window.addEventListener("error", function(e){
