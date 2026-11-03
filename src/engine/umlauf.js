@@ -25,13 +25,21 @@ function evalRun(run, params) {
   const { board, walk, expressSaving, shift = 0, express = false,
           arriveBufferMin = 0, departReserveMin = 0 } = params;
 
+  // Direction-specific transfer times (Boizenburg Bahnhof platform layout):
+  // Train from Hamburg → bus: platform close to bus stop = 2 min
+  // Train from Schwerin → bus: platform far from bus stop = 5 min
+  // Bus → train to Hamburg: bus stop far from Hamburg platform = 5 min
+  // Bus → train to Schwerin: bus stop close to Schwerin platform = 2 min
+  const arrivalBoard = (run.arr && run.arr.from === "Schwerin") ? 5 : (board || 2);
+  const departureWalk = (run.arr && run.arr.to === "Hamburg") ? 5 : (walk || 1);
+
   const ring = express ? Math.max(10, run.ring - expressSaving) : run.ring;
   const dep = run.dep + shift;
   const ret = dep + ring;
 
   let arrival = null;
   if (run.arr) {
-    const buffer = dep - run.arr.min - board;
+    const buffer = dep - run.arr.min - arrivalBoard;
     const p90 = run.arr.p90 == null ? null : run.arr.p90;
     arrival = {
       train: run.arr.min,
@@ -48,7 +56,7 @@ function evalRun(run, params) {
 
   let departure = null;
   if (run.depTrain) {
-    const reserve = run.depTrain.min - ret - walk;
+    const reserve = run.depTrain.min - ret - departureWalk;
     departure = {
       train: run.depTrain.min,
       p90: run.depTrain.p90,

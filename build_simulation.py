@@ -50,14 +50,15 @@ function pct(x){ return (Math.round(x*10)/10).toFixed(1)+"%"; }
 
 /* Richtungskürzel: SN = Schwerin, HH = Hamburg, BZBG = Boizenburg */
 function dirBadge(f,t){
-  var key = (f==="Schwerin"?"SN":(f==="Hamburg"?"HH":f));
-  var cls = key==="SN"?"dir-sn":"dir-hh";
-  return '<span class="dir-badge '+cls+'">'+key+'&rarr;BZBG</span>';
+  var fromKey = (f==="Schwerin"?"SN":(f==="Hamburg"?"HH":f));
+  var toKey = (t==="Schwerin"?"SN":(t==="Hamburg"?"HH":t));
+  var cls = fromKey==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge '+cls+'">'+fromKey+'&rarr;'+toKey+'</span>';
 }
 function depDirBadge(t){
-  var key = (t==="Schwerin"?"SN":(t==="Hamburg"?"HH":t));
-  var cls = key==="SN"?"dir-sn":"dir-hh";
-  return '<span class="dir-badge dir-hh">BZBG&rarr;'+key+'</span>';
+  var toKey = (t==="Schwerin"?"SN":(t==="Hamburg"?"HH":t));
+  var cls = toKey==="SN"?"dir-sn":"dir-hh";
+  return '<span class="dir-badge dir-hh">HH&rarr;'+toKey+'</span>';
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -103,7 +104,8 @@ function hideTip(e){
 }
 
 function initTooltips(){
-  document.querySelectorAll(".tip").forEach(function(tip){
+  document.querySelectorAll(".tip:not([data-tip-init])").forEach(function(tip){
+    tip.setAttribute("data-tip-init", "1");
     tip.addEventListener("mouseenter", showTip);
     tip.addEventListener("focus", showTip);
     tip.addEventListener("mouseleave", hideTip);
@@ -191,9 +193,31 @@ function renderAll(){
 
 function renderKpis(res){
   var k = res.kpis;
-  var tipArrival = '<span class="tip">ⓘ<span class="tipbox">Berechnung: Für jeden Zug wird geprüft, ob der Bus noch abfährt, nachdem der Zug am Bahnhof Boizenburg angekommen ist und die Fahrgäste eingestiegen sind. Puffer = Busabfahrt − Zugplanankunft − Einstieg 2 Min. Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist. Die Prozentzahl ist gewichtet mit den Fahrgastzahlen n (wie viele Leute tatsächlich in diesem Zug sitzen). Betroffene Pendler: RE1-Fahrgäste, die aussteigen und mit dem Bus weiterfahren – aus Hamburg kommend (HH→BZBG) oder aus Schwerin kommend (SN→BZBG).</span></span>';
+  // Commuter satisfaction by origin city — combines arrival (Zug→Bus) AND departure (Bus→Zug)
+  // A commuter is "zufrieden" when both sides of the round trip work.
+  var hhConn = 0, hhOk = 0, snConn = 0, snOk = 0;
+  for (var _i = 0; _i < res.runs.length; _i++) {
+    var _r = res.runs[_i];
+    if (_r.arrival) {
+      // Ankommend: RE1 kommt aus dieser Stadt, Pendler steigt in Boizenburg um in den Bus
+      if (_r.arrival.from === "Hamburg") { hhConn++; if (_r.arrival.reachable) hhOk++; }
+      if (_r.arrival.from === "Schwerin") { snConn++; if (_r.arrival.reachable) snOk++; }
+    }
+    if (_r.departure && _r.arrival) {
+      // Abfahrend: Pendler kommt mit dem Bus zurück zum Bahnhof, RE1 fährt weiter zur Zielstadt
+      // Zielstadt = Ankunftsziel (der Zug setzt seine Fahrt fort)
+      var _dest = _r.arrival.to === "Hamburg" ? "Hamburg" : (_r.arrival.to === "Schwerin" ? "Schwerin" : null);
+      if (_dest === "Hamburg") { hhConn++; if (_r.departure.reachable) hhOk++; }
+      if (_dest === "Schwerin") { snConn++; if (_r.departure.reachable) snOk++; }
+    }
+  }
+  var hhPct = hhConn ? Math.round((hhOk / hhConn) * 100) : 0;
+  var snPct = snConn ? Math.round((snOk / snConn) * 100) : 0;
+  var hhCls = hhPct >= 90 ? "good" : (hhPct >= 70 ? "warn" : "bad");
+  var snCls = snPct >= 90 ? "good" : (snPct >= 70 ? "warn" : "bad");
+  var tipArrival = '<span class="tip">ⓘ<span class="tipbox">Berechnung: Für jeden Zug wird geprüft, ob der Bus noch abfährt, nachdem der Zug am Bahnhof Boizenburg angekommen ist und die Fahrgäste eingestiegen sind. Puffer = Busabfahrt − Zugplanankunft − Einstieg (2 Min. aus Hamburg, 5 Min. aus Schwerin). Ein Anschluss zählt als erreicht, wenn der Puffer ≥ eingestellter Mindestpuffer ist.</span></span>';
   var tipRobust = '<span class="tip">ⓘ<span class="tipbox">Grün ✓ = verspätungsrobust: Der Puffer reicht auch, wenn der Zug mit seiner p90-Verspätung kommt. Rot ✗ = nicht robust: Bei planmäßiger Ankunft reicht der Puffer gerade, bei der üblichen p90-Verspätung verpasst man den Bus. Verspätungsrobust bedeutet: Puffer ≥ p90-Verspätung.</span></span>';
-  var tipReturn = '<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug 1 Min. ≥ 0 Min. heißt: Der Bus ist rechtzeitig zurück, damit Fahrgäste den abfahrenden RE1 noch erreichen. Unter 0 Min. rot: Der Bus käme zu spät, der Zug wäre weg. Betroffene Pendler: Bus-Fahrgäste, die am Bahnhof ankommen und den RE1 erreichen wollen – mit dem Bus nach Hamburg (BZBG→HH) oder nach Schwerin (BZBG→SN).</span></span>';
+  var tipReturn = '<span class="tip">ⓘ<span class="tipbox">Reserve = Zugabfahrt − Busrückkehr am Bahnhof − Fußweg zum Zug (5 Min. nach Hamburg, 2 Min. nach Schwerin). ≥ 0 Min. heißt: Der Bus ist rechtzeitig zurück, damit Fahrgäste den abfahrenden RE1 noch erreichen. Unter 0 Min. rot: Der Bus käme zu spät, der Zug wäre weg.</span></span>';
   $("kpis").innerHTML =
     kpi("Anschluss ankommend " + tipArrival, pct(k.arrReachRate), cls(k.arrReachRate),
         "Bus erreicht (Puffer ≥ " + ui.arriveBufferMin + " Min.)")
@@ -203,6 +227,15 @@ function renderKpis(res){
         "Bus rechtzeitig zurück (Reserve ≥ " + ui.departReserveMin + " Min.)")
   + kpi("Ø Ankunftspuffer", k.meanArrBuffer.toFixed(1) + " Min.", "",
         "Wartezeit pünktlicher Fahrgäste");
+
+  // Separate row: Pendler-Zufriedenheit nach Herkunft (Ankunft + Abfahrt kombiniert)
+  var tipHh = '<span class="tip">ⓘ<span class="tipbox">Anteil der Verbindungen, bei denen sowohl die Anreise (RE1 aus Hamburg kommt an → Bus ab Boizenburg, Einstieg 2 Min.) als auch die Abreise (Bus zurück zum Bahnhof → RE1 nach Hamburg ab Boizenburg, Fußweg 5 Min.) funktionieren. Ein Hamburg-Pendler ist zufrieden, wenn beide Teile klappen – auch bei p90-Verspätung des Zuges.</span></span>';
+  var tipSn = '<span class="tip">ⓘ<span class="tipbox">Anteil der Verbindungen, bei denen sowohl die Anreise (RE1 aus Schwerin kommt an → Bus ab Boizenburg, Einstieg 5 Min.) als auch die Abreise (Bus zurück zum Bahnhof → RE1 nach Schwerin ab Boizenburg, Fußweg 2 Min.) funktionieren. Ein Schwerin-Pendler ist zufrieden, wenn beide Teile klappen – auch bei p90-Verspätung des Zuges.</span></span>';
+  $("commuter-satisfaction").innerHTML =
+    kpi("HH-Pendler zufrieden " + tipHh, hhPct + "%", hhCls,
+        "Ankunft + Abfahrt Hamburg")
+  + kpi("SN-Pendler zufrieden " + tipSn, snPct + "%", snCls,
+        "Ankunft + Abfahrt Schwerin");
 }
 function kpi(k,v,c,s){ return '<div class="kpi"><div class="k">'+k+'</div><div class="v '+c+'">'+v+'</div><div class="s">'+s+'</div></div>'; }
 function cls(r){ return r>=90?"good":(r>=70?"warn":"bad"); }
@@ -217,12 +250,12 @@ function renderRuns(res){
     var resCls = d ? (d.reserve < 0 ? "bad" : (d.reserve >= ui.departReserveMin ? "good" : "warn")) : "";
     var svcBadge = r.service === "schule" ? ' <span style="color:var(--muted);font-size:10px">(Schultag)</span>'
                  : r.service === "ferien" ? ' <span style="color:var(--muted);font-size:10px">(Ferien)</span>' : '';
-    // Ankommender RE1 Richtung
+    // Ankommender RE1 Richtung: volle Streckenrichtung SN→HH oder HH→SN
     var arrDirHtml = a ? dirBadge(a.from, a.to) : '<span class="blank">—</span>';
-    var arrDirTxt = a ? (a.from==="Schwerin"?"SN→BZBG":(a.from==="Hamburg"?"HH→BZBG":(a.from+"→BZBG"))) : "—";
-    // Abfahrender RE1 Richtung: zurück zum Herkunftsort des ankommenden Zuges
+    var arrDirTxt = a ? (a.from==="Schwerin" && a.to==="Hamburg" ? "SN→HH" : (a.from==="Hamburg" && a.to==="Schwerin" ? "HH→SN" : (a.from+"→"+a.to))) : "—";
+    // Abfahrender RE1 Richtung: volle Streckenrichtung SN→HH oder HH→SN
     var depDirHtml = d ? depDirBadge(d.train ? "x" : "x") : '<span class="blank">—</span>';
-    var depDirTxt = d ? (a ? (a.from==="Schwerin"?"BZBG→SN":(a.from==="Hamburg"?"BZBG→HH":"BZBG→?")) : "BZBG→?") : "—";
+    var depDirTxt = d ? (a ? (a.from==="Schwerin" ? "HH→SN" : (a.from==="Hamburg" ? "SN→HH" : "?→?")) : "?→?") : "—";
     return '<tr class="' + (exprChecked?"expr":"") + '">'
       + '<td>' + (a ? hh(a.train) : '<span class="blank">—</span>') + '</td>'
       + '<td>' + arrDirHtml + '</td>'
